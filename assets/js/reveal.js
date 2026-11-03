@@ -19,7 +19,7 @@
     observer.observe(el);
   });
 
-  // Legacy figures climb with the scroll: "20+", "7,000+", "6 Mn", "Top 100" keep their wording.
+  // Legacy figures count up from 0 once the row is well in view: "20+", "7,000+", "6 Mn", "Top 100" keep their wording.
   var stats = document.querySelector('.legacy-stats');
   if (!stats) return;
   var counters = Array.prototype.map.call(stats.querySelectorAll('strong'), function (el) {
@@ -30,19 +30,25 @@
     var n = Math.round(value);
     return c.prefix + (c.comma ? n.toLocaleString('en-IN') : String(n)) + c.suffix;
   }
-  var ticking = false;
-  function update() {
-    ticking = false;
-    var rect = stats.getBoundingClientRect();
-    // 0 when the row enters at the bottom, 1 once it has risen 55% of the screen.
-    var base = (innerHeight - rect.top) / (innerHeight * 0.55);
+  // A slow, even climb (2.8s each, gently staggered) so the progression can be followed.
+  var DURATION = 2800, STAGGER = 220, started = false;
+  function run(start) {
+    var done = true;
     counters.forEach(function (c, i) {
-      var p = Math.max(0, Math.min(1, base - i * 0.06));
-      var eased = 1 - Math.pow(1 - p, 3);
-      if (eased > c.shown) { c.shown = eased; c.el.textContent = format(c, c.target * eased); }
+      var p = Math.max(0, Math.min(1, (performance.now() - start - i * STAGGER) / DURATION));
+      var eased = 1 - Math.pow(1 - p, 2);
+      c.el.textContent = format(c, c.target * eased);
+      if (p < 1) done = false;
     });
+    if (!done) requestAnimationFrame(function () { run(start); });
+  }
+  function check() {
+    if (started || stats.getBoundingClientRect().top > innerHeight * 0.7) return;
+    started = true; removeEventListener('scroll', check);
+    // Let the row finish fading in, so the count is seen from 0.
+    setTimeout(function () { run(performance.now()); }, 500);
   }
   counters.forEach(function (c) { c.el.setAttribute('aria-label', format(c, c.target)); c.el.textContent = format(c, 0); });
-  addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, {passive: true});
-  update();
+  addEventListener('scroll', check, {passive: true});
+  check();
 })();
