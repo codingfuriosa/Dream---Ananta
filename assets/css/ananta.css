@@ -103,12 +103,12 @@ h3{font-family:var(--serif);font-weight:500;font-size:26px;line-height:1.2}
 @keyframes fade-down{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
 
 /* Hero: the elevation, uninterrupted */
-.hero{position:relative;height:calc(100svh - var(--header));min-height:520px;max-height:940px;overflow:hidden;background:#2a2016}
+.hero{position:relative;height:calc(100svh - var(--header));min-height:520px;max-height:940px;overflow:hidden;background:var(--night)}
 .hero picture{display:block;height:100%}
 .hero-image{width:100%;height:100%;max-width:none;object-fit:cover;object-position:center;animation:hero-in 2.4s var(--ease) both}
 .hero::before{content:'';position:absolute;inset:0 0 auto;z-index:1;height:18%;background:linear-gradient(180deg,#0c102066,#0c102000);pointer-events:none}
 /* The brochure's line, set high in the sky (never centred at the bottom) */
-.hero-caption{position:absolute;z-index:2;isolation:isolate;bottom:clamp(64px,11vh,120px);left:50%;width:min(1240px,calc(100% - 112px));transform:translateX(-50%);color:var(--white);text-shadow:0 2px 18px #0c1020cc,0 0 2px #0c102080}
+.hero-caption{position:absolute;z-index:2;isolation:isolate;bottom:clamp(40px,7vh,80px);left:50%;width:min(1240px,calc(100% - 112px));transform:translateX(-50%);color:var(--white);text-shadow:0 2px 18px #0c1020cc,0 0 2px #0c102080}
 .hero-caption::before{content:'';position:absolute;z-index:-1;left:-12%;top:-34%;width:min(900px,120%);height:170%;background:radial-gradient(ellipse 58% 52% at 34% 56%,#0c1020f0 0%,#0c1020b8 42%,#0c102000 74%);filter:blur(10px);pointer-events:none}
 .hero-caption>*{animation:rise 1.4s var(--ease) both}
 .hero-caption>:nth-child(1){animation-delay:.35s}.hero-caption>:nth-child(2){animation-delay:.55s}.hero-caption>:nth-child(4){animation-delay:1.05s}
@@ -120,17 +120,21 @@ h3{font-family:var(--serif);font-weight:500;font-size:26px;line-height:1.2}
 .hero-caption h1 em{padding-right:.06em;background:linear-gradient(100deg,#ffd9a8 0%,#ffd9a8 35%,#fff4e2 48%,#f0b56a 60%,#ffd9a8 75%,#ffd9a8 100%) 0 0/260% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;filter:drop-shadow(0 2px 14px #0c1020cc);animation:shimmer 7s 1.8s ease-in-out infinite}
 @keyframes shimmer{0%,55%{background-position:100% 0}100%{background-position:0 0}}
 @keyframes caption-in{from{opacity:0;transform:translate(-50%,16px)}to{opacity:1;transform:translateX(-50%)}}
-.hero::after{content:'';position:absolute;inset:auto 0 0;z-index:1;height:62%;background:linear-gradient(180deg,#0c102000 0%,#0c10204d 32%,#0c1020b3 66%,#0c1020eb 88%,var(--night) 100%);pointer-events:none}
+.hero::after{content:'';position:absolute;inset:auto 0 -2px;z-index:1;height:62%;background:linear-gradient(180deg,#0c102000 0%,#0c10204d 32%,#0c1020b3 66%,#0c1020eb 88%,var(--night) 100%);pointer-events:none}
 .hero-caption .horizon-rule{margin-top:26px;width:150px}
 .hero-place{margin-top:18px;font-size:11px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:#ffffffc7}
 @keyframes hero-in{from{transform:scale(1.06)}to{transform:none}}
 
 /* Overview: the brochure's night runway */
-.overview{position:relative;isolation:isolate;overflow:hidden;padding:120px 0 72px;background:linear-gradient(180deg,var(--night) 0%,#0c1020e0 22%,#0c1020a6 55%,#1a1a3fcc 80%,#0c1020 100%),linear-gradient(90deg,#0c1020d9 0%,#0c102066 55%,#0c102033 100%),url('../images/web/overview-elevation.webp') 70% 40%/cover no-repeat;background-color:var(--night)}
+.overview{position:relative;isolation:isolate;overflow:hidden;margin-top:-1px;padding:28px 0 72px;background:linear-gradient(180deg,var(--night) 0%,#0c1020e0 22%,#0c1020a6 55%,#1a1a3fcc 80%,#0c1020 100%),linear-gradient(90deg,#0c1020d9 0%,#0c102066 55%,#0c102033 100%),url('../images/web/overview-elevation.webp') 70% 40%/cover no-repeat;background-color:var(--night)}
 
 .section-intro{display:grid;grid-template-columns:1.1fr .9fr;gap:80px;align-items:end}
 .overview h2{color:var(--white)}
 .intro-copy{max-width:440px}
+/* The overview opens straight on its description */
+.overview .section-intro{grid-template-columns:1fr}
+.overview .intro-copy{max-width:560px}
+.overview .intro-copy p{font-size:17px;line-height:1.8;color:var(--on-dark)}
 .overview-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
 .overview-actions .btn{background:linear-gradient(100deg,#f5dfb3 0%,#e3c27e 55%,#d6a565 100%);border-color:#e3c27e;color:var(--ink)}
 .overview-actions .btn:hover{background:var(--white);border-color:var(--white)}
@@ -245,6 +249,7 @@ summary::-webkit-details-marker{display:none}
 .amenity-directory summary{display:flex;align-items:center;gap:18px;min-height:62px;font-family:var(--serif);font-size:22px}
 .directory-count{margin-left:auto;font:500 11px var(--sans);letter-spacing:.14em;color:var(--gold-deep)}
 .directory-plus,.acc .plus{font:300 22px/1 var(--sans);color:var(--gold);transition:transform .35s var(--ease)}
+.directory-plus{margin-left:auto}
 details[open] .directory-plus,details[open] .plus{transform:rotate(45deg)}
 .amenity-directory ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 24px;padding:0 0 22px}
 .amenity-directory li{font-size:14px;color:var(--muted);padding-left:16px;position:relative}
@@ -471,7 +476,7 @@ h2 em,h3 em{padding-right:.06em;background:linear-gradient(100deg,#7d5a1c 0%,var
   .hero{height:100svh;min-height:560px;max-height:none;margin-top:calc(-1 * var(--header))}
   .hero-image{object-position:center 60%}
   .hero::before{height:20%}
-  .hero-caption{bottom:calc(44px + env(safe-area-inset-bottom));width:calc(100% - 40px)}
+  .hero-caption{bottom:calc(30px + env(safe-area-inset-bottom));width:calc(100% - 40px)}
   .hero-caption::before{left:-20px;top:-40%;width:calc(100% + 40px);height:180%;background:radial-gradient(ellipse 80% 55% at 40% 58%,#0c1020f2 0%,#0c1020b3 45%,#0c102000 78%)}
   .hero-place{font-size:9px;letter-spacing:.24em}
   .hero-caption .horizon-rule{margin-top:20px}
@@ -482,7 +487,7 @@ h2 em,h3 em{padding-right:.06em;background:linear-gradient(100deg,#7d5a1c 0%,var
   .hero::after{height:60%}
   .at-hero .mobile-actions{transform:translateY(100%)}
   .at-hero .wa-float{opacity:0;pointer-events:none;transform:translateY(20px)}
-  .overview{padding:80px 0 48px;background-position:0 0,0 0,62% 30%}
+  .overview{padding:20px 0 48px;background-position:0 0,0 0,62% 30%}
   .section-intro{grid-template-columns:1fr;gap:24px}
   .overview-actions .btn{flex:1 1 100%}
   .overview-actions .overview-visit{display:none}
@@ -537,14 +542,16 @@ h2 em,h3 em{padding-right:.06em;background:linear-gradient(100deg,#7d5a1c 0%,var
   .horizon-strip p{font-size:10px;letter-spacing:.3em}
   .footer{padding:20px 0 calc(28px + env(safe-area-inset-bottom))}
 
-  /* Compact on phones, so the closing image above always fits on screen with it */
-  .footer-grid{grid-template-columns:1fr 1fr;gap:18px 20px;font-size:12px;line-height:1.65}
-  .footer-brand{grid-column:1/-1}
-  .footer-brand p:first-child{font-size:20px;max-width:none}
-  .footer-brand p+p{margin-top:6px;font-size:10px}
-  .footer h2{margin-bottom:6px;font-size:9px}
-  .footer-bottom{margin-top:22px;padding-top:14px;gap:12px;font-size:10px}
-  .footer-bottom>div{gap:14px}
+  /* Phones: one calm, centred column; still short enough that the closing image fits above it */
+  .footer{text-align:center}
+  .footer-grid{grid-template-columns:1fr;gap:20px;font-size:13px;line-height:1.7}
+  .footer-brand p:first-child{font-size:20px;max-width:none;text-wrap:balance}
+  .footer-brand p+p{margin-top:6px;font-size:10px;letter-spacing:.12em}
+  .footer-brand::after{content:'';display:block;width:72px;height:1px;margin:18px auto 0;background:var(--horizon);box-shadow:0 0 10px #e09ca580}
+  .footer h2{margin-bottom:6px;font-size:10px}
+  .footer-bottom{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:24px;padding-top:16px;font-size:10px}
+  .footer-bottom>div{gap:22px}
+  .footer-bottom button{white-space:nowrap}
   .image-dialog{width:calc(100vw - 16px);height:calc(100svh - 24px)}
   .brochure-dialog .enquiry-form{padding:44px 22px 28px}
   /* Quick contact: a floating smoked-plum bar with a lit edge, the visit as a gold bar inside it */
