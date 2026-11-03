@@ -346,13 +346,13 @@ details[open] .directory-plus,details[open] .plus{transform:rotate(45deg)}
 .enquiry-form>button[type=submit]{width:100%;margin-top:20px}
 
 /* Footer: the one horizon image on the page, cropped tall: sky and sign above, runway beneath the details */
-.horizon-strip{position:relative;height:400px;display:flex;align-items:flex-start;justify-content:center;padding-top:clamp(64px,9vh,96px);text-align:center;background:#000 url('../images/curated/horizon.webp') center/cover no-repeat}
+.horizon-strip{position:relative;height:400px;height:max(400px,calc(100vh - var(--footer-h,0px)));height:max(400px,calc(100lvh - var(--footer-h,0px)));display:flex;align-items:flex-start;justify-content:center;padding-top:clamp(64px,9vh,96px);text-align:center;background:#000 url('../images/curated/horizon.webp') center/cover no-repeat}
 .horizon-strip::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,#0c1020cc 0%,#0c102066 26%,#0c102000 44%,#0c102000 70%,var(--night) 100%)}
 .horizon-strip>div{position:relative}
 .horizon-strip img{width:170px;margin:auto}
 .horizon-strip p{margin-top:24px;font-size:11px;letter-spacing:.42em;color:var(--champagne-soft)}
 @media (min-width:701px){
-  .horizon-strip{height:470px;padding-top:clamp(96px,14vh,140px)}
+  .horizon-strip{padding-top:clamp(96px,14vh,140px)}
   .horizon-strip img{width:190px}
 }
 .footer{position:relative;background:linear-gradient(180deg,var(--night),#0a0e1c);padding:32px 0 32px;font-size:14px;color:var(--on-dark-muted)}
@@ -537,7 +537,7 @@ h2 em,h3 em{padding-right:.06em;background:linear-gradient(100deg,#7d5a1c 0%,var
   .enquiry-form{padding:28px 20px 24px}
   .enquiry-form h3{font-size:24px}
   .frow.two{grid-template-columns:1fr;gap:0}
-  .horizon-strip{height:280px;padding-top:40px}
+  .horizon-strip{height:max(220px,calc(100vh - var(--footer-h,0px)));height:max(220px,calc(100lvh - var(--footer-h,0px)));padding-top:40px;padding-top:calc(40px + 100lvh - 100svh)}
   .horizon-strip img{width:130px}
   .horizon-strip p{font-size:10px;letter-spacing:.3em}
   .footer{padding:20px 0 calc(28px + env(safe-area-inset-bottom))}

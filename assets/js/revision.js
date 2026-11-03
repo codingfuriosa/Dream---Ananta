@@ -36,11 +36,12 @@
  // width), scaling just enough to cover.
  var artWidth=2200,artHeight=1114,lightX=1439,lightY=615,wide=matchMedia('(min-width:701px)');
  function alignHorizons(){document.querySelectorAll('.horizon-strip,[data-horizon]').forEach(function(el){var w=el.clientWidth,h=el.clientHeight,fy=parseFloat((wide.matches&&el.dataset.horizonYWide)||el.dataset.horizonY||'.5');var scale=Math.max(w/(2*Math.min(lightX,artWidth-lightX)),(h*fy)/lightY,(h*(1-fy))/(artHeight-lightY));el.style.backgroundSize=(artWidth*scale)+'px '+(artHeight*scale)+'px';el.style.backgroundPosition=(w/2-lightX*scale)+'px '+(h*fy-lightY*scale)+'px';});}
- // At the very end the closing image and the footer fill the screen together, so the image with the
- // logo sits at the top. Sized on load and on width changes only (not when a phone's address bar moves).
- var strip=document.querySelector('.horizon-strip'),footer=document.querySelector('.footer'),lastWidth=0;
- function fitEnding(){if(!strip||!footer||innerWidth===lastWidth)return;lastWidth=innerWidth;strip.style.height=Math.max(wide.matches?400:220,innerHeight-footer.offsetHeight)+'px';}
- function refit(){lastWidth=0;fitEnding();alignHorizons();}
+ // At the very end the closing image and the footer fill the screen together, so the page always ends on
+ // the dark image with the logo at the top. CSS sizes the strip against the tallest screen height (100lvh);
+ // the script only reports the footer's height.
+ var strip=document.querySelector('.horizon-strip'),footer=document.querySelector('.footer');
+ function fitEnding(){if(!strip||!footer)return;strip.style.setProperty('--footer-h',footer.offsetHeight+'px');}
+ function refit(){fitEnding();alignHorizons();}
  // The closing mark lights up gradually: --glow is 0 as the strip enters the screen and 1 once it reaches the top.
  function glow(){if(!strip)return;var t=strip.getBoundingClientRect().top,p=Math.max(0,Math.min(1,1-t/innerHeight));strip.style.setProperty('--glow',(p*p).toFixed(3));}
  addEventListener('scroll',function(){requestAnimationFrame(glow);},{passive:true});
