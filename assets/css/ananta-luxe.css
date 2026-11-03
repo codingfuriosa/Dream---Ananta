@@ -1,0 +1,59 @@
+/* Ananta Luxe: the bold layer of premium finishes on top of ananta.css.
+   Switch it off by removing <link rel="stylesheet" href="assets/css/ananta-luxe.css"> from index.html;
+   the page works and looks complete without it. */
+
+/* 1. Arrival: the night opens on the ANANTA mark, a horizon draws beneath it, then the curtain lifts */
+main::before{content:'';position:fixed;inset:0;z-index:300;pointer-events:none;
+  background:url('../images/web/ananta-logo.webp') center calc(50% - 34px)/min(230px,52vw) auto no-repeat,
+    radial-gradient(ellipse 55% 30% at 50% 58%,#e09ca538,#f0b56a12 45%,transparent 72%),var(--night);
+  animation:luxe-curtain 2.1s .1s var(--ease) both}
+main::after{content:'';position:fixed;z-index:301;top:calc(50% + 22px);left:50%;width:min(360px,64vw);height:1px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,#e09ca5 20%,#fff1d6 50%,#f0b56a 80%,transparent);box-shadow:0 0 18px 1px #f0b56aaa;
+  transform:translateX(-50%) scaleX(0);animation:luxe-line 2.1s .1s var(--ease) both}
+@keyframes luxe-curtain{0%,58%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-3%);visibility:hidden}}
+@keyframes luxe-line{0%{transform:translateX(-50%) scaleX(0);opacity:1}40%{transform:translateX(-50%) scaleX(1);opacity:1}62%{opacity:1}100%{transform:translateX(-50%) scaleX(1.4);opacity:0;visibility:hidden}}
+/* The hero waits for the curtain */
+.hero-image{animation-delay:1.3s}
+.hero-caption>:nth-child(1){animation-delay:1.65s}.hero-caption>:nth-child(2){animation-delay:1.85s}.hero-caption>:nth-child(4){animation-delay:2.35s}
+.hero-caption>.horizon-rule{animation-delay:2.15s}
+
+.hero-caption h1{font-size:clamp(54px,6.4vw,104px);letter-spacing:-.015em}
+
+/* 3. Bigger, editorial headlines */
+h2{font-size:clamp(44px,5.2vw,80px);line-height:.98}
+.section-top{margin-bottom:64px}
+
+/* 4. Eyebrows wear a small gold diamond before the line */
+.eyebrow::after{content:'';order:-1;width:5px;height:5px;border:1px solid currentColor;transform:rotate(45deg);opacity:.8}
+
+/* 5. Gold-leaf numerals */
+.project-facts strong,.legacy-stats strong,.airport b{background:linear-gradient(180deg,#fff4de 0%,#f5dfb3 38%,#e3c27e 62%,#b98a3c 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 16px #f0b56a33)}
+.legacy-stats strong{font-size:clamp(44px,4.4vw,70px)}
+
+/* 6. Buttons in gold leaf */
+.btn-p{border:1px solid transparent;background:linear-gradient(var(--night),var(--night)) padding-box,linear-gradient(100deg,#f5dfb3,#b3832d 50%,#f5dfb3) border-box;color:var(--champagne-soft)}
+.btn-p:hover{background:linear-gradient(100deg,#f5dfb3,#e3c27e 55%,#d6a565) padding-box,linear-gradient(100deg,#f5dfb3,#b3832d 50%,#f5dfb3) border-box;color:var(--ink)}
+.directions-button,.text-link{letter-spacing:.24em}
+
+/* 7. The plan sheet framed like a print: a double gold rule */
+#floor-panel{outline:1px solid #c99a4c55;outline-offset:8px}
+
+/* 8. Menu: a full night sky with large serif links that rise in turn */
+.mobile-menu[open]{background:radial-gradient(ellipse 90% 45% at 50% 105%,#e09ca540,transparent 70%),linear-gradient(180deg,var(--night),#231c4c 70%,#3a2a5e)}
+.mobile-menu nav a{font-size:34px;font-style:italic;padding:16px 0;animation:rise .9s var(--ease) both}
+.mobile-menu nav a:nth-child(2){animation-delay:.06s}.mobile-menu nav a:nth-child(3){animation-delay:.12s}.mobile-menu nav a:nth-child(4){animation-delay:.18s}.mobile-menu nav a:nth-child(5){animation-delay:.24s}.mobile-menu nav a:nth-child(6){animation-delay:.3s}
+
+/* 9. Closing strip: the mark lights up gradually as you arrive (--glow runs 0 to 1 with the scroll) */
+.horizon-strip{overflow:hidden;--glow:0}
+.horizon-strip>div{isolation:isolate}
+.horizon-strip>div::before{content:'';position:absolute;left:50%;top:44%;z-index:-1;width:min(440px,100%);height:180px;transform:translate(-50%,-50%);background:radial-gradient(closest-side,#ffd9a840,#f0b56a1f 45%,transparent);filter:blur(6px);opacity:var(--glow);pointer-events:none}
+.horizon-strip img{filter:drop-shadow(0 0 calc(var(--glow) * 4px) #fff4dc99) drop-shadow(0 0 calc(var(--glow) * 16px) #f0b56a99)}
+.horizon-strip p{color:#fff0d6;text-shadow:0 0 calc(var(--glow) * 12px) #f0b56aaa}
+
+@media (max-width:700px){
+  .hero-caption h1{font-size:clamp(40px,12.6vw,58px)}
+  h2{font-size:44px}
+  .legacy-stats strong{font-size:42px}
+  .gallery-image span{font-size:20px}
+}
+@media (prefers-reduced-motion:reduce){main::before,main::after{display:none}}

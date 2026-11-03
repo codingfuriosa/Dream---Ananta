@@ -39,8 +39,14 @@
  // At the very end the closing image and the footer fill the screen together, so the image with the
  // logo sits at the top. Sized on load and on width changes only (not when a phone's address bar moves).
  var strip=document.querySelector('.horizon-strip'),footer=document.querySelector('.footer'),lastWidth=0;
- function fitEnding(){if(!strip||!footer||innerWidth===lastWidth)return;lastWidth=innerWidth;strip.style.height=Math.max(wide.matches?400:260,innerHeight-footer.offsetHeight)+'px';}
- addEventListener('resize',function(){fitEnding();alignHorizons();});fitEnding();alignHorizons();
+ function fitEnding(){if(!strip||!footer||innerWidth===lastWidth)return;lastWidth=innerWidth;strip.style.height=Math.max(wide.matches?400:220,innerHeight-footer.offsetHeight)+'px';}
+ function refit(){lastWidth=0;fitEnding();alignHorizons();}
+ // The closing mark lights up gradually: --glow is 0 as the strip enters the screen and 1 once it reaches the top.
+ function glow(){if(!strip)return;var t=strip.getBoundingClientRect().top,p=Math.max(0,Math.min(1,1-t/innerHeight));strip.style.setProperty('--glow',(p*p).toFixed(3));}
+ addEventListener('scroll',function(){requestAnimationFrame(glow);},{passive:true});
+ addEventListener('resize',function(){fitEnding();alignHorizons();});fitEnding();alignHorizons();glow();
+ // Web fonts change the footer's height: measure again once they (and the page) have loaded.
+ addEventListener('load',refit);if(document.fonts)document.fonts.ready.then(refit);
  var directory=Array.from(document.querySelectorAll('.amenity-directory details'));directory.forEach(function(d){d.addEventListener('toggle',function(){if(d.open)directory.forEach(function(o){if(o!==d)o.open=false;});});});
 })();
 /* Floor level: a styled menu that mirrors the native select (which stays for no-JS and keeps the change logic). */

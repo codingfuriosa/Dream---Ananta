@@ -19,7 +19,7 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header) + 16px);scrollbar-width:none}
 html::-webkit-scrollbar{display:none}
-body{margin:0;background:var(--ivory);color:var(--ink);font:400 15px/1.75 var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{margin:0;overflow-x:clip;background:var(--ivory);color:var(--ink);font:400 15px/1.75 var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 body:has(dialog[open]:modal),.menu-open{overflow:hidden}
 h1,h2,h3,p,figure{margin:0}
 ul{list-style:none;margin:0;padding:0}
@@ -108,13 +108,20 @@ h3{font-family:var(--serif);font-weight:500;font-size:26px;line-height:1.2}
 .hero-image{width:100%;height:100%;max-width:none;object-fit:cover;object-position:center;animation:hero-in 2.4s var(--ease) both}
 .hero::before{content:'';position:absolute;inset:0 0 auto;z-index:1;height:18%;background:linear-gradient(180deg,#0c102066,#0c102000);pointer-events:none}
 /* The brochure's line, set high in the sky (never centred at the bottom) */
-.hero-caption{position:absolute;z-index:2;bottom:clamp(64px,11vh,120px);left:50%;width:min(1240px,calc(100% - 112px));transform:translateX(-50%);color:var(--white);text-shadow:0 2px 24px #0c102099;animation:caption-in 1.6s .3s var(--ease) both}
+.hero-caption{position:absolute;z-index:2;isolation:isolate;bottom:clamp(64px,11vh,120px);left:50%;width:min(1240px,calc(100% - 112px));transform:translateX(-50%);color:var(--white);text-shadow:0 2px 18px #0c1020cc,0 0 2px #0c102080}
+.hero-caption::before{content:'';position:absolute;z-index:-1;left:-12%;top:-34%;width:min(900px,120%);height:170%;background:radial-gradient(ellipse 58% 52% at 34% 56%,#0c1020f0 0%,#0c1020b8 42%,#0c102000 74%);filter:blur(10px);pointer-events:none}
+.hero-caption>*{animation:rise 1.4s var(--ease) both}
+.hero-caption>:nth-child(1){animation-delay:.35s}.hero-caption>:nth-child(2){animation-delay:.55s}.hero-caption>:nth-child(4){animation-delay:1.05s}
+.hero-caption>.horizon-rule{transform-origin:left;animation:draw 1.6s .85s var(--ease) both}
+@keyframes rise{from{opacity:0;transform:translateY(18px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 .hero-caption .eyebrow{margin-bottom:18px;color:var(--champagne-soft)}
 .hero-caption h1{max-width:9.5em;font-size:clamp(48px,5.6vw,88px);line-height:1}
-.hero-caption h1 em{color:#ffdcae}
+.hero-caption h1 em{padding-right:.06em;background:linear-gradient(100deg,#ffd9a8 0%,#ffd9a8 35%,#fff4e2 48%,#f0b56a 60%,#ffd9a8 75%,#ffd9a8 100%) 0 0/260% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;filter:drop-shadow(0 2px 14px #0c1020cc);animation:shimmer 7s 1.8s ease-in-out infinite}
+@keyframes shimmer{0%,55%{background-position:100% 0}100%{background-position:0 0}}
 @keyframes caption-in{from{opacity:0;transform:translate(-50%,16px)}to{opacity:1;transform:translateX(-50%)}}
 .hero::after{content:'';position:absolute;inset:auto 0 0;z-index:1;height:62%;background:linear-gradient(180deg,#0c102000 0%,#0c10204d 32%,#0c1020b3 66%,#0c1020eb 88%,var(--night) 100%);pointer-events:none}
-.hero-caption .horizon-rule{margin-top:26px}
+.hero-caption .horizon-rule{margin-top:26px;width:150px}
 .hero-place{margin-top:18px;font-size:11px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:#ffffffc7}
 @keyframes hero-in{from{transform:scale(1.06)}to{transform:none}}
 
@@ -131,7 +138,10 @@ h3{font-family:var(--serif);font-weight:500;font-size:26px;line-height:1.2}
 .overview-actions .btn-brochure:hover{background:#ffffff14;border-color:var(--champagne);color:var(--white)}
 /* Facts sit on a smoked-glass band so the runway lights never wash them out; 1px gaps draw the grid */
 .project-facts{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:1px;margin-top:180px;background:#ffffff26;border:1px solid #ffffff26;backdrop-filter:blur(10px) saturate(1.3);-webkit-backdrop-filter:blur(10px) saturate(1.3)}
-.project-facts>div{display:flex;flex-direction:column;gap:12px;padding:28px 26px;background:#0c10204d;text-shadow:0 1px 10px #0009}
+.project-facts>div{position:relative;display:flex;flex-direction:column;gap:12px;padding:28px 26px;background:#0c10204d;text-shadow:0 1px 10px #0009;transition:background .6s var(--ease)}
+.project-facts>div::before{content:'';position:absolute;inset:-1px 0 auto;height:1px;background:linear-gradient(90deg,transparent,var(--amber),#fff0d6,var(--rose),transparent);box-shadow:0 0 12px #f0b56a99;transform:scaleX(0);transition:transform .7s var(--ease)}
+.project-facts>div:hover{background:#2a22564d}
+.project-facts>div:hover::before{transform:scaleX(1)}
 .project-facts span{font-size:10px;font-weight:500;line-height:1.4;letter-spacing:.24em;text-transform:uppercase;color:var(--on-dark-muted)}
 .project-facts strong{display:flex;align-items:baseline;gap:6px;white-space:nowrap;font-family:var(--serif);font-weight:400;font-size:clamp(26px,2.2vw,34px);line-height:1;color:var(--champagne-soft)}
 .project-facts small{font-family:var(--sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--on-dark-muted)}
@@ -331,15 +341,14 @@ details[open] .directory-plus,details[open] .plus{transform:rotate(45deg)}
 .enquiry-form>button[type=submit]{width:100%;margin-top:20px}
 
 /* Footer: the one horizon image on the page, cropped tall: sky and sign above, runway beneath the details */
-.horizon-strip{position:relative;height:400px;display:flex;align-items:center;justify-content:center;text-align:center;background:#000 url('../images/curated/horizon.webp') center/cover no-repeat}
-.horizon-strip::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,#0c1020b3 0%,#0c102000 38%,#0c102000 62%,var(--night) 100%)}
-.horizon-strip>div{position:relative;transform:translateY(-40px)}
+.horizon-strip{position:relative;height:400px;display:flex;align-items:flex-start;justify-content:center;padding-top:clamp(64px,9vh,96px);text-align:center;background:#000 url('../images/curated/horizon.webp') center/cover no-repeat}
+.horizon-strip::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,#0c1020cc 0%,#0c102066 26%,#0c102000 44%,#0c102000 70%,var(--night) 100%)}
+.horizon-strip>div{position:relative}
 .horizon-strip img{width:170px;margin:auto}
 .horizon-strip p{margin-top:24px;font-size:11px;letter-spacing:.42em;color:var(--champagne-soft)}
 @media (min-width:701px){
-  .horizon-strip{height:470px;align-items:flex-end;padding-bottom:58px}
-  .horizon-strip::before{background:linear-gradient(180deg,#0c1020b3 0%,#0c102000 26%,#0c102000 46%,#0c1020b3 78%,var(--night) 100%)}
-  .horizon-strip>div{transform:none}
+  .horizon-strip{height:470px;padding-top:clamp(96px,14vh,140px)}
+  .horizon-strip img{width:190px}
 }
 .footer{position:relative;background:linear-gradient(180deg,var(--night),#0a0e1c);padding:32px 0 32px;font-size:14px;color:var(--on-dark-muted)}
 
@@ -387,8 +396,8 @@ dialog::backdrop{background:#0d0a07cc;backdrop-filter:blur(6px)}
 
 /* Headline accents: the second phrase in italic, like the brochure's "Limitless" */
 h1 em,h2 em,h3 em{font-style:italic;font-weight:400}
-h2 em,h3 em{color:var(--gold-deep)}
-:is(.overview,.highlights,.details-section,.gallery-section,.legacy) h2 em{color:var(--champagne)}
+h2 em,h3 em{padding-right:.06em;background:linear-gradient(100deg,#7d5a1c 0%,var(--gold) 45%,#c99a4c 70%,var(--gold-deep) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+:is(.overview,.highlights,.details-section,.gallery-section,.legacy) :is(h2,h3) em{background-image:linear-gradient(100deg,#f3c7c6 0%,var(--rose) 30%,var(--amber) 70%,var(--champagne) 100%)}
 .overview h2 em{padding-right:.06em;background:linear-gradient(100deg,#f3c7c6 0%,var(--rose) 30%,var(--amber) 75%,var(--champagne) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 
 /* Big numbers use lining figures so they sit level */
@@ -400,8 +409,12 @@ h2 em,h3 em{color:var(--gold-deep)}
 :is(.portrait,.detail-feature,.gallery-image,.amenity):hover::before{inset:10px;border-color:#f5dfb399}
 
 /* Reveal on scroll (only once JS confirms it can run) */
-.reveal-ready .reveal{opacity:0;transform:translateY(24px);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease);transition-delay:var(--reveal-delay,0ms)}
-.reveal-ready .reveal.is-in{opacity:1;transform:none}
+.reveal-ready .reveal{opacity:0;transform:translateY(24px);filter:blur(6px);transition:opacity 1.2s var(--ease),transform 1.2s var(--ease),filter 1.2s var(--ease);transition-delay:var(--reveal-delay,0ms)}
+.reveal-ready .reveal.is-in{opacity:1;transform:none;filter:none}
+/* Photographs and the map only fade and rise: blurring large images makes scrolling stutter */
+.reveal-ready :is(.portrait,.details-lead,.loc>div,#floor-panel,.all-amenities).reveal{filter:none}
+/* The site-visit form wears the horizon along its top edge */
+.visit .enquiry-form::before{content:'';position:absolute;inset:-1px -1px auto;height:3px;background:var(--horizon);box-shadow:0 0 18px #e09ca566}
 
 /* Desktop: at the end of the page the beam blooms brighter and wider */
 @media (min-width:1001px){
@@ -459,6 +472,7 @@ h2 em,h3 em{color:var(--gold-deep)}
   .hero-image{object-position:center 60%}
   .hero::before{height:20%}
   .hero-caption{bottom:calc(44px + env(safe-area-inset-bottom));width:calc(100% - 40px)}
+  .hero-caption::before{left:-20px;top:-40%;width:calc(100% + 40px);height:180%;background:radial-gradient(ellipse 80% 55% at 40% 58%,#0c1020f2 0%,#0c1020b3 45%,#0c102000 78%)}
   .hero-place{font-size:9px;letter-spacing:.24em}
   .hero-caption .horizon-rule{margin-top:20px}
   .hero-caption .eyebrow{margin-bottom:14px;font-size:9px;letter-spacing:.26em}
@@ -518,20 +532,23 @@ h2 em,h3 em{color:var(--gold-deep)}
   .enquiry-form{padding:28px 20px 24px}
   .enquiry-form h3{font-size:24px}
   .frow.two{grid-template-columns:1fr;gap:0}
-  .horizon-strip{height:280px}
+  .horizon-strip{height:280px;padding-top:40px}
   .horizon-strip img{width:130px}
   .horizon-strip p{font-size:10px;letter-spacing:.3em}
   .footer{padding:20px 0 calc(28px + env(safe-area-inset-bottom))}
 
-  .footer-grid{grid-template-columns:1fr;gap:26px}
-  .footer-brand p:first-child{font-size:22px}
-  .footer h2{margin-bottom:8px}
-  .footer-bottom{display:block;margin-top:48px}
-  .footer-bottom>div{margin-top:12px}
+  /* Compact on phones, so the closing image above always fits on screen with it */
+  .footer-grid{grid-template-columns:1fr 1fr;gap:18px 20px;font-size:12px;line-height:1.65}
+  .footer-brand{grid-column:1/-1}
+  .footer-brand p:first-child{font-size:20px;max-width:none}
+  .footer-brand p+p{margin-top:6px;font-size:10px}
+  .footer h2{margin-bottom:6px;font-size:9px}
+  .footer-bottom{margin-top:22px;padding-top:14px;gap:12px;font-size:10px}
+  .footer-bottom>div{gap:14px}
   .image-dialog{width:calc(100vw - 16px);height:calc(100svh - 24px)}
   .brochure-dialog .enquiry-form{padding:44px 22px 28px}
   /* Quick contact: a floating smoked-plum bar with a lit edge, the visit as a gold bar inside it */
-  .mobile-actions{position:fixed;left:0;right:0;bottom:0;z-index:33;display:grid;grid-template-columns:1.15fr 1fr;gap:5px;min-height:62px;padding:6px 6px calc(6px + env(safe-area-inset-bottom));border:0;border-top:1px solid #e3c27e38;background:linear-gradient(110deg,#0c1020ed 0%,#221c4aed 55%,#3e2c5eed 100%);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);box-shadow:0 20px 40px -18px #000c,inset 0 1px 0 #ffffff12;transition:transform .5s var(--ease)}
+  .mobile-actions{position:fixed;left:0;right:0;bottom:0;z-index:33;display:grid;grid-template-columns:1.15fr 1fr;gap:5px;min-height:62px;padding:6px 6px calc(6px + env(safe-area-inset-bottom));border:0;border-top:1px solid #e3c27e38;background:linear-gradient(110deg,#0c1020ed 0%,#221c4aed 55%,#3e2c5eed 100%);box-shadow:0 20px 40px -18px #000c,inset 0 1px 0 #ffffff12;transition:transform .5s var(--ease)}
   .mobile-actions::before{content:'';position:absolute;left:16%;right:16%;top:-1px;height:1px;background:linear-gradient(90deg,transparent,#e09ca5,#fff0d6 50%,#f0b56a,transparent);box-shadow:0 0 10px #f0b56a99}
   .mobile-actions a{display:flex;align-items:center;justify-content:center;gap:10px;font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:var(--on-dark)}
   .mobile-actions a:first-child{background:linear-gradient(100deg,#f5dfb3 0%,#e3c27e 55%,#d6a565 100%);color:var(--ink)}
