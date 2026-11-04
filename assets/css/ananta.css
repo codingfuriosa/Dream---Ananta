@@ -191,13 +191,11 @@ h3{font-family:var(--serif);font-weight:500;font-size:26px;line-height:1.2}
 #floor-panel{background:var(--white);border:1px solid var(--line);box-shadow:0 40px 80px -60px #3b2a1059}
 .plan-sheet{display:block;width:100%;padding:clamp(16px,3vw,40px);overflow:hidden;cursor:zoom-in;background:#fbf4e4}
 .plan-sheet img{width:100%;height:auto;filter:sepia(.35) saturate(.55) brightness(1.06);mix-blend-mode:multiply;transition:transform 1.2s var(--ease),opacity .35s var(--ease)}
-/* Switching block: the old sheets fade out, the new ones fade in. Each floor's sheet sits under the last. */
+/* Switching block or floor: the old sheet fades out, the new one fades in */
 .plan-list{transition:opacity .3s var(--ease)}
 .plan-list.is-swapping{opacity:0}
-.plan-item+.plan-item{border-top:1px solid var(--line)}
-/* Wider screens: every floor of the block sits in one row, each sheet sized by how many share it (two per row on tablets) */
-@media (min-width:701px){.plan-list{display:grid;grid-template-columns:repeat(var(--n2,1),minmax(0,1fr))}.plan-item+.plan-item{border-top:0}.plan-item{border-left:1px solid var(--line)}.plan-item:nth-child(2n+1){border-left:0}.plan-item:nth-child(n+3){border-top:1px solid var(--line)}.plan-list:not([data-count="1"]) .plan-sheet{padding:18px}.plan-list:not([data-count="1"]) .plan-caption{flex-direction:column;align-items:flex-start;gap:8px;padding:14px 18px}}
-@media (min-width:1001px){.plan-list{grid-template-columns:repeat(var(--n,1),minmax(0,1fr))}.plan-item:nth-child(2n+1){border-left:1px solid var(--line)}.plan-item:first-child{border-left:0}.plan-item:nth-child(n+3){border-top:0}}
+/* Before an enquiry the floor stays unnamed and there is no floor menu; Blocks D and E never have one */
+.is-locked .plan-floor,.is-locked .floor-select,.floor-select[hidden]{display:none}
 .plan-sheet:hover img{transform:scale(1.015)}
 
 /* Until an enquiry, the sheets stay hazy (colours still read) with one way in: View plans. */

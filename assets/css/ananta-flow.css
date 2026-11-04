@@ -1,3 +1,7 @@
+/* The progress beam's glowing tip never pushes the page wider than the screen */
+.page-progress{overflow-x:clip;overflow-y:visible}
+/* No overflow rule on html or body: it would turn the body into its own scroll box and unpin the sticky header
+   whenever the menu locks scrolling. The progress beam clips its own glow instead. */
 /* Ananta Flow: a bit of variety, all of it merging. Beige for Plans, Amenities and Location;
    purple for Details and Legacy; the Gallery over a full photograph under blue night, like the overview.
    Into the night, a photograph rises out of the beige at its sky. Out of the night: sunset cloud after
@@ -15,10 +19,15 @@ main>section{margin-bottom:-1px}
 .highlights{position:relative;isolation:isolate;background:linear-gradient(180deg,#0c1020 0 50%,#f6ead5 50% 100%)}
 .highlights::before{content:'';position:absolute;inset:2px 0;z-index:-2;pointer-events:none;background:url('../images/web/sky-courtyard.webp') center bottom/100% var(--sky) no-repeat}
 .highlights::after{content:'';display:block;position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,#0c1020 0,#221d4c 50%,#3a2b62 calc(100% - var(--sky)),#3a2b62a6 calc(100% - var(--sky) * .78),#3a2b6240 calc(100% - var(--sky) * .6),#3a2b6200 calc(100% - var(--sky) * .44),#f6ead500 calc(100% - calc(var(--sky) * .38)),#f6ead52e calc(100% - calc(var(--sky) * .38) * .85),#f6ead580 calc(100% - calc(var(--sky) * .38) * .65),#f6ead5d9 calc(100% - calc(var(--sky) * .38) * .4),#f6ead5 calc(100% - calc(var(--sky) * .38) * .15),#f6ead5 100%)}
-/* Details: purple, rising out of the plans through the courtyard, settling briefly into the amenities' cream */
-.details-section{position:relative;isolation:isolate;background:linear-gradient(180deg,#f1dfc2 0 50%,#f8efe0 50% 100%)}
-.details-section::before{content:'';position:absolute;inset:2px 0;z-index:-2;pointer-events:none;background:url('../images/web/ga-courtyard.webp') center top/max(100%,900px) auto no-repeat}
-.details-section::after{content:'';display:block;position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,#f1dfc2 0,#f1dfc2 calc(var(--edge) * .15),#f1dfc2d9 calc(var(--edge) * .4),#f1dfc280 calc(var(--edge) * .65),#f1dfc22e calc(var(--edge) * .85),#f1dfc200 var(--edge),#1f1a4899 calc(var(--band) * .55),#1f1a48 var(--band),#2f2560 50%,#45316c calc(100% - var(--blend) * 1.1),#45316c calc(100% - var(--blend) * 1.00),#48346e calc(100% - var(--blend) * 0.92),#524076 calc(100% - var(--blend) * 0.82),#675886 calc(100% - var(--blend) * 0.70),#837699 calc(100% - var(--blend) * 0.58),#a398ae calc(100% - var(--blend) * 0.46),#c4b9c2 calc(100% - var(--blend) * 0.34),#dfd6d2 calc(100% - var(--blend) * 0.22),#f2e9dd calc(100% - var(--blend) * 0.10),#f8efe0 calc(100% - var(--blend) * 0.00))}
+/* Details: light ivory after the clouds, warming at its foot into the purple of the plans */
+/* z-index:1 lets the cards' soft shadows spill over the top of the plans instead of being cut at the join */
+.details-section{position:relative;z-index:1;isolation:isolate;color:var(--ink);background:linear-gradient(180deg,#f6ead5 0 50%,#f8efe0 50% 100%)}
+.details-section::before{content:none}
+.details-section::after{content:'';display:block;position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,#f6ead5 0,#fbf6ee 24%,#f8efe0 100%)}
+.details-section .details-lead h2,.details-section .detail-row h3{color:var(--ink)}
+.details-section h2 em{background-image:linear-gradient(100deg,#7d5a1c 0%,var(--gold) 45%,#c99a4c 70%,var(--gold-deep) 100%)}
+.details-section .details-lead .body-copy,.details-section .detail-row p{color:var(--muted)}
+.details-section .detail-number,.details-section .detail-row:hover h3{color:var(--gold-deep)}
 /* Gallery: the boulevard rises out of the beige into blue night (no photograph behind the section), and the
    night thins slowly over a rose-gold cloud sky above the location, the way Highlights opens into the plans */
 .gallery-section{position:relative;isolation:isolate;background:linear-gradient(180deg,#f1e4cd 0 50%,#f1e4cd 50% 100%)}
@@ -29,8 +38,11 @@ main>section{margin-bottom:-1px}
 .legacy::before{content:'';position:absolute;inset:2px 0;z-index:-2;pointer-events:none;background:url('../images/web/ga-aerial.webp') center top/cover no-repeat}
 .legacy::after{content:'';display:block;position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,#f6ecdc 0,#f6ecdc calc(var(--edge) * .15),#f6ecdcd9 calc(var(--edge) * .4),#f6ecdc80 calc(var(--edge) * .65),#f6ecdc2e calc(var(--edge) * .85),#f6ecdc00 var(--edge),#231d5038 calc(var(--band) * .6),#231d50bf var(--band),#3a2a66bf 50%,#563a6cbf calc(100% - var(--pfade)),#563a6c38 calc(100% - var(--pfade) * .62),#fcf8f100 calc(100% - calc(var(--pfade) * .5)),#fcf8f12e calc(100% - calc(var(--pfade) * .5) * .85),#fcf8f180 calc(100% - calc(var(--pfade) * .5) * .65),#fcf8f1d9 calc(100% - calc(var(--pfade) * .5) * .4),#fcf8f1 calc(100% - calc(var(--pfade) * .5) * .15),#fcf8f1 100%)}
 /* Room at each bridged edge, so text always sits on the settled colour */
-.section.highlights{padding-bottom:calc(var(--sky) * .45)}
-.section.details-section{padding-top:var(--bridge);padding-bottom:calc(var(--blend) * .45)}
+.section.highlights{padding-bottom:calc(var(--sky) * .8)}
+.section.details-section{padding-top:4px;padding-bottom:56px}
+/* Gold words in headings that sit over photographs keep a soft night halo, so they never melt into a sky */
+:is(.gallery-section,.legacy) h2{text-shadow:0 2px 18px #1a1638b3}
+:is(.gallery-section,.legacy,.residences) h2 em{background-image:linear-gradient(100deg,#ffe6b8 0%,#f5d08a 40%,#e8b25e 70%,#ffe2a8 100%);filter:drop-shadow(0 1px 2px #1a1638) drop-shadow(0 0 16px #1a1638cc)}
 .section.gallery-section{padding-top:var(--bridge);padding-bottom:calc(var(--gsky) * .5)}
 .section.legacy{padding-top:var(--bridge);padding-bottom:calc(var(--pfade) * .45)}
 /* No label line at the start of a section: each opens straight on its heading */
@@ -40,10 +52,10 @@ main .eyebrow{display:none}
 .overview{padding-bottom:40px}
 .project-facts{margin-top:96px}
 .section.highlights{padding-top:56px}
-.section.residences{padding-top:32px;padding-bottom:32px}
+.section.residences{padding-top:var(--bridge);padding-bottom:calc(var(--blend) * .5)}
 .residences .section-top{margin-bottom:28px}
 .residences .plan-controls{margin-bottom:20px}
-.section.amenities{padding-top:24px;padding-bottom:8px}
+.section.amenities{padding-top:4px;padding-bottom:8px}
 .all-amenities{margin-top:64px}
 .section.location-section{padding-top:32px;padding-bottom:40px}
 .section.visit{padding-top:56px;padding-bottom:0}
@@ -54,26 +66,45 @@ main .eyebrow{display:none}
   .overview{padding-bottom:24px}
   .project-facts{margin-top:56px}
   .section.highlights{padding-top:48px}
-  .section.residences{padding-top:20px;padding-bottom:24px}
+  .section.details-section{padding-top:0;padding-bottom:40px}
+  .section.residences{padding-top:var(--bridge);padding-bottom:calc(var(--blend) * .5)}
   .residences .section-top{margin-bottom:20px}
   .residences .plan-controls{margin-bottom:16px}
-  .section.amenities{padding-top:16px;padding-bottom:4px}
+  .section.amenities{padding-top:0;padding-bottom:4px}
   .all-amenities{margin-top:48px}
   .section.location-section{padding-top:20px;padding-bottom:28px}
   .section.visit{padding-top:40px;padding-bottom:0}
   .visit .enquiry-form{margin-top:32px}
 }
 
-/* Plans: warm linen lit softly from within, a faint architect's grid, and a horizon line under the heading.
+/* Plans: the courtyard rises at the top out of the purple above, the way Details once opened; deep purple lit softly from within, a faint architect's grid, and a horizon line under the heading.
    Every glow and shadow stays clear of the top and bottom edges. */
-.residences{position:relative;isolation:isolate;background:
-  radial-gradient(ellipse 65% 26% at 50% 42%,#fffaf0cc 0%,#fffaf000 70%),
-  radial-gradient(ellipse 45% 24% at 100% 58%,#e3c27e2e 0%,#e3c27e00 70%),
-  linear-gradient(180deg,#f6ead5 0%,#f4e5cc 55%,#f1dfc2 100%)}
-.residences::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(#b3832d12 1px,transparent 1px) 0 0/56px 56px,linear-gradient(90deg,#b3832d12 1px,transparent 1px) 0 0/56px 56px;-webkit-mask-image:linear-gradient(transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(transparent,#000 18%,#000 82%,transparent)}
+.residences{position:relative;isolation:isolate;color:var(--on-dark);background:
+  radial-gradient(ellipse 65% 26% at 50% 60%,#e09ca524 0%,#e09ca500 70%),
+  radial-gradient(ellipse 45% 24% at 100% 30%,#e3c27e1c 0%,#e3c27e00 70%),
+  linear-gradient(180deg,#f8efe0 0,#f8efe0 calc(var(--edge) * .5),#1f1a48 var(--edge),#1f1a48 var(--band),#2f2560 50%,#3a2a66 calc(100% - var(--blend) * 1.1),#45316c calc(100% - var(--blend) * 1),#48346e calc(100% - var(--blend) * .92),#524076 calc(100% - var(--blend) * .82),#675886 calc(100% - var(--blend) * .7),#837699 calc(100% - var(--blend) * .58),#a398ae calc(100% - var(--blend) * .46),#c4b9c2 calc(100% - var(--blend) * .34),#dfd6d2 calc(100% - var(--blend) * .22),#f2e9dd calc(100% - var(--blend) * .1),#f8efe0 100%)}
 .residences .section-top h2::after{content:'';display:block;width:120px;height:1px;margin-top:26px;background:var(--horizon);box-shadow:0 0 14px #e09ca580}
-.residences .block-tabs{box-shadow:0 18px 40px -26px #6b4a1a66}
-.residences #floor-panel{box-shadow:0 30px 50px -40px #6b4a1a73,0 0 0 1px #e3c27e66}
+.residences .block-tabs{box-shadow:0 18px 40px -26px #0c1020b3}
+.residences .section-top h2{color:var(--white)}
+.residences .floor-select label{color:var(--on-dark-muted)}
+/* Plans controls, dressed for the purple: frosted-glass tabs and floor menu with gold edges, a gold selected block,
+   and the cream sheet held in a glass frame */
+.residences .block-tabs{background:#ffffff0d;border-color:#e3c27e59;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.residences .block-tabs button{color:#f6f0e6b3}
+.residences .block-tabs button:hover{color:var(--white)}
+.residences .block-tabs button[aria-selected=true]{background:linear-gradient(100deg,#f5dfb3 0%,#e3c27e 55%,#d6a565 100%);color:var(--ink)}
+.residences .fselect-btn{background:#ffffff0d;border-color:#e3c27e59;color:var(--white);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.residences .fselect-btn:hover,.residences .fselect.is-open .fselect-btn{border-color:var(--champagne)}
+.residences .fselect-list{background:#221c4a;border-color:#e3c27e40;box-shadow:0 30px 60px -30px #0c1020}
+.residences .fselect-list li{color:#f6f0e6a6}
+.residences .fselect-list li:hover,.residences .fselect-list li.is-active{background:#ffffff12;color:var(--white)}
+.residences .fselect-list li[aria-selected=true]{color:var(--champagne)}
+.residences .plan-lock .btn{background:#0c1020;border-color:#e3c27e80;color:var(--champagne-soft);box-shadow:0 14px 30px -14px #0c1020b3}
+.residences .plan-lock .btn:hover{background:linear-gradient(100deg,#f5dfb3 0%,#e3c27e 55%,#d6a565 100%);border-color:#e3c27e;color:var(--ink)}
+
+/* Details specs on ivory: gold-leaf numerals, gold hairlines that fade at the ends, icons in gold rings, a warm glow
+   behind the list and the interior held in a soft gold frame */
+
 
 /* The ending: the visit section stays cream, and the ANANTA photograph itself rises out of that cream, the way
    the hero melts into the overview. The rise sits on extra height added above the strip (--lead), which has
@@ -84,3 +115,71 @@ main .eyebrow{display:none}
 /* Into the night like a sunset: beige warms through peach and dusty rose to mauve, lands on a twilight a shade
    lighter than the image's own sky, then dissolves into it, so there is no grey band where beige meets navy */
 .horizon-strip::before{inset:-2px 0 0;background:linear-gradient(180deg,#f6dfba 0,#efcfae calc((var(--lead) + 2px) * 0.3),#dcb0a0 calc((var(--lead) + 2px) * 0.48),#b38a97 calc((var(--lead) + 2px) * 0.64),#7f6487 calc((var(--lead) + 2px) * 0.8),#4f4770 calc((var(--lead) + 2px) * 0.94),#3c3c62 calc((var(--lead) + 2px) * 1.05),#3c3c6299 calc((var(--lead) + 2px) * 1.25),#3c3c6200 calc((var(--lead) + 2px) * 1.45),#0c102000 calc(var(--lead) + 30%),var(--night) 100%)}
+
+/* Plans: the courtyard rises out of the Details ivory and settles into night purple; a soft rose glow behind the ivory plan card */
+.residences::after{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,#f8efe0 0,#f8efe0 calc(var(--edge) * .15),#f8efe0d9 calc(var(--edge) * .4),#f8efe080 calc(var(--edge) * .65),#f8efe02e calc(var(--edge) * .85),#f8efe000 var(--edge),#1f1a4899 calc(var(--band) * .55),#1f1a48 calc(var(--band) * .88)),url('../images/web/ga-courtyard.webp') center top/max(100%,900px) auto no-repeat;-webkit-mask-image:linear-gradient(#000 0,#000 calc(var(--band) * .9),transparent var(--band));mask-image:linear-gradient(#000 0,#000 calc(var(--band) * .9),transparent var(--band))}
+.residences #floor-panel{background:#fbf6ee;border:1px solid #e3c27e;box-shadow:0 50px 90px -50px #05060f,0 0 0 8px #ffffff0a}
+.residences .plan-caption{border-top-color:#e3c27e59;color:var(--muted)}
+.residences .plan-caption .text-link{color:var(--ink);border-bottom-color:var(--gold)}
+
+/* Details, on ivory: a tall framed interior beside the five specifications, which sit on a raised ivory card with a
+   gilded top edge, gold-leaf numerals, gold hairlines and gold-ringed icons */
+.details-section .details-layout{align-items:start}
+.details-section .details-lead h2::after{content:'';display:block;width:96px;height:1px;margin-top:24px;background:linear-gradient(90deg,#c99a4c,#e3c27e 60%,#c99a4c00)}
+.details-section .details-lead .horizon-rule{display:none}
+.details-section .detail-feature{margin-top:36px;padding:12px;background:#fffdf8;border:1px solid #c99a4c66;box-shadow:0 40px 70px -44px #6b4a1a80}
+.details-section .detail-feature img{height:440px}
+.details-section .detail-feature::before{inset:24px;border-color:#fff4dc66}
+.details-section .detail-feature::after{content:'';position:absolute;inset:-7px;z-index:4;pointer-events:none;background:linear-gradient(#c99a4c,#c99a4c) 0 0/28px 1px,linear-gradient(#c99a4c,#c99a4c) 0 0/1px 28px,linear-gradient(#c99a4c,#c99a4c) 100% 0/28px 1px,linear-gradient(#c99a4c,#c99a4c) 100% 0/1px 28px,linear-gradient(#c99a4c,#c99a4c) 0 100%/28px 1px,linear-gradient(#c99a4c,#c99a4c) 0 100%/1px 28px,linear-gradient(#c99a4c,#c99a4c) 100% 100%/28px 1px,linear-gradient(#c99a4c,#c99a4c) 100% 100%/1px 28px;background-repeat:no-repeat}
+.details-section .detail-rows{position:relative;padding:18px 40px;background:#fffdf8;border:1px solid #e3c27e73;box-shadow:0 50px 90px -56px #6b4a1a8c}
+.details-section .detail-rows::before,.details-section .detail-rows::after{content:'';position:absolute;left:-1px;right:-1px;height:3px;background:linear-gradient(90deg,#c99a4c,#f5dfb3 35%,#e3c27e 65%,#b3832d)}
+.details-section .detail-rows::before{top:-1px}
+.details-section .detail-rows::after{bottom:-1px;background:linear-gradient(90deg,#b3832d,#e3c27e 35%,#f5dfb3 65%,#c99a4c)}
+.details-section .detail-row{border-top:0;padding:26px 6px}
+.details-section .detail-row+.detail-row::after{content:'';position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,#c99a4c00,#c99a4c73 14%,#c99a4c73 86%,#c99a4c00)}
+.details-section .detail-row::before{display:none}
+.details-section .detail-row:hover{background:linear-gradient(90deg,#f6e6c64d,#f6e6c600 75%)}
+.details-section .detail-number{font-size:30px;line-height:1;background:linear-gradient(100deg,#7d5a1c 0%,var(--gold) 45%,#c99a4c 70%,var(--gold-deep) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+@media (max-width:1000px){.details-section .detail-feature img{height:340px}}
+@media (max-width:700px){.details-section .detail-rows{padding:6px 18px}.details-section .detail-row{padding:22px 0}.details-section .detail-number{font-size:24px}.details-section .detail-feature img{height:250px}.details-section .detail-feature{padding:8px}}
+
+.details-section .detail-row{transition:background .5s var(--ease),transform .5s var(--ease)}
+.details-section .detail-row:hover{transform:translateX(4px)}
+
+/* Short lines that sit over a photograph's sky keep a night halo so they stay legible */
+.gallery-section .section-aside,.legacy .legacy-intro{color:#fffaf0!important;opacity:1!important;text-shadow:0 1px 2px #1a1638,0 0 12px #1a1638,0 0 26px #1a1638cc}
+
+/* Details without numerals: title and description beside the gold medallion */
+.details-section .detail-number{display:none}
+.details-section .detail-row{grid-template-columns:minmax(0,1fr) 44px}
+@media (max-width:700px){.details-section .detail-row{grid-template-columns:minmax(0,1fr) 38px}}
+/* The plans heading sits over the courtyard photo: a night halo keeps it crisp */
+.residences .section-top h2{text-shadow:0 2px 20px #1a1638cc,0 1px 3px #1a1638}
+.residences .section-top h2 em,:is(.gallery-section,.legacy) h2 em{text-shadow:none}
+
+/* Responsiveness: headings and lines over bright photo skies keep a firm night halo at every width */
+.residences .section-top h2,:is(.gallery-section,.legacy) h2{text-shadow:0 1px 3px #1a1638,0 0 10px #1a1638d9,0 2px 28px #1a1638b3}
+.residences .block-tabs{background:#1f1a48b3}
+.highlights .split :is(h3,p),.highlights :is(.highlight-list,.highlights-copy) :is(h3,p){text-shadow:0 1px 2px #1a1638,0 0 12px #1a1638cc}
+@media (min-width:701px) and (max-width:1000px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px 40px}.footer-grid>:first-child{grid-column:1/-1}}
+.residences .section-top h2::after{height:2px;background:linear-gradient(90deg,#fff4dc,#e3c27e 60%,#d6a565);box-shadow:0 1px 0 1px #1a163899,0 0 14px #e09ca5cc}
+
+.details-section .detail-row h3{font-size:clamp(22px,2vw,27px)}
+
+
+/* Highlights: the night render at its natural scale, in a shorter frame that crops the empty sky above the rooftops */
+.highlights .portrait img{height:400px;object-position:center 100%}
+@media (max-width:1000px){.highlights .portrait img{height:350px}}
+@media (max-width:700px){.highlights .portrait img{height:280px}}
+/* Call now on phones: deep gold beside the champagne half, so neither blends with the phone's own dark bar beneath */
+@media (max-width:700px){.mobile-actions a:last-child{background:linear-gradient(100deg,#d9a96a 0%,#c08a3a 55%,#a8782a 100%);color:var(--ink);letter-spacing:.16em;box-shadow:inset 1px 0 0 #0c102040}.mobile-actions a:last-child{gap:8px}
+.mobile-actions .call-icon{display:inline-flex;align-items:center;justify-content:center;width:11px;height:11px;margin-top:-1px}
+.mobile-actions .call-icon i{font-size:10px;line-height:1;transform-origin:50% 60%;animation:call-ring 4.2s ease-in-out infinite}
+@keyframes call-ring{0%,4%{transform:rotate(0);filter:none}6%{filter:drop-shadow(0 0 6px #fff4dccc)}7%{transform:rotate(-16deg)}10%{transform:rotate(13deg)}13%{transform:rotate(-11deg)}16%{transform:rotate(8deg)}19%{transform:rotate(-5deg)}22%{transform:rotate(0)}26%,100%{transform:rotate(0);filter:none}}
+@media (prefers-reduced-motion:reduce){.mobile-actions .call-icon i{animation:none}}
+
+
+/* Legacy: heading only, no partner logo */
+.legacy-heading{display:block}
+/* Details on wide screens: the framed interior stretches to end level with the specifications card */
+@media (min-width:1001px){.details-section .details-layout{align-items:stretch}.details-section .detail-rows{align-self:start}.details-section .details-lead{display:flex;flex-direction:column}.details-section .detail-feature{flex:1 1 0;display:flex;min-height:200px}.details-section .detail-feature img{flex:1 1 0;height:auto;min-height:0;object-fit:cover}}

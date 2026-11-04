@@ -6,7 +6,7 @@
   function track(event, data) { window.dataLayer = window.dataLayer || []; window.dataLayer.push(Object.assign({event:event},data || {})); }
   var menu = $('#mobile-menu'), toggle = $('.menu-toggle');
   toggle.addEventListener('click', function () { if(menu.open){menu.close();return;} menu.show(); document.body.classList.add('menu-open');$('main').inert=true;$('footer').inert=true;toggle.setAttribute('aria-expanded','true');toggle.setAttribute('aria-label','Close navigation'); });
-  menu.addEventListener('close', function () { document.body.classList.remove('menu-open');$('main').inert=false;$('footer').inert=false;toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open navigation');toggle.focus(); });
+  menu.addEventListener('close', function () { document.body.classList.remove('menu-open');$('main').inert=false;$('footer').inert=false;toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open navigation');toggle.focus({preventScroll:true}); });
   document.addEventListener('keydown',function(e){if(!menu.open)return;if(e.key==='Escape'){menu.close();return;}if(e.key==='Tab'){var list=[toggle].concat($$('a',menu));var i=list.indexOf(document.activeElement);if(e.shiftKey&&i<=0){e.preventDefault();list[list.length-1].focus();}else if(!e.shiftKey&&(i===list.length-1||i===-1)){e.preventDefault();toggle.focus();}}});
   $$('#mobile-menu a').forEach(function (link) { link.addEventListener('click', function () { menu.close(); }); });
   $$('[data-dismiss]').forEach(function (button) { button.addEventListener('click', function () { button.closest('dialog').close(); }); });
@@ -32,31 +32,35 @@
   }
   // Full sheets retain floor names and original area schedules from the brochure.
   var sheets = {
-    C: {height:'G+8', options:[['2','Ground floor'],['3','1st floor'],['4','2nd, 4th, 6th & 8th floors'],['5','3rd, 5th & 7th floors']]},
-    D: {height:'B+G+8', options:[['6','Odd & even floor layouts']]},
-    E: {height:'B+G+8', options:[['7','Odd & even floor layouts']]}
+    // Block C opens on its typical floor (the one most homes share); D and E have a single sheet.
+    C: {height:'G+8', first:'4', options:[['2','Ground floor'],['3','1st floor'],['4','2nd, 4th, 6th & 8th floors'],['5','3rd, 5th & 7th floors']]},
+    D: {height:'B+G+8', first:'6', options:[]},
+    E: {height:'B+G+8', first:'7', options:[]}
   };
-  // Every floor of the chosen block is shown at once, one sheet under another.
-  var block='C', planList=$('#plan-list');
-  function title(entry) { return 'Block '+block+' · '+sheets[block].height+' · '+entry[1]; }
-  function renderBlock() {
-    var html=sheets[block].options.map(function (entry) {
-      var t=title(entry);
-      return '<div class="plan-item"><div class="plan-frame"><button class="plan-sheet" type="button" data-enlarge="'+entry[0]+'" aria-label="Enlarge '+t+'"><img src="assets/images/curated/floor-preview-'+entry[0]+'.webp" alt="'+t+': original floor-plan sheet with area schedule" width="2548" height="866"></button><div class="plan-lock"><button class="btn" type="button" data-plans aria-haspopup="dialog">View plans ↗</button></div></div>'+
-        '<div class="plan-caption"><span>'+t+'</span><button class="text-link" type="button" data-enlarge="'+entry[0]+'">Enlarge plan <span aria-hidden="true">↗</span></button></div></div>';
-    }).join('');
-    // Crossfade: the current block fades out, the next fades in
+  // One sheet at a time. Before an enquiry it stays hazy and names only the block; after, the floor is named and
+  // Block C gains a floor menu.
+  var block='C', planList=$('#plan-list'), level=$('#floor-level'), floorSelect=$('.floor-select');
+  function renderSheet(value) {
+    var entry=sheets[block].options.filter(function (o) { return o[0]===value; })[0];
+    var base='Block '+block+' · '+sheets[block].height, floor=entry?' · '+entry[1]:'';
+    var html='<div class="plan-item"><div class="plan-frame"><button class="plan-sheet" type="button" data-enlarge="'+value+'" aria-label="Enlarge '+base+floor+'"><img src="assets/images/curated/floor-preview-'+value+'.webp" alt="'+base+floor+': original floor-plan sheet with area schedule" width="2548" height="866"></button><div class="plan-lock"><button class="btn" type="button" data-plans aria-haspopup="dialog">View plans ↗</button></div></div>'+
+      '<div class="plan-caption"><span>'+base+'<span class="plan-floor">'+floor+'</span></span><button class="text-link" type="button" data-enlarge="'+value+'">Enlarge plan <span aria-hidden="true">↗</span></button></div></div>';
+    // Crossfade: the current sheet fades out, the next fades in
     planList.classList.add('is-swapping');
-    var count=sheets[block].options.length;
-    setTimeout(function () { planList.innerHTML=html; planList.style.setProperty('--n',count); planList.style.setProperty('--n2',Math.min(count,2)); planList.dataset.count=count; planList.classList.remove('is-swapping'); },300);
+    setTimeout(function () { planList.innerHTML=html; planList.classList.remove('is-swapping'); },300);
     $('#floor-panel').setAttribute('aria-labelledby','block-'+block.toLowerCase());
   }
   function selectBlock(value) {
     if (value===block) return;
     block=value;
     $$('[data-block]').forEach(function (tab) { var selected=tab.dataset.block===block;tab.setAttribute('aria-selected',String(selected));tab.tabIndex=selected?0:-1; });
-    renderBlock();
+    var options=sheets[block].options;
+    floorSelect.hidden=!options.length;
+    level.replaceChildren();
+    options.forEach(function (o) { var option=document.createElement('option');option.value=o[0];option.textContent=o[1];option.selected=o[0]===sheets[block].first;level.appendChild(option); });
+    renderSheet(sheets[block].first);
   }
+  level.addEventListener('change',function () { renderSheet(level.value); });
   var tabs=$$('[data-block]');
   tabs.forEach(function (tab,index) {
     tab.addEventListener('click',function () {selectBlock(tab.dataset.block);});

@@ -73,7 +73,7 @@
     return c.prefix + (c.comma ? n.toLocaleString('en-IN') : String(n)) + c.suffix;
   }
   // A slow, even climb (2.8s each, gently staggered) so the progression can be followed.
-  var DURATION = 2800, STAGGER = 220, started = false;
+  var DURATION = 1400, STAGGER = 120, started = false;
   function run(start) {
     var done = true;
     counters.forEach(function (c, i) {
