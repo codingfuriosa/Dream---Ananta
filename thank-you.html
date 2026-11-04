@@ -83,8 +83,19 @@ html,body{height:100%;overflow:hidden;background:#000}
   action.href='index.html#enquiry';
   return;
  }
- // After a brochure enquiry, the download starts once the visitor is back on the main page.
- if((intent||(receipt&&receipt.intent))==='brochure')action.href='index.html?brochure=download';
+ // A brochure enquiry downloads the brochure as soon as this page opens (once per enquiry, not on every
+ // refresh). Floor-plan and site-visit enquiries never download it.
+ var kind=intent||(receipt&&receipt.intent);
+ if(kind==='brochure'&&config.brochure){
+  var key='ananta_brochure_sent_'+((receipt&&receipt.confirmedAt)||'direct'),sent=false;
+  try{sent=sessionStorage.getItem(key)==='1';}catch(e){}
+  if(!sent){
+   setTimeout(function(){var a=document.createElement('a');a.href=config.brochure;a.download='Dream-Ananta-Brochure.pdf';document.body.appendChild(a);a.click();a.remove();window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'brochure_download'});},600);
+   try{sessionStorage.setItem(key,'1');}catch(e){}
+  }
+ }
+ // Floor-plan enquiries return straight to the plans, now unlocked.
+ if(kind==='floor_plans')action.href='index.html#plans';
  if(receipt){window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'thank_you_view',form:receipt.intent});}
 })();
 </script>
