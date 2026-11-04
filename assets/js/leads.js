@@ -87,7 +87,7 @@
     var result=await response.json();if(result.success!==true)throw new Error('Lead not confirmed');
     // With a destination set, only its confirmed response unlocks the brochure.
     complete();
-   }catch(error){status.textContent='We could not confirm your enquiry. Please try again or call +91 73531 58222.';}
+   }catch(error){status.textContent='We could not confirm your enquiry. Please try again or call '+(matchMedia('(max-width:700px)').matches?'+91 73531 50777':'+91 73531 58222')+'.';}
    finally{clearTimeout(timer);submit.disabled=false;submit.textContent=label;}
   });
  });

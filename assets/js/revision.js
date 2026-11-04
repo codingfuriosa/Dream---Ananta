@@ -6,11 +6,11 @@
  // The progress line is a beam of light; at the very end it blooms from the centre.
  // Over the hero the navbar floats on the image (until the first ~100px of scroll) and the
  // quick-contact bar waits until two-thirds of the hero has passed.
- function pageProgress(){var max=document.documentElement.scrollHeight-innerHeight;var p=max>0?Math.min(1,scrollY/max):0;beam.style.setProperty('--p',p.toFixed(4));beam.classList.toggle('is-complete',p>.995);if(hero){document.body.classList.toggle('hero-top',scrollY<Math.min(100,innerHeight*.12));document.body.classList.toggle('at-hero',scrollY<hero.offsetHeight*.65);}frame=false;}
- // Once the closing horizon strip (or the footer below it) is on screen, the header and the
- // phone quick-contact bar step aside.
- var ending=$$('.horizon-strip,.footer'),inView=new Set();
- if(ending.length&&'IntersectionObserver' in window){var endObserver=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)inView.add(e.target);else inView.delete(e.target);});document.body.classList.toggle('at-footer',inView.size>0);},{threshold:0});ending.forEach(function(el){endObserver.observe(el);});}
+ function pageProgress(){ending();var max=document.documentElement.scrollHeight-innerHeight;var p=max>0?Math.min(1,scrollY/max):0;beam.style.setProperty('--p',p.toFixed(4));beam.classList.toggle('is-complete',p>.995);if(hero){document.body.classList.toggle('hero-top',scrollY<Math.min(100,innerHeight*.12));document.body.classList.toggle('at-hero',scrollY<hero.offsetHeight*.65);}frame=false;}
+ // Once the dark part of the closing image (below its cream lead-in) or the footer is on screen, the
+ // header and the phone quick-contact bar step aside.
+ var strip=$('.horizon-strip');
+ function ending(){if(!strip)return;var lead=parseFloat(getComputedStyle(strip).getPropertyValue('--lead'))||0;document.body.classList.toggle('at-footer',strip.getBoundingClientRect().top+lead<innerHeight);}
  addEventListener('scroll',function(){if(!frame){frame=true;requestAnimationFrame(pageProgress);}},{passive:true});addEventListener('resize',pageProgress);pageProgress();
  $$('[data-scroll-controls]').forEach(function(controls){
   var track=document.getElementById(controls.dataset.scrollControls),items=Array.from(track.children),count=$('.scroll-count',controls),fill=$('.scroll-line>span',controls),previous=$('[data-direction="-1"]',controls),next=$('[data-direction="1"]',controls);
@@ -35,7 +35,9 @@
  // to a horizontal centre and a chosen height (data-horizon-y, 0–1; data-horizon-y-wide above phone
  // width), scaling just enough to cover.
  var artWidth=2200,artHeight=1114,lightX=1439,lightY=615,wide=matchMedia('(min-width:701px)');
- function alignHorizons(){document.querySelectorAll('.horizon-strip,[data-horizon]').forEach(function(el){var w=el.clientWidth,h=el.clientHeight,fy=parseFloat((wide.matches&&el.dataset.horizonYWide)||el.dataset.horizonY||'.5');var scale=Math.max(w/(2*Math.min(lightX,artWidth-lightX)),(h*fy)/lightY,(h*(1-fy))/(artHeight-lightY));el.style.backgroundSize=(artWidth*scale)+'px '+(artHeight*scale)+'px';el.style.backgroundPosition=(w/2-lightX*scale)+'px '+(h*fy-lightY*scale)+'px';});}
+ function alignHorizons(){document.querySelectorAll('.horizon-strip,[data-horizon]').forEach(function(el){var w=el.clientWidth,h=el.clientHeight,fy=parseFloat((wide.matches&&el.dataset.horizonYWide)||el.dataset.horizonY||'.5');
+  // A lead-in (--lead) above the visible part shifts the horizon down so it keeps its place on the last screen
+  var lead=parseFloat(getComputedStyle(el).getPropertyValue('--lead'))||0;if(lead&&h>lead)fy=(lead+fy*(h-lead))/h;var scale=Math.max(w/(2*Math.min(lightX,artWidth-lightX)),(h*fy)/lightY,(h*(1-fy))/(artHeight-lightY));el.style.backgroundSize=(artWidth*scale)+'px '+(artHeight*scale)+'px';el.style.backgroundPosition=(w/2-lightX*scale)+'px '+(h*fy-lightY*scale)+'px';});}
  // At the very end the closing image and the footer fill the screen together, so the page always ends on
  // the dark image with the logo at the top. CSS sizes the strip against the tallest screen height (100lvh);
  // the script only reports the footer's height.
@@ -88,4 +90,17 @@
  new MutationObserver(build).observe(select,{childList:true});
  select.addEventListener('change',build);
  build();
+})();
+/* Plans: the container starts zoomed out and grows with the scroll, from the moment the section appears
+   until the container is well up the screen. */
+(function(){
+ 'use strict';
+ var section=document.getElementById('plans'),panel=document.getElementById('floor-panel');
+ if(!section||!panel||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ var START=.68,ticking=false;
+ function update(){ticking=false;var top=section.getBoundingClientRect().top;
+  // 0 as the section's top enters at the bottom of the screen, 1 once the container's top reaches 30% of it
+  var gap=panel.getBoundingClientRect().top-top,span=Math.max(1,innerHeight*.7+gap),p=Math.max(0,Math.min(1,(innerHeight-top)/span));
+  var eased=1-Math.pow(1-p,2);panel.style.scale=(START+(1-START)*eased).toFixed(4);}
+ addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(update);}},{passive:true});addEventListener('resize',update);update();
 })();

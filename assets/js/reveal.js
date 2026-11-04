@@ -19,6 +19,48 @@
     observer.observe(el);
   });
 
+  // Overview facts count up as they arrive: ₹62 Lakhs, 15 min, 70% and the 2032 possession year.
+  // Figures that are not plain counts (G+8, 2, 3 & 4 BHK) stay as they are.
+  var facts = Array.prototype.map.call(document.querySelectorAll('.project-facts strong'), function (el) {
+    var node = el.firstChild;
+    if (!node || node.nodeType !== 3) return null;
+    var m = node.nodeValue.match(/^(₹?)(\d+)(\s*\D*)$/);
+    if (!m) return null;
+    var target = Number(m[2]);
+    return {node: node, prefix: m[1], target: target, from: target > 1900 ? target - 12 : 0, suffix: m[3]};
+  }).filter(Boolean);
+  if (facts.length) {
+    facts.forEach(function (f) { f.node.parentNode.setAttribute('aria-label', f.node.parentNode.textContent); f.node.nodeValue = f.prefix + f.from + f.suffix; });
+    var factsRow = document.querySelector('.project-facts'), factsStarted = false;
+    var countFacts = function () {
+      if (factsStarted || factsRow.getBoundingClientRect().top > innerHeight * 0.88) return;
+      factsStarted = true; removeEventListener('scroll', countFacts);
+      var start = performance.now();
+      (function step() {
+        var running = false;
+        facts.forEach(function (f, i) {
+          var p = Math.max(0, Math.min(1, (performance.now() - start - i * 120) / 1400)), e = 1 - Math.pow(1 - p, 3);
+          f.node.nodeValue = f.prefix + Math.round(f.from + (f.target - f.from) * e) + f.suffix;
+          if (p < 1) running = true;
+        });
+        if (running) requestAnimationFrame(step);
+      })();
+    };
+    addEventListener('scroll', countFacts, {passive: true});
+    countFacts();
+  }
+
+  // The site-visit form's gold edge lights up once, the first time the form comes into view
+  var visitForm = document.getElementById('enquiry');
+  if (visitForm) {
+    var formSeen = new IntersectionObserver(function (entries) {
+      if (!entries[0].isIntersecting) return;
+      formSeen.disconnect();
+      visitForm.classList.add('is-lit');
+    }, {threshold: 0.45});
+    formSeen.observe(visitForm);
+  }
+
   // Legacy figures count up from 0 once the row is well in view: "20+", "7,000+", "6 Mn", "Top 100" keep their wording.
   var stats = document.querySelector('.legacy-stats');
   if (!stats) return;

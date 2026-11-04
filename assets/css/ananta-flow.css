@@ -1,0 +1,54 @@
+/* Ananta Flow: a bit of variety, all of it merging. Beige for Plans, Amenities and Location;
+   purple for Details and Legacy; the Gallery over a full photograph under blue night, like the overview.
+   Into the night, a photograph rises out of the beige at its sky. Out of the night: sunset cloud after
+   Highlights and the Gallery, a short eased blend elsewhere. The visit section turns to night just after the
+   form, so the closing ANANTA screen is dark from its top.
+   Switch it off by removing <link rel="stylesheet" href="assets/css/ananta-flow.css"> from index.html. */
+
+:root{--band:400px;--edge:150px;--sky:320px;--blend:220px;--pfade:360px;--bridge:240px;--vfade:260px;--gsky:560px}
+@media (max-width:700px){:root{--band:280px;--edge:90px;--sky:220px;--blend:150px;--pfade:250px;--bridge:200px;--vfade:180px;--gsky:400px}}
+/* No sliver of the page colour can show between two sections */
+body{background:var(--night)}
+main>section{margin-bottom:-1px}
+
+/* Highlights: the night opens into a rose-gold cloud sky, which settles into the plans */
+.highlights{position:relative;isolation:isolate;background:linear-gradient(180deg,#0c1020 0 50%,#f6ead5 50% 100%)}
+.highlights::before{content:'';position:absolute;inset:2px 0;z-index:-2;pointer-events:none;background:url('../images/web/sky-courtyard.webp') center bottom/100% var(--sky) no-repeat}
+.highlights::after{content:'';display:block;position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,#0c1020 0,#221d4c 50%,#3a2b62 calc(100% - var(--sky)),#3a2b62a6 calc(100% - var(--sky) * .78),#3a2b6240 calc(100% - var(--sky) * .6),#3a2b6200 calc(100% - var(--sky) * .44),#f6ead500 calc(100% - calc(var(--sky) * .38)),#f6ead52e calc(100% - calc(var(--sky) * .38) * .85),#f6ead580 calc(100% - calc(var(--sky) * .38) * .65),#f6ead5d9 calc(100% - calc(var(--sky) * .38) * .4),#f6ead5 calc(100% - calc(var(--sky) * .38) * .15),#f6ead5 100%)}
+/* Details: purple, rising out of the plans through the courtyard, settling briefly into the amenities' cream */
+.details-section{position:relative;isolation:isolate;background:linear-gradient(180deg,#f1dfc2 0 50%,#f8efe0 50% 100%)}
+.details-section::before{content:'';position:absolute;inset:2px 0;z-index:-2;pointer-events:none;background:url('../images/web/ga-courtyard.webp') center top/max(100%,900px) auto no-repeat}
+.details-section::after{content:'';display:block;position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,#f1dfc2 0,#f1dfc2 calc(var(--edge) * .15),#f1dfc2d9 calc(var(--edge) * .4),#f1dfc280 calc(var(--edge) * .65),#f1dfc22e calc(var(--edge) * .85),#f1dfc200 var(--edge),#1f1a4899 calc(var(--band) * .55),#1f1a48 var(--band),#2f2560 50%,#45316c calc(100% - var(--blend) * 1.1),#45316c calc(100% - var(--blend) * 1.00),#48346e calc(100% - var(--blend) * 0.92),#524076 calc(100% - var(--blend) * 0.82),#675886 calc(100% - var(--blend) * 0.70),#837699 calc(100% - var(--blend) * 0.58),#a398ae calc(100% - var(--blend) * 0.46),#c4b9c2 calc(100% - var(--blend) * 0.34),#dfd6d2 calc(100% - var(--blend) * 0.22),#f2e9dd calc(100% - var(--blend) * 0.10),#f8efe0 calc(100% - var(--blend) * 0.00))}
+/* Gallery: the boulevard rises out of the beige into blue night (no photograph behind the section), and the
+   night thins slowly over a rose-gold cloud sky above the location, the way Highlights opens into the plans */
+.gallery-section{position:relative;isolation:isolate;background:linear-gradient(180deg,#f1e4cd 0 50%,#f1e4cd 50% 100%)}
+.gallery-section::before{content:'';position:absolute;inset:2px 0;z-index:-2;pointer-events:none;background:url('../images/web/ga-boulevard.webp') center top/max(100%,900px) auto no-repeat,url('../images/web/sky-courtyard.webp') center bottom/100% var(--gsky) no-repeat}
+.gallery-section::after{content:'';display:block;position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,#f1e4cd 0,#f1e4cd calc(var(--edge) * .15),#f1e4cdd9 calc(var(--edge) * .4),#f1e4cd80 calc(var(--edge) * .65),#f1e4cd2e calc(var(--edge) * .85),#f1e4cd00 var(--edge),#11173399 calc(var(--band) * .55),#111733 var(--band),#151c3c 50%,#1c2246 calc(100% - var(--gsky)),#1c2246f0 calc(100% - var(--gsky) * .9),#1c2246cc calc(100% - var(--gsky) * .8),#1c224694 calc(100% - var(--gsky) * .7),#1c224657 calc(100% - var(--gsky) * .6),#1c224626 calc(100% - var(--gsky) * .5),#1c224600 calc(100% - var(--gsky) * .42),#f1e4cd00 calc(100% - calc(var(--gsky) * .36)),#f1e4cd2e calc(100% - calc(var(--gsky) * .36) * .85),#f1e4cd80 calc(100% - calc(var(--gsky) * .36) * .65),#f1e4cdd9 calc(100% - calc(var(--gsky) * .36) * .4),#f1e4cd calc(100% - calc(var(--gsky) * .36) * .15),#f1e4cd 100%)}
+/* Legacy: the aerial view rises out of the location and stays visible behind the purple */
+.legacy{position:relative;isolation:isolate;background:linear-gradient(180deg,#f6ecdc 0 50%,#fcf8f1 50% 100%)}
+.legacy::before{content:'';position:absolute;inset:2px 0;z-index:-2;pointer-events:none;background:url('../images/web/ga-aerial.webp') center top/cover no-repeat}
+.legacy::after{content:'';display:block;position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,#f6ecdc 0,#f6ecdc calc(var(--edge) * .15),#f6ecdcd9 calc(var(--edge) * .4),#f6ecdc80 calc(var(--edge) * .65),#f6ecdc2e calc(var(--edge) * .85),#f6ecdc00 var(--edge),#231d5038 calc(var(--band) * .6),#231d50bf var(--band),#3a2a66bf 50%,#563a6cbf calc(100% - var(--pfade)),#563a6c38 calc(100% - var(--pfade) * .62),#fcf8f100 calc(100% - calc(var(--pfade) * .5)),#fcf8f12e calc(100% - calc(var(--pfade) * .5) * .85),#fcf8f180 calc(100% - calc(var(--pfade) * .5) * .65),#fcf8f1d9 calc(100% - calc(var(--pfade) * .5) * .4),#fcf8f1 calc(100% - calc(var(--pfade) * .5) * .15),#fcf8f1 100%)}
+/* Room at each bridged edge, so text always sits on the settled colour */
+.section.highlights{padding-bottom:calc(var(--sky) * .8)}
+.section.details-section{padding-top:var(--bridge);padding-bottom:calc(var(--blend) + 40px)}
+.section.gallery-section{padding-top:var(--bridge);padding-bottom:calc(var(--gsky) * .85)}
+.section.legacy{padding-top:var(--bridge);padding-bottom:calc(var(--pfade) * .75)}
+
+/* Plans: warm linen lit softly from within, a faint architect's grid, and a horizon line under the heading.
+   Every glow and shadow stays clear of the top and bottom edges. */
+.residences{position:relative;isolation:isolate;background:
+  radial-gradient(ellipse 65% 26% at 50% 42%,#fffaf0cc 0%,#fffaf000 70%),
+  radial-gradient(ellipse 45% 24% at 100% 58%,#e3c27e2e 0%,#e3c27e00 70%),
+  linear-gradient(180deg,#f6ead5 0%,#f4e5cc 55%,#f1dfc2 100%)}
+.residences::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(#b3832d12 1px,transparent 1px) 0 0/56px 56px,linear-gradient(90deg,#b3832d12 1px,transparent 1px) 0 0/56px 56px;-webkit-mask-image:linear-gradient(transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(transparent,#000 18%,#000 82%,transparent)}
+.residences .section-top h2::after{content:'';display:block;width:120px;height:1px;margin-top:26px;background:var(--horizon);box-shadow:0 0 14px #e09ca580}
+.residences .block-tabs{box-shadow:0 18px 40px -26px #6b4a1a66}
+.residences #floor-panel{box-shadow:0 30px 50px -40px #6b4a1a73,0 0 0 1px #e3c27e66}
+
+/* The ending: the visit section stays cream, and the ANANTA photograph itself rises out of that cream, the way
+   the hero melts into the overview. The rise sits on extra height added above the strip (--lead), which has
+   scrolled past by the end of the page, so the last screen is the dark image from its very top. */
+.visit{background:linear-gradient(180deg,#fcf8f1 0%,#f9ecd6 45%,#f6dfba 100%)}
+.horizon-strip{--lead:var(--vfade);background-color:transparent;height:calc(max(400px,calc(100vh - var(--footer-h,0px))) + var(--lead));height:calc(max(400px,calc(100lvh - var(--footer-h,0px))) + var(--lead));padding-top:calc(var(--lead) + clamp(96px,14vh,140px))}
+@media (max-width:700px){.horizon-strip{height:calc(max(220px,calc(100vh - var(--footer-h,0px))) + var(--lead));height:calc(max(220px,calc(100lvh - var(--footer-h,0px))) + var(--lead));padding-top:calc(var(--lead) + 40px + 100lvh - 100svh)}}
+.horizon-strip::before{inset:-2px 0 0;background:linear-gradient(180deg,#f6dfba 0,#f6dfba calc(calc(var(--lead) + 2px) * .15),#f6dfbad9 calc(calc(var(--lead) + 2px) * .4),#f6dfba80 calc(calc(var(--lead) + 2px) * .65),#f6dfba2e calc(calc(var(--lead) + 2px) * .85),#f6dfba00 calc(var(--lead) + 2px),#0c102000 calc(var(--lead) + 30%),var(--night) 100%)}

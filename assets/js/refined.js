@@ -39,7 +39,17 @@
   var block='C', level=$('#floor-level'), floorImage=$('#floor-image');
   function renderSheet() {
     var title='Block '+block+' · '+sheets[block].height+' · '+level.options[level.selectedIndex].text;
-    floorImage.src='assets/images/curated/floor-preview-'+level.value+'.webp';
+    // Crossfade: the current sheet fades out, the new one fades in once it has loaded
+    var next='assets/images/curated/floor-preview-'+level.value+'.webp';
+    if (floorImage.getAttribute('src')!==next) {
+      floorImage.classList.add('is-swapping');
+      setTimeout(function () {
+        var shown=function () { floorImage.classList.remove('is-swapping'); };
+        floorImage.addEventListener('load',shown,{once:true});
+        setTimeout(shown,1500);
+        floorImage.src=next;
+      },300);
+    }
     floorImage.alt=title+' — original floor-plan sheet with area schedule';
     $('#floor-caption').textContent=title;
     $('.plan-sheet').setAttribute('aria-label','Enlarge '+title);
