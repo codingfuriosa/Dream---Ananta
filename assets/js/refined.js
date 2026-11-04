@@ -47,7 +47,8 @@
     }).join('');
     // Crossfade: the current block fades out, the next fades in
     planList.classList.add('is-swapping');
-    setTimeout(function () { planList.innerHTML=html; planList.classList.remove('is-swapping'); },300);
+    var count=sheets[block].options.length;
+    setTimeout(function () { planList.innerHTML=html; planList.style.setProperty('--n',count); planList.style.setProperty('--n2',Math.min(count,2)); planList.dataset.count=count; planList.classList.remove('is-swapping'); },300);
     $('#floor-panel').setAttribute('aria-labelledby','block-'+block.toLowerCase());
   }
   function selectBlock(value) {

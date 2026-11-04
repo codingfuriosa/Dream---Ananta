@@ -195,6 +195,9 @@ h3{font-family:var(--serif);font-weight:500;font-size:26px;line-height:1.2}
 .plan-list{transition:opacity .3s var(--ease)}
 .plan-list.is-swapping{opacity:0}
 .plan-item+.plan-item{border-top:1px solid var(--line)}
+/* Wider screens: every floor of the block sits in one row, each sheet sized by how many share it (two per row on tablets) */
+@media (min-width:701px){.plan-list{display:grid;grid-template-columns:repeat(var(--n2,1),minmax(0,1fr))}.plan-item+.plan-item{border-top:0}.plan-item{border-left:1px solid var(--line)}.plan-item:nth-child(2n+1){border-left:0}.plan-item:nth-child(n+3){border-top:1px solid var(--line)}.plan-list:not([data-count="1"]) .plan-sheet{padding:18px}.plan-list:not([data-count="1"]) .plan-caption{flex-direction:column;align-items:flex-start;gap:8px;padding:14px 18px}}
+@media (min-width:1001px){.plan-list{grid-template-columns:repeat(var(--n,1),minmax(0,1fr))}.plan-item:nth-child(2n+1){border-left:1px solid var(--line)}.plan-item:first-child{border-left:0}.plan-item:nth-child(n+3){border-top:0}}
 .plan-sheet:hover img{transform:scale(1.015)}
 
 /* Until an enquiry, the sheets stay hazy (colours still read) with one way in: View plans. */
