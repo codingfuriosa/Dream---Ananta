@@ -197,13 +197,10 @@ h3{font-family:var(--serif);font-weight:500;font-size:26px;line-height:1.2}
 .plan-item+.plan-item{border-top:1px solid var(--line)}
 .plan-sheet:hover img{transform:scale(1.015)}
 
-#floor-panel{position:relative}
 /* Until an enquiry, the sheets stay hazy (colours still read) with one way in: View plans. */
 .plan-frame{position:relative;overflow:hidden}
 .plan-lock{display:none}
 .is-locked .plan-sheet{cursor:default;pointer-events:none}
-/* Locked, one hazy sheet carries the button; every floor appears once unlocked */
-.is-locked .plan-item+.plan-item{display:none}
 .is-locked .plan-sheet img{filter:sepia(.35) saturate(.7) brightness(1.04) blur(9px);transform:scale(1.06)}
 .is-locked .plan-lock{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:20px;text-align:center;background:radial-gradient(ellipse 60% 70% at 50% 50%,#fbf4e4cc,#fbf4e400 75%)}
 .plan-lock p{font-family:var(--serif);font-size:clamp(22px,2.2vw,30px);line-height:1.2;color:var(--ink)}

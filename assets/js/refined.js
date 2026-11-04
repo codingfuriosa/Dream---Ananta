@@ -42,7 +42,7 @@
   function renderBlock() {
     var html=sheets[block].options.map(function (entry) {
       var t=title(entry);
-      return '<div class="plan-item"><div class="plan-frame"><button class="plan-sheet" type="button" data-enlarge="'+entry[0]+'" aria-label="Enlarge '+t+'"><img src="assets/images/curated/floor-preview-'+entry[0]+'.webp" alt="'+t+': original floor-plan sheet with area schedule" width="2548" height="866"></button></div>'+
+      return '<div class="plan-item"><div class="plan-frame"><button class="plan-sheet" type="button" data-enlarge="'+entry[0]+'" aria-label="Enlarge '+t+'"><img src="assets/images/curated/floor-preview-'+entry[0]+'.webp" alt="'+t+': original floor-plan sheet with area schedule" width="2548" height="866"></button><div class="plan-lock"><button class="btn" type="button" data-plans aria-haspopup="dialog">View plans ↗</button></div></div>'+
         '<div class="plan-caption"><span>'+t+'</span><button class="text-link" type="button" data-enlarge="'+entry[0]+'">Enlarge plan <span aria-hidden="true">↗</span></button></div></div>';
     }).join('');
     // Crossfade: the current block fades out, the next fades in

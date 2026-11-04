@@ -19,7 +19,8 @@
  addEventListener('pageshow',refresh);refresh();
  // Locked plans: View plans, or trying to enlarge a sheet, opens the floor-plans enquiry.
  var plansDialog=document.getElementById('plans-dialog');
- document.querySelectorAll('[data-plans]').forEach(function(button){button.addEventListener('click',function(){if(unlocked())document.documentElement.classList.remove('is-locked');else plansDialog.showModal();});});
+ // Delegated, so the buttons of a block switched in later work too
+ document.addEventListener('click',function(e){if(!e.target.closest('[data-plans]'))return;if(unlocked())document.documentElement.classList.remove('is-locked');else plansDialog.showModal();});
  document.addEventListener('click',function(e){if(!document.documentElement.classList.contains('is-locked')||!e.target.closest('[data-enlarge]'))return;e.preventDefault();e.stopImmediatePropagation();plansDialog.showModal();},true);
  // Back from the thank-you page after a brochure enquiry: start the download here, then tidy the address.
  if(new URLSearchParams(location.search).get('brochure')==='download'){
