@@ -83,6 +83,8 @@ h3{font-family:var(--serif);font-weight:500;font-size:26px;line-height:1.2}
 /* Header */
 /* The header shares the overview's night sky so the two read as one surface */
 .site-header::after{content:'';position:absolute;inset:auto 0 0;height:1px;background:linear-gradient(90deg,transparent,#e3c27e33 30%,#e3c27e33 70%,transparent);pointer-events:none}
+/* With the menu open, the bar and the menu are one surface: no hairline between them */
+.menu-open .site-header::after{opacity:0}
 .site-header{position:sticky;top:0;z-index:35;background:var(--night);backdrop-filter:saturate(1.2) blur(12px);-webkit-backdrop-filter:saturate(1.2) blur(12px);color:var(--on-dark);transition:transform .5s var(--ease),background .5s var(--ease)}
 .header-inner{max-width:1440px;margin:auto;padding:0 28px 0 48px;min-height:var(--header);display:flex;align-items:center;gap:40px}
 .brand img{width:132px}
@@ -189,14 +191,19 @@ h3{font-family:var(--serif);font-weight:500;font-size:26px;line-height:1.2}
 #floor-panel{background:var(--white);border:1px solid var(--line);box-shadow:0 40px 80px -60px #3b2a1059}
 .plan-sheet{display:block;width:100%;padding:clamp(16px,3vw,40px);overflow:hidden;cursor:zoom-in;background:#fbf4e4}
 .plan-sheet img{width:100%;height:auto;filter:sepia(.35) saturate(.55) brightness(1.06);mix-blend-mode:multiply;transition:transform 1.2s var(--ease),opacity .35s var(--ease)}
-/* Switching block or floor: the old sheet fades out, the new one fades in */
-.plan-sheet img.is-swapping{opacity:0}
+/* Switching block: the old sheets fade out, the new ones fade in. Each floor's sheet sits under the last. */
+.plan-list{transition:opacity .3s var(--ease)}
+.plan-list.is-swapping{opacity:0}
+.plan-item+.plan-item{border-top:1px solid var(--line)}
 .plan-sheet:hover img{transform:scale(1.015)}
 
-/* Until an enquiry, the sheet stays hazy (colours still read) with one way in: View plans. */
+#floor-panel{position:relative}
+/* Until an enquiry, the sheets stay hazy (colours still read) with one way in: View plans. */
 .plan-frame{position:relative;overflow:hidden}
 .plan-lock{display:none}
 .is-locked .plan-sheet{cursor:default;pointer-events:none}
+/* Locked, one hazy sheet carries the button; every floor appears once unlocked */
+.is-locked .plan-item+.plan-item{display:none}
 .is-locked .plan-sheet img{filter:sepia(.35) saturate(.7) brightness(1.04) blur(9px);transform:scale(1.06)}
 .is-locked .plan-lock{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:20px;text-align:center;background:radial-gradient(ellipse 60% 70% at 50% 50%,#fbf4e4cc,#fbf4e400 75%)}
 .plan-lock p{font-family:var(--serif);font-size:clamp(22px,2.2vw,30px);line-height:1.2;color:var(--ink)}
@@ -568,10 +575,9 @@ h2 em,h3 em{padding-right:.06em;background:linear-gradient(100deg,#7d5a1c 0%,var
   .image-dialog{width:calc(100vw - 16px);height:calc(100svh - 24px)}
   .brochure-dialog .enquiry-form{padding:44px 22px 28px}
   /* Quick contact: a floating smoked-plum bar with a lit edge, the visit as a gold bar inside it */
-  .mobile-actions{position:fixed;left:0;right:0;bottom:0;z-index:33;display:grid;grid-template-columns:1.15fr 1fr;gap:0;min-height:62px;padding:0;border:0;background:linear-gradient(110deg,#0c1020ed 0%,#221c4aed 55%,#3e2c5eed 100%);box-shadow:0 20px 40px -18px #000c,inset 0 1px 0 #ffffff12;transition:transform .5s var(--ease)}
+  .mobile-actions{position:fixed;left:0;right:0;bottom:0;z-index:33;display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:62px;padding:0;border:0;background:linear-gradient(100deg,#1a1f3d 0%,#0c1020 100%);box-shadow:0 20px 40px -18px #000c,inset 0 1px 0 #ffffff12;transition:transform .5s var(--ease)}
   .mobile-actions a{display:flex;align-items:center;justify-content:center;gap:10px;min-height:62px;padding-bottom:env(safe-area-inset-bottom);font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:var(--on-dark)}
   .mobile-actions a:first-child{background:linear-gradient(100deg,#f5dfb3 0%,#e3c27e 55%,#d6a565 100%);color:var(--ink)}
-  .mobile-actions a:last-child{letter-spacing:.08em}
   .mobile-actions svg{box-sizing:content-box;padding:7px;border:1px solid #e3c27e66;border-radius:50%;color:var(--champagne)}
   /* The quick-contact bar steps aside once the footer is on screen */
 

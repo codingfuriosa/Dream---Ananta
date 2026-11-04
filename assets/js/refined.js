@@ -36,31 +36,25 @@
     D: {height:'B+G+8', options:[['6','Odd & even floor layouts']]},
     E: {height:'B+G+8', options:[['7','Odd & even floor layouts']]}
   };
-  var block='C', level=$('#floor-level'), floorImage=$('#floor-image');
-  function renderSheet() {
-    var title='Block '+block+' · '+sheets[block].height+' · '+level.options[level.selectedIndex].text;
-    // Crossfade: the current sheet fades out, the new one fades in once it has loaded
-    var next='assets/images/curated/floor-preview-'+level.value+'.webp';
-    if (floorImage.getAttribute('src')!==next) {
-      floorImage.classList.add('is-swapping');
-      setTimeout(function () {
-        var shown=function () { floorImage.classList.remove('is-swapping'); };
-        floorImage.addEventListener('load',shown,{once:true});
-        setTimeout(shown,1500);
-        floorImage.src=next;
-      },300);
-    }
-    floorImage.alt=title+' — original floor-plan sheet with area schedule';
-    $('#floor-caption').textContent=title;
-    $('.plan-sheet').setAttribute('aria-label','Enlarge '+title);
+  // Every floor of the chosen block is shown at once, one sheet under another.
+  var block='C', planList=$('#plan-list');
+  function title(entry) { return 'Block '+block+' · '+sheets[block].height+' · '+entry[1]; }
+  function renderBlock() {
+    var html=sheets[block].options.map(function (entry) {
+      var t=title(entry);
+      return '<div class="plan-item"><div class="plan-frame"><button class="plan-sheet" type="button" data-enlarge="'+entry[0]+'" aria-label="Enlarge '+t+'"><img src="assets/images/curated/floor-preview-'+entry[0]+'.webp" alt="'+t+': original floor-plan sheet with area schedule" width="2548" height="866"></button></div>'+
+        '<div class="plan-caption"><span>'+t+'</span><button class="text-link" type="button" data-enlarge="'+entry[0]+'">Enlarge plan <span aria-hidden="true">↗</span></button></div></div>';
+    }).join('');
+    // Crossfade: the current block fades out, the next fades in
+    planList.classList.add('is-swapping');
+    setTimeout(function () { planList.innerHTML=html; planList.classList.remove('is-swapping'); },300);
     $('#floor-panel').setAttribute('aria-labelledby','block-'+block.toLowerCase());
   }
   function selectBlock(value) {
+    if (value===block) return;
     block=value;
     $$('[data-block]').forEach(function (tab) { var selected=tab.dataset.block===block;tab.setAttribute('aria-selected',String(selected));tab.tabIndex=selected?0:-1; });
-    level.replaceChildren();
-    sheets[block].options.forEach(function (entry) { var option=document.createElement('option');option.value=entry[0];option.textContent=entry[1];level.appendChild(option); });
-    renderSheet();
+    renderBlock();
   }
   var tabs=$$('[data-block]');
   tabs.forEach(function (tab,index) {
@@ -74,7 +68,6 @@
       if (destination!==undefined) {e.preventDefault();selectBlock(tabs[destination].dataset.block);tabs[destination].focus();}
     });
   });
-  level.addEventListener('change',renderSheet);
   // Image viewer: wheel, pinch, double-tap and +/− zoom up to 6×, drag to pan, never off-screen.
   var viewer=$('#image-dialog'), dialogImage=$('#dialog-image'), scroll=$('.image-scroll');
   var z={s:1,x:0,y:0}, MAX=6, pointers=new Map(), pinch=null, lastTap=0;
@@ -121,7 +114,10 @@
     resetZoom();dialogImage.src=src;dialogImage.alt=caption;$('#image-caption').textContent=caption;viewer.showModal();track('image_view',{image:caption});
   }
   $$('[data-image]').forEach(function (button) {button.addEventListener('click',function () {showImage(button.dataset.image,button.dataset.caption);});});
-  $$('[data-enlarge]').forEach(function (button) {button.addEventListener('click',function () {showImage(floorImage.src.replace('floor-preview-','floor-sheet-'),$('#floor-caption').textContent);});});
+  planList.addEventListener('click',function (e) {
+    var button=e.target.closest('[data-enlarge]');if(!button)return;
+    showImage('assets/images/curated/floor-sheet-'+button.dataset.enlarge+'.webp',button.closest('.plan-item').querySelector('.plan-caption span').textContent);
+  });
   dialogImage.addEventListener('load',function () {apply(false);});
   viewer.addEventListener('close',resetZoom);
   // Only one location category expands at a time.
