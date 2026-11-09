@@ -14,12 +14,15 @@
 .spec-frame{position:relative;aspect-ratio:16/9;overflow:hidden;background:#e8d6b3}
 .spec-shot{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;opacity:0;transform:scale(1.05);transition:opacity .7s var(--ease),transform 1.6s var(--ease)}
 .spec-shot.is-on{opacity:1;transform:none}
-.spec-frame::after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(180deg,transparent 58%,#1a1228b3 100%)}
-.spec-caption{position:absolute;z-index:4;left:clamp(24px,2.2vw,40px);right:30px;bottom:clamp(24px,2.6vw,48px);display:flex;align-items:baseline;gap:16px;color:var(--white);text-shadow:0 2px 16px #1a1228cc}
+.spec-frame::after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(180deg,transparent 38%,#1a1228cc 100%)}
+.spec-caption{position:absolute;z-index:4;left:clamp(24px,2.2vw,40px);right:30px;bottom:clamp(22px,2.4vw,44px);display:flex;flex-direction:column;align-items:flex-start;gap:8px;color:var(--white);text-shadow:0 2px 16px #1a1228cc}
 .spec-caption-title{font:400 clamp(22px,2.4vw,46px)/1.1 var(--serif)}
 
 /* Click the photograph to open it large */
 .spec-zoom{position:absolute;inset:0;z-index:5;cursor:zoom-in}
+
+/* The caption carries the point's one-line description, so the list itself stays slim */
+.spec-caption-text{max-width:48ch;font:400 clamp(13px,.92vw,17px)/1.55 var(--sans);color:#fff4dcf2}
 
 /* The points: an ivory card with a gilded top and foot */
 .spec-list{position:relative;display:flex;flex-direction:column;--pad:clamp(20px,2.6vw,44px);padding:10px var(--pad);background:#fffdf8;border:1px solid #e3c27e73;box-shadow:0 50px 90px -56px #6b4a1a8c}
@@ -47,18 +50,73 @@
   .spec-item:hover .spec-arrow{background:linear-gradient(100deg,#f5dfb3,#d6a565);box-shadow:0 0 18px #f0b56a99}
 }
 
-/* Phones and tablets: tap a point and the page glides up to the common photograph */
+/* Desktop: the heading runs across one line above, then the photograph and the slim list sit side by side, all in one view */
+@media (min-width:1001px){
+  .details-section .details-layout{grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);grid-template-areas:"head head" "stage list";gap:clamp(24px,2.4vw,44px) clamp(36px,4.4vw,96px);align-items:stretch}
+  .details-section .details-lead{display:contents}
+  .details-section .details-head{grid-area:head}
+  .details-section .spec-stage{grid-area:stage;margin:0}
+  .details-section .spec-list{grid-area:list}
+  .details-head h2 br{display:none}
+  .details-head h2 em{margin-left:.26em}
+  .details-head .horizon-rule{display:none}
+  .details-section .details-head .body-copy{max-width:none;margin:16px 0 0}
+  .spec-short{display:none}
+  .spec-tab{padding-block:clamp(14px,1.2vw,24px)}
+}
+/* Phones and tablets: the five points are a collapsible list. Tap a point and its photograph opens right there
+   (tap again to fold it away), so there is no scrolling about and the section stays as short as you like. */
+.spec-panel{display:none}
 @media (max-width:1000px){
-  .details-section .details-layout{grid-template-columns:1fr;gap:36px}
-  .spec-list{--pad:18px}
-  .spec-tab{cursor:pointer;padding-block:20px}
-  .spec-title{font-size:clamp(20px,5.6vw,26px)}
-  .spec-short{font-size:14px}
-  .spec-arrow{width:38px;border-color:#c99a4c80;color:var(--gold-deep)}
-  .spec-arrow::before{content:'↑';font:400 17px/1 var(--sans)}
-  .spec-item.is-on .spec-arrow{color:var(--ink)}
+  .details-section .details-layout{grid-template-columns:1fr;gap:26px}
+  .spec-stage{display:none}
+  .spec-list{--pad:20px;padding:4px var(--pad)}
+  .spec-item{display:block;margin-inline:calc(var(--pad) * -1)}
+  .spec-tab{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:14px;padding:17px var(--pad);cursor:pointer;min-height:58px}
+  .spec-title{font-size:clamp(20px,5.6vw,25px)}
+  .spec-short{display:none;font-size:14px;line-height:1.6;margin-top:6px}
+  .spec-item.is-on .spec-short{display:block}
+  .spec-arrow{width:34px;border-color:#c99a4c99;color:var(--gold-deep);background:none;box-shadow:none}
+  .spec-arrow{position:relative;align-self:start;margin-top:-2px}
+  .spec-arrow::before,.spec-arrow::after{content:'';position:absolute;left:50%;top:50%;width:14px;height:1.5px;margin:-.75px 0 0 -7px;background:currentColor;border-radius:1px;font:0}
+  .spec-arrow::after{transform:rotate(90deg)}
+  .spec-item.is-on .spec-arrow{transform:rotate(45deg);background:linear-gradient(100deg,#f5dfb3,#d6a565);border-color:#e3c27e;color:var(--ink)}
+  .spec-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--ease)}
+  .spec-item.is-on .spec-panel{grid-template-rows:1fr}
+  .spec-panel-inner{min-height:0;overflow:hidden}
+  .spec-photo{display:block;width:calc(100% - var(--pad) * 2);margin:6px var(--pad) 18px;aspect-ratio:16/9;overflow:hidden;cursor:zoom-in;box-shadow:0 0 0 1px #c99a4c66,0 18px 30px -22px #6b4a1a99}
+  .spec-photo img{width:100%;height:100%;object-fit:cover}
 }
 
+/* Legacy: one lead figure beside a tidy 2 x 2, on a smoked-glass panel so every figure reads over the photograph.
+   Five figures fill their grid exactly: no cell is ever left empty. */
+.legacy .legacy-stats{display:grid;grid-template-columns:1.15fr 1fr 1fr;grid-template-rows:auto auto;gap:0;margin-top:clamp(40px,4vw,64px);background:#0c10204d;border:1px solid #ffffff2e;-webkit-backdrop-filter:blur(10px) saturate(1.2);backdrop-filter:blur(10px) saturate(1.2)}
+.legacy .legacy-stats>div:nth-child(n){display:flex;flex-direction:column;justify-content:center;padding:clamp(22px,2.4vw,40px);border:0;border-left:1px solid #ffffff26;border-top:1px solid #ffffff26}
+.legacy .legacy-stats>div:nth-child(2),.legacy .legacy-stats>div:nth-child(3){border-top:0}
+.legacy .legacy-stats>div:first-child{grid-column:1;grid-row:1 / span 2;display:flex;flex-direction:column;justify-content:center;border:0;background:linear-gradient(135deg,#e3c27e24,#e09ca510 70%,transparent)}
+.legacy .legacy-stats>div:first-child{justify-content:space-between;gap:clamp(18px,2vw,34px)}
+.legacy .legacy-stats>div:first-child strong{font-size:clamp(64px,7.4vw,140px)}
+.legacy-logo{display:block;align-self:flex-start;flex:none;width:auto;max-width:100%;height:clamp(26px,2.1vw,40px);aspect-ratio:480/111;object-fit:contain;filter:brightness(0) invert(1);opacity:.88}
+.legacy .legacy-lead>p{max-width:30ch;margin:0;padding-top:0;font-size:clamp(13px,.92vw,17px);line-height:1.65;color:#f6f0e6d9;text-shadow:0 1px 8px #1a1638}
+.legacy .legacy-stats strong{font-size:clamp(36px,3.8vw,68px)}
+.legacy .legacy-stats span{max-width:none;margin-top:12px;font-size:clamp(10px,.72vw,14px);color:#f6f0e6;text-shadow:0 1px 8px #1a1638}
+.legacy .legacy-stats>div:first-child span{font-size:clamp(11px,.84vw,16px)}
+@media (max-width:700px){
+  .legacy .legacy-stats{grid-template-columns:1fr 1fr;margin-top:36px}
+  .legacy .legacy-stats>div:nth-child(n){padding:22px 18px}
+  .legacy .legacy-stats>div:first-child{grid-row:auto;grid-column:1 / -1;align-items:flex-start;padding:26px 20px}
+  .legacy .legacy-stats>div:first-child strong{font-size:84px}
+  .legacy .legacy-stats>div:first-child{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:20px;row-gap:14px;align-items:center;justify-content:normal}
+  .legacy .legacy-big{grid-column:1;grid-row:1}
+  .legacy-logo{grid-column:2;grid-row:1;justify-self:end;align-self:start;height:26px}
+  .legacy .legacy-lead>p{grid-column:1 / -1;grid-row:2;max-width:none;margin:0;padding-top:0;text-align:left;font-size:13px}
+  .legacy .legacy-stats>div:nth-child(2),.legacy .legacy-stats>div:nth-child(3){border-top:1px solid #ffffff26}
+    .legacy .legacy-stats strong{font-size:38px}
+  .legacy .legacy-stats span{font-size:10px;letter-spacing:.12em;margin-top:10px}
+}
+/* Location map: the brochure's own map, shown whole */
+.map-image-button,#google-map{flex:none;aspect-ratio:2000/1278;min-height:0}
+.map-image-button img{object-fit:cover;mix-blend-mode:normal}
 /* Highlights: the night render framed on the buildings' feet, the gate and the road */
 .highlights .portrait img{height:auto;aspect-ratio:1080/850;object-position:center 100%}
 
@@ -108,12 +166,13 @@
   .hero-caption{bottom:clamp(40px,7vh,96px)}
   .hero-caption h1{font-size:clamp(54px,6.2vw,150px)}
 
-  /* Overview: the towers and sky show through the night */
-  .overview{background:linear-gradient(180deg,var(--night) 0%,#0c102099 20%,#0c102052 52%,#1a1a3f99 80%,#0c1020 100%),linear-gradient(90deg,#0c1020b8 0%,#0c102047 52%,#0c102000 100%),url('../images/web/overview-elevation.webp') 70% 40%/cover no-repeat;background-color:var(--night)}
-  .project-facts{margin-top:clamp(96px,11vw,260px)}
-  .overview .intro-copy{max-width:clamp(440px,36vw,760px)}
-  .overview .intro-copy p{font-size:clamp(14.5px,.88vw,19px);line-height:1.75}
-  .overview-actions .btn{min-height:clamp(52px,3.4vw,66px)}
+  /* Overview: the towers and sky show through the night. The fade is measured in pixels, the same distances the
+     tall version used, so the merge with the hero keeps its look while the section itself is shorter. */
+  .overview{padding-top:clamp(24px,2.4vw,44px);padding-bottom:clamp(28px,2.6vw,48px);background:linear-gradient(180deg,var(--night) 0,#0c102099 102px,#0c102052 266px,#1a1a3f99 calc(100% - 90px),#0c1020 100%),linear-gradient(90deg,#0c1020b8 0%,#0c102047 52%,#0c102000 100%),url('../images/web/overview-elevation.webp') 70% 40%/cover no-repeat;background-color:var(--night)}
+  .project-facts{margin-top:clamp(56px,5.6vw,110px)}
+  .overview .intro-copy{max-width:none;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:clamp(24px,3vw,64px)}
+  .overview .overview-actions{margin:0;flex-wrap:nowrap}
+  .overview .intro-copy p{max-width:46ch;font-size:clamp(14.5px,.88vw,19px);line-height:1.75}  .overview-actions .btn{min-height:clamp(52px,3.4vw,66px)}
 
   /* Type scales with the screen; paragraphs stay modest */
   h2,.section-top h2{font-size:clamp(44px,4.6vw,112px)}
