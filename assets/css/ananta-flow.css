@@ -196,3 +196,15 @@ main .eyebrow{display:none}
 /* Site visit on wide screens: the words sit level with the top of the form, with a fuller paragraph and a wider form column */
 .visit .visit-more{display:none}
 @media (min-width:1001px){.visit-grid{grid-template-columns:.85fr 1.15fr;gap:72px;align-items:start}.visit .enquiry-form{margin-top:0}.visit .visit-more{display:block;margin-top:18px;max-width:40ch}.visit .visit-more+.visit-more{margin-top:12px}}
+/* Nine links on one line: labels never wrap, and the bar tightens its gaps on laptops */
+.desktop-nav a{white-space:nowrap}
+@media (min-width:701px) and (max-width:1280px){.desktop-nav{gap:22px}.desktop-nav a{font-size:10px;letter-spacing:.14em}}
+@media (min-width:701px) and (max-width:1100px){.desktop-nav{gap:16px}.desktop-nav a{letter-spacing:.1em}}
+/* Phone menu: nine links always fit one screen. Row size scales with the screen height, so tall phones keep the
+   large italic rows and short phones get compact ones, with no scrolling either way. */
+@media (max-width:700px){
+  .mobile-menu[open]{padding:0 24px calc(16px + env(safe-area-inset-bottom))}
+  /* the nav fills the menu and the nine rows share its height evenly, so there is never a gap left at the bottom */
+  .mobile-menu nav{flex:1 1 auto;justify-content:space-evenly;min-height:0}
+  .mobile-menu nav a{flex:0 1 auto;font-size:clamp(20px,3.6vh,34px);padding:clamp(4px,1vh,14px) 0;line-height:1.25}
+}
