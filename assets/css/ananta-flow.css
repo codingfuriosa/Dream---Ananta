@@ -128,7 +128,6 @@ main .eyebrow{display:none}
 .details-section .details-lead h2::after{content:'';display:block;width:96px;height:1px;margin-top:24px;background:linear-gradient(90deg,#c99a4c,#e3c27e 60%,#c99a4c00)}
 .details-section .details-lead .horizon-rule{display:none}
 .details-section .detail-feature{margin-top:36px;padding:12px;background:#fffdf8;border:1px solid #c99a4c66;box-shadow:0 40px 70px -44px #6b4a1a80}
-.details-section .detail-feature img{height:440px}
 .details-section .detail-feature::before{inset:24px;border-color:#fff4dc66}
 .details-section .detail-feature::after{content:'';position:absolute;inset:-7px;z-index:4;pointer-events:none;background:linear-gradient(#c99a4c,#c99a4c) 0 0/28px 1px,linear-gradient(#c99a4c,#c99a4c) 0 0/1px 28px,linear-gradient(#c99a4c,#c99a4c) 100% 0/28px 1px,linear-gradient(#c99a4c,#c99a4c) 100% 0/1px 28px,linear-gradient(#c99a4c,#c99a4c) 0 100%/28px 1px,linear-gradient(#c99a4c,#c99a4c) 0 100%/1px 28px,linear-gradient(#c99a4c,#c99a4c) 100% 100%/28px 1px,linear-gradient(#c99a4c,#c99a4c) 100% 100%/1px 28px;background-repeat:no-repeat}
 .details-section .detail-rows{position:relative;padding:18px 40px;background:#fffdf8;border:1px solid #e3c27e73;box-shadow:0 50px 90px -56px #6b4a1a8c}
@@ -172,7 +171,7 @@ main .eyebrow{display:none}
 @media (max-width:1000px){.highlights .portrait img{height:350px}}
 @media (max-width:700px){.highlights .portrait img{height:280px}}
 /* Call now on phones: deep gold beside the champagne half, so neither blends with the phone's own dark bar beneath */
-@media (max-width:700px){.mobile-actions a:last-child{background:linear-gradient(100deg,#d9a96a 0%,#c08a3a 55%,#a8782a 100%);color:var(--ink);letter-spacing:.16em;box-shadow:inset 1px 0 0 #0c102040}.mobile-actions a:last-child{gap:8px}
+@media (max-width:700px){.mobile-actions a:last-child{background:linear-gradient(100deg,#d9a96a 0%,#c08a3a 55%,#a8782a 100%);color:var(--ink);letter-spacing:.16em}.mobile-actions a:last-child{gap:8px}}
 .mobile-actions .call-icon{display:inline-flex;align-items:center;justify-content:center;width:11px;height:11px;margin-top:-1px}
 .mobile-actions .call-icon i{font-size:10px;line-height:1;transform-origin:50% 60%;animation:call-ring 4.2s ease-in-out infinite}
 @keyframes call-ring{0%,4%{transform:rotate(0);filter:none}6%{filter:drop-shadow(0 0 6px #fff4dccc)}7%{transform:rotate(-16deg)}10%{transform:rotate(13deg)}13%{transform:rotate(-11deg)}16%{transform:rotate(8deg)}19%{transform:rotate(-5deg)}22%{transform:rotate(0)}26%,100%{transform:rotate(0);filter:none}}
@@ -182,4 +181,18 @@ main .eyebrow{display:none}
 /* Legacy: heading only, no partner logo */
 .legacy-heading{display:block}
 /* Details on wide screens: the framed interior stretches to end level with the specifications card */
-@media (min-width:1001px){.details-section .details-layout{align-items:stretch}.details-section .detail-rows{align-self:start}.details-section .details-lead{display:flex;flex-direction:column}.details-section .detail-feature{flex:1 1 0;display:flex;min-height:200px}.details-section .detail-feature img{flex:1 1 0;height:auto;min-height:0;object-fit:cover}}
+@media (min-width:1001px){.details-section .details-layout{display:grid;align-items:stretch}.details-section .detail-rows{align-self:start}.details-section .details-lead{display:flex;flex-direction:column;min-height:0}.details-section .details-lead>*{flex:0 0 auto}.details-section .details-lead .detail-feature{flex:1 1 0;position:relative;min-height:240px;height:auto;margin-top:36px}.details-section .details-lead .detail-feature img{position:absolute;inset:12px;width:calc(100% - 24px);height:calc(100% - 24px);min-height:0;object-fit:cover}}
+
+/* Phone bottom bar: two flush halves, gold Book a site visit and Call now on the site's royal purple, so the
+   bar never merges with a phone's own dark bar */
+@media (max-width:700px){
+  .mobile-actions{background:linear-gradient(100deg,#2b2466 0%,#3a2b62 60%,#45316c 100%);box-shadow:0 -18px 40px -20px #0c1020cc}
+  .mobile-actions a:first-child{background:linear-gradient(100deg,#f5dfb3 0%,#e3c27e 55%,#d6a565 100%);color:var(--ink)}
+  .mobile-actions a:last-child{background:transparent;color:#fff4dc;letter-spacing:.16em}
+  .mobile-actions .call-icon i{color:var(--champagne)}
+}
+/* Amenity cards are square: aim the games render at the players and the table */
+.amenity img[src*="am-games"]{object-position:90% 60%}
+/* Site visit on wide screens: the words sit level with the top of the form, with a fuller paragraph and a wider form column */
+.visit .visit-more{display:none}
+@media (min-width:1001px){.visit-grid{grid-template-columns:.85fr 1.15fr;gap:72px;align-items:start}.visit .enquiry-form{margin-top:0}.visit .visit-more{display:block;margin-top:18px;max-width:40ch}.visit .visit-more+.visit-more{margin-top:12px}}
