@@ -108,7 +108,7 @@
   .legacy .legacy-stats>div:first-child strong{font-size:84px}
   .legacy .legacy-stats>div:first-child{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:20px;row-gap:14px;align-items:center;justify-content:normal}
   .legacy .legacy-big{grid-column:1;grid-row:1}
-  .legacy-logo{grid-column:2;grid-row:1;justify-self:end;align-self:start;height:26px}
+  .legacy-logo{display:none}
   .legacy .legacy-lead>p{grid-column:1 / -1;grid-row:2;max-width:none;margin:0;padding-top:0;text-align:left;font-size:13px}
   .legacy .legacy-stats>div:nth-child(2),.legacy .legacy-stats>div:nth-child(3){border-top:1px solid #ffffff26}
     .legacy .legacy-stats strong{font-size:38px}
