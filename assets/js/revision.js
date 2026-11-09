@@ -17,9 +17,17 @@
   var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
   function spacing(){return items.length>1?items[1].offsetLeft-items[0].offsetLeft:track.clientWidth;}
   function update(){var max=track.scrollWidth-track.clientWidth;var progress=max>0?Math.max(0,Math.min(1,track.scrollLeft/max)):1;var index=Math.min(items.length-1,Math.round(track.scrollLeft/spacing()));if(progress>.995)index=items.length-1;count.textContent=String(index+1).padStart(2,'0')+' / '+String(items.length).padStart(2,'0');fill.style.width=(Math.max(1/items.length,progress)*100)+'%';previous.disabled=track.scrollLeft<3;next.disabled=track.scrollLeft>=max-3;}
-  function move(direction){track.scrollBy({left:spacing()*direction,behavior:reduced?'instant':'smooth'});}
+  var raf=0,gliding=false,settle=0,soft=matchMedia('(hover:hover) and (min-width:1001px)');
+  function glide(to){cancelAnimationFrame(raf);var max=track.scrollWidth-track.clientWidth;to=Math.max(0,Math.min(max,to));var from=track.scrollLeft,d=to-from;if(reduced||Math.abs(d)<2){track.scrollLeft=to;return;}gliding=true;var t0=performance.now(),dur=Math.min(950,Math.max(520,Math.abs(d)*.55));track.style.scrollSnapType='none';(function step(now){var p=Math.min(1,(now-t0)/dur),e=p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;track.scrollLeft=from+d*e;if(p<1)raf=requestAnimationFrame(step);else{track.style.scrollSnapType='';gliding=false;}})(t0);}
+  function move(direction){var i=Math.round(track.scrollLeft/spacing());glide((i+direction)*spacing());}
+  // Mouse: drag the row, and it settles on the nearest image when released (touch keeps native swiping).
+  var drag=null,dragged=false;
+  track.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse'||e.button!==0)return;cancelAnimationFrame(raf);drag={x:e.clientX,left:track.scrollLeft};dragged=false;});
+  addEventListener('pointermove',function(e){if(!drag)return;var dx=e.clientX-drag.x;if(!dragged&&Math.abs(dx)>6){dragged=true;track.style.scrollSnapType='none';track.classList.add('is-dragging');}if(dragged)track.scrollLeft=drag.left-dx;});
+  addEventListener('pointerup',function(){if(!drag)return;var was=dragged;drag=null;track.classList.remove('is-dragging');if(was){glide(Math.round(track.scrollLeft/spacing())*spacing());setTimeout(function(){dragged=false;},0);}});
+  track.addEventListener('click',function(e){if(dragged){e.preventDefault();e.stopPropagation();}},true);
   $$('[data-direction]',controls).forEach(function(button){button.addEventListener('click',function(){move(Number(button.dataset.direction));});});
-  track.addEventListener('scroll',function(){requestAnimationFrame(update);},{passive:true});
+  track.addEventListener('scroll',function(){requestAnimationFrame(update);if(gliding||drag||!soft.matches)return;clearTimeout(settle);settle=setTimeout(function(){var to=Math.round(track.scrollLeft/spacing())*spacing();if(Math.abs(to-track.scrollLeft)>3)glide(to);},170);},{passive:true});
   track.addEventListener('keydown',function(event){if(event.target!==track)return;if(event.key==='ArrowRight'||event.key==='ArrowLeft'){event.preventDefault();move(event.key==='ArrowRight'?1:-1);}});
   if('ResizeObserver'in window)new ResizeObserver(update).observe(track);else addEventListener('resize',update);
   update();

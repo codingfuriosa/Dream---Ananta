@@ -24,15 +24,12 @@ main>section{margin-bottom:-1px}
 .details-section{position:relative;z-index:1;isolation:isolate;color:var(--ink);background:linear-gradient(180deg,#f6ead5 0 50%,#f8efe0 50% 100%)}
 .details-section::before{content:none}
 .details-section::after{content:'';display:block;position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,#f6ead5 0,#fbf6ee 24%,#f8efe0 100%)}
-.details-section .details-lead h2,.details-section .detail-row h3{color:var(--ink)}
 .details-section h2 em{background-image:linear-gradient(100deg,#7d5a1c 0%,var(--gold) 45%,#c99a4c 70%,var(--gold-deep) 100%)}
-.details-section .details-lead .body-copy,.details-section .detail-row p{color:var(--muted)}
-.details-section .detail-number,.details-section .detail-row:hover h3{color:var(--gold-deep)}
 /* Gallery: the boulevard rises out of the beige into blue night (no photograph behind the section), and the
    night thins slowly over a rose-gold cloud sky above the location, the way Highlights opens into the plans */
 .gallery-section{position:relative;isolation:isolate;background:linear-gradient(180deg,#f1e4cd 0 50%,#f1e4cd 50% 100%)}
 .gallery-section::before{content:'';position:absolute;inset:2px 0;z-index:-2;pointer-events:none;background:url('../images/web/ga-boulevard.webp') center top/max(100%,900px) auto no-repeat,url('../images/web/sky-courtyard.webp') center bottom/100% var(--gsky) no-repeat}
-.gallery-section::after{content:'';display:block;position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,#f1e4cd 0,#f1e4cd calc(var(--edge) * .15),#f1e4cdd9 calc(var(--edge) * .4),#f1e4cd80 calc(var(--edge) * .65),#f1e4cd2e calc(var(--edge) * .85),#f1e4cd00 var(--edge),#11173399 calc(var(--band) * .55),#111733 var(--band),#151c3c 50%,#1c2246 calc(100% - var(--gsky)),#1c2246f0 calc(100% - var(--gsky) * .9),#1c2246cc calc(100% - var(--gsky) * .8),#1c224694 calc(100% - var(--gsky) * .7),#1c224657 calc(100% - var(--gsky) * .6),#1c224626 calc(100% - var(--gsky) * .5),#1c224600 calc(100% - var(--gsky) * .42),#f1e4cd00 calc(100% - calc(var(--gsky) * .36)),#f1e4cd2e calc(100% - calc(var(--gsky) * .36) * .85),#f1e4cd80 calc(100% - calc(var(--gsky) * .36) * .65),#f1e4cdd9 calc(100% - calc(var(--gsky) * .36) * .4),#f1e4cd calc(100% - calc(var(--gsky) * .36) * .15),#f1e4cd 100%)}
+.gallery-section::after{content:'';display:block;position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,#f1e4cd 0,#f1e4cd calc(var(--edge) * .15),#f1e4cdd9 calc(var(--edge) * .4),#f1e4cd80 calc(var(--edge) * .65),#f1e4cd2e calc(var(--edge) * .85),#f1e4cd00 var(--edge),#1f1a4899 calc(var(--band) * .55),#1f1a48 var(--band),#2a2156 50%,#3a2b62 calc(100% - var(--gsky)),#3a2b62f0 calc(100% - var(--gsky) * .9),#3a2b62cc calc(100% - var(--gsky) * .8),#3a2b6294 calc(100% - var(--gsky) * .7),#3a2b6257 calc(100% - var(--gsky) * .6),#3a2b6226 calc(100% - var(--gsky) * .5),#3a2b6200 calc(100% - var(--gsky) * .42),#f1e4cd00 calc(100% - calc(var(--gsky) * .36)),#f1e4cd2e calc(100% - calc(var(--gsky) * .36) * .85),#f1e4cd80 calc(100% - calc(var(--gsky) * .36) * .65),#f1e4cdd9 calc(100% - calc(var(--gsky) * .36) * .4),#f1e4cd calc(100% - calc(var(--gsky) * .36) * .15),#f1e4cd 100%)}
 /* Legacy: the aerial view rises out of the location and stays visible behind the purple */
 .legacy{position:relative;isolation:isolate;background:linear-gradient(180deg,#f6ecdc 0 50%,#fcf8f1 50% 100%)}
 .legacy::before{content:'';position:absolute;inset:2px 0;z-index:-2;pointer-events:none;background:url('../images/web/ga-aerial.webp') center top/cover no-repeat}
@@ -124,34 +121,12 @@ main .eyebrow{display:none}
 
 /* Details, on ivory: a tall framed interior beside the five specifications, which sit on a raised ivory card with a
    gilded top edge, gold-leaf numerals, gold hairlines and gold-ringed icons */
-.details-section .details-layout{align-items:start}
-.details-section .details-lead h2::after{content:'';display:block;width:96px;height:1px;margin-top:24px;background:linear-gradient(90deg,#c99a4c,#e3c27e 60%,#c99a4c00)}
-.details-section .details-lead .horizon-rule{display:none}
-.details-section .detail-feature{margin-top:36px;padding:12px;background:#fffdf8;border:1px solid #c99a4c66;box-shadow:0 40px 70px -44px #6b4a1a80}
-.details-section .detail-feature::before{inset:24px;border-color:#fff4dc66}
-.details-section .detail-feature::after{content:'';position:absolute;inset:-7px;z-index:4;pointer-events:none;background:linear-gradient(#c99a4c,#c99a4c) 0 0/28px 1px,linear-gradient(#c99a4c,#c99a4c) 0 0/1px 28px,linear-gradient(#c99a4c,#c99a4c) 100% 0/28px 1px,linear-gradient(#c99a4c,#c99a4c) 100% 0/1px 28px,linear-gradient(#c99a4c,#c99a4c) 0 100%/28px 1px,linear-gradient(#c99a4c,#c99a4c) 0 100%/1px 28px,linear-gradient(#c99a4c,#c99a4c) 100% 100%/28px 1px,linear-gradient(#c99a4c,#c99a4c) 100% 100%/1px 28px;background-repeat:no-repeat}
-.details-section .detail-rows{position:relative;padding:18px 40px;background:#fffdf8;border:1px solid #e3c27e73;box-shadow:0 50px 90px -56px #6b4a1a8c}
-.details-section .detail-rows::before,.details-section .detail-rows::after{content:'';position:absolute;left:-1px;right:-1px;height:3px;background:linear-gradient(90deg,#c99a4c,#f5dfb3 35%,#e3c27e 65%,#b3832d)}
-.details-section .detail-rows::before{top:-1px}
-.details-section .detail-rows::after{bottom:-1px;background:linear-gradient(90deg,#b3832d,#e3c27e 35%,#f5dfb3 65%,#c99a4c)}
-.details-section .detail-row{border-top:0;padding:26px 6px}
-.details-section .detail-row+.detail-row::after{content:'';position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,#c99a4c00,#c99a4c73 14%,#c99a4c73 86%,#c99a4c00)}
-.details-section .detail-row::before{display:none}
-.details-section .detail-row:hover{background:linear-gradient(90deg,#f6e6c64d,#f6e6c600 75%)}
-.details-section .detail-number{font-size:30px;line-height:1;background:linear-gradient(100deg,#7d5a1c 0%,var(--gold) 45%,#c99a4c 70%,var(--gold-deep) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-@media (max-width:1000px){.details-section .detail-feature img{height:340px}}
-@media (max-width:700px){.details-section .detail-rows{padding:6px 18px}.details-section .detail-row{padding:22px 0}.details-section .detail-number{font-size:24px}.details-section .detail-feature img{height:250px}.details-section .detail-feature{padding:8px}}
 
-.details-section .detail-row{transition:background .5s var(--ease),transform .5s var(--ease)}
-.details-section .detail-row:hover{transform:translateX(4px)}
 
 /* Short lines that sit over a photograph's sky keep a night halo so they stay legible */
 .gallery-section .section-aside,.legacy .legacy-intro{color:#fffaf0!important;opacity:1!important;text-shadow:0 1px 2px #1a1638,0 0 12px #1a1638,0 0 26px #1a1638cc}
 
 /* Details without numerals: title and description beside the gold medallion */
-.details-section .detail-number{display:none}
-.details-section .detail-row{grid-template-columns:minmax(0,1fr) 44px}
-@media (max-width:700px){.details-section .detail-row{grid-template-columns:minmax(0,1fr) 38px}}
 /* The plans heading sits over the courtyard photo: a night halo keeps it crisp */
 .residences .section-top h2{text-shadow:0 2px 20px #1a1638cc,0 1px 3px #1a1638}
 .residences .section-top h2 em,:is(.gallery-section,.legacy) h2 em{text-shadow:none}
@@ -163,7 +138,6 @@ main .eyebrow{display:none}
 @media (min-width:701px) and (max-width:1000px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px 40px}.footer-grid>:first-child{grid-column:1/-1}}
 .residences .section-top h2::after{height:2px;background:linear-gradient(90deg,#fff4dc,#e3c27e 60%,#d6a565);box-shadow:0 1px 0 1px #1a163899,0 0 14px #e09ca5cc}
 
-.details-section .detail-row h3{font-size:clamp(22px,2vw,27px)}
 
 
 /* Highlights: the night render at its natural scale, in a shorter frame that crops the empty sky above the rooftops */
@@ -171,7 +145,8 @@ main .eyebrow{display:none}
 @media (max-width:1000px){.highlights .portrait img{height:350px}}
 @media (max-width:700px){.highlights .portrait img{height:280px}}
 /* Call now on phones: deep gold beside the champagne half, so neither blends with the phone's own dark bar beneath */
-@media (max-width:700px){.mobile-actions a:last-child{background:linear-gradient(100deg,#d9a96a 0%,#c08a3a 55%,#a8782a 100%);color:var(--ink);letter-spacing:.16em}.mobile-actions a:last-child{gap:8px}}
+@media (max-width:700px){.mobile-actions a:last-child{background:linear-gradient(100deg,#d9a96a 0%,#c08a3a 55%,#a8782a 100%);color:var(--ink);letter-spacing:.16em}.mobile-actions a:last-child{gap:8px}
+}
 .mobile-actions .call-icon{display:inline-flex;align-items:center;justify-content:center;width:11px;height:11px;margin-top:-1px}
 .mobile-actions .call-icon i{font-size:10px;line-height:1;transform-origin:50% 60%;animation:call-ring 4.2s ease-in-out infinite}
 @keyframes call-ring{0%,4%{transform:rotate(0);filter:none}6%{filter:drop-shadow(0 0 6px #fff4dccc)}7%{transform:rotate(-16deg)}10%{transform:rotate(13deg)}13%{transform:rotate(-11deg)}16%{transform:rotate(8deg)}19%{transform:rotate(-5deg)}22%{transform:rotate(0)}26%,100%{transform:rotate(0);filter:none}}
@@ -181,7 +156,6 @@ main .eyebrow{display:none}
 /* Legacy: heading only, no partner logo */
 .legacy-heading{display:block}
 /* Details on wide screens: the framed interior stretches to end level with the specifications card */
-@media (min-width:1001px){.details-section .details-layout{display:grid;align-items:stretch}.details-section .detail-rows{align-self:start}.details-section .details-lead{display:flex;flex-direction:column;min-height:0}.details-section .details-lead>*{flex:0 0 auto}.details-section .details-lead .detail-feature{flex:1 1 0;position:relative;min-height:240px;height:auto;margin-top:36px}.details-section .details-lead .detail-feature img{position:absolute;inset:12px;width:calc(100% - 24px);height:calc(100% - 24px);min-height:0;object-fit:cover}}
 
 /* Phone bottom bar: two flush halves, gold Book a site visit and Call now on the site's royal purple, so the
    bar never merges with a phone's own dark bar */

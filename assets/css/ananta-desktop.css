@@ -1,0 +1,161 @@
+/* Ananta Desktop: one fluid layer for every desktop width (1001px and up), plus the Details photo explorer.
+   Layout, type and spacing scale with the screen instead of stopping at a fixed 1240px column.
+   Phones and tablets keep the rules in ananta.css / ananta-flow.css. */
+
+/* ---------------------------------------------------------------- Details: one common photograph, five points (all widths) */
+.details-section .details-layout{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:clamp(40px,5vw,110px);align-items:stretch}
+.details-section .details-lead h2{color:var(--ink)}
+.details-section .details-lead .horizon-rule{margin-top:24px}
+.details-section .details-lead .body-copy{max-width:44ch;margin-top:22px;color:var(--muted)}
+
+/* The common photograph, framed like a print */
+.spec-stage{position:relative;margin:clamp(26px,2.4vw,44px) 0 0;padding:12px;background:#fffdf8;border:1px solid #c99a4c66;box-shadow:0 40px 70px -44px #6b4a1a80;scroll-margin-top:calc(var(--header) + 16px)}
+.spec-stage::after{content:'';position:absolute;inset:-7px;z-index:4;pointer-events:none;background:linear-gradient(#c99a4c,#c99a4c) 0 0/28px 1px,linear-gradient(#c99a4c,#c99a4c) 0 0/1px 28px,linear-gradient(#c99a4c,#c99a4c) 100% 0/28px 1px,linear-gradient(#c99a4c,#c99a4c) 100% 0/1px 28px,linear-gradient(#c99a4c,#c99a4c) 0 100%/28px 1px,linear-gradient(#c99a4c,#c99a4c) 0 100%/1px 28px,linear-gradient(#c99a4c,#c99a4c) 100% 100%/28px 1px,linear-gradient(#c99a4c,#c99a4c) 100% 100%/1px 28px;background-repeat:no-repeat}
+.spec-frame{position:relative;aspect-ratio:16/9;overflow:hidden;background:#e8d6b3}
+.spec-shot{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;opacity:0;transform:scale(1.05);transition:opacity .7s var(--ease),transform 1.6s var(--ease)}
+.spec-shot.is-on{opacity:1;transform:none}
+.spec-frame::after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(180deg,transparent 58%,#1a1228b3 100%)}
+.spec-caption{position:absolute;z-index:4;left:clamp(24px,2.2vw,40px);right:30px;bottom:clamp(24px,2.6vw,48px);display:flex;align-items:baseline;gap:16px;color:var(--white);text-shadow:0 2px 16px #1a1228cc}
+.spec-caption-title{font:400 clamp(22px,2.4vw,46px)/1.1 var(--serif)}
+
+/* Click the photograph to open it large */
+.spec-zoom{position:absolute;inset:0;z-index:5;cursor:zoom-in}
+
+/* The points: an ivory card with a gilded top and foot */
+.spec-list{position:relative;display:flex;flex-direction:column;--pad:clamp(20px,2.6vw,44px);padding:10px var(--pad);background:#fffdf8;border:1px solid #e3c27e73;box-shadow:0 50px 90px -56px #6b4a1a8c}
+.spec-list::before,.spec-list::after{content:'';position:absolute;left:-1px;right:-1px;height:3px;background:linear-gradient(90deg,#c99a4c,#f5dfb3 35%,#e3c27e 65%,#b3832d)}
+.spec-list::before{top:-1px}
+.spec-list::after{bottom:-1px}
+.spec-item{position:relative;flex:1 1 auto;display:flex;margin-inline:calc(var(--pad) * -1);transition:background .5s var(--ease)}
+.spec-item+.spec-item::before{content:'';position:absolute;left:var(--pad);right:var(--pad);top:0;height:1px;background:linear-gradient(90deg,#c99a4c00,#c99a4c73 14%,#c99a4c73 86%,#c99a4c00)}
+.spec-item.is-on{background:linear-gradient(90deg,#f6e6c699,#f6e6c600 85%)}
+.spec-item+.spec-item{margin-top:0}
+.spec-tab{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(14px,1.4vw,28px);align-items:center;flex:1 1 auto;width:100%;padding:clamp(18px,1.5vw,28px) var(--pad);text-align:left;color:inherit;cursor:default;transition:transform .5s var(--ease)}
+.spec-tab:focus-visible{outline-offset:-4px}
+.spec-text{display:block;min-width:0}
+.spec-title{display:block;font-family:var(--serif);font-weight:500;font-size:clamp(21px,1.7vw,32px);line-height:1.15;color:var(--ink);transition:color .4s var(--ease)}
+.spec-short{display:block;max-width:none;text-wrap:balance;margin-top:6px;font-size:clamp(13px,.82vw,15.5px);line-height:1.65;color:var(--muted)}
+.spec-item.is-on .spec-title{color:var(--gold-deep)}
+.spec-arrow{display:grid;place-items:center;width:clamp(14px,1vw,20px);aspect-ratio:1;border:1px solid #c99a4c;border-radius:50%;transition:background .4s var(--ease),box-shadow .4s var(--ease),transform .5s var(--ease)}
+.spec-item.is-on .spec-arrow{background:linear-gradient(100deg,#f5dfb3,#d6a565);box-shadow:0 0 18px #f0b56a99}
+
+/* Desktop is hover only: the row glides forward and the common photograph changes */
+@media (hover:hover) and (min-width:1001px){
+  .spec-item:hover .spec-tab{transform:translateX(8px)}
+  .spec-item:hover .spec-title{color:var(--gold-deep)}
+  .spec-item:not(.is-on):hover{background:linear-gradient(90deg,#f6e6c666,#f6e6c600 85%)}
+  .spec-item:hover .spec-arrow{background:linear-gradient(100deg,#f5dfb3,#d6a565);box-shadow:0 0 18px #f0b56a99}
+}
+
+/* Phones and tablets: tap a point and the page glides up to the common photograph */
+@media (max-width:1000px){
+  .details-section .details-layout{grid-template-columns:1fr;gap:36px}
+  .spec-list{--pad:18px}
+  .spec-tab{cursor:pointer;padding-block:20px}
+  .spec-title{font-size:clamp(20px,5.6vw,26px)}
+  .spec-short{font-size:14px}
+  .spec-arrow{width:38px;border-color:#c99a4c80;color:var(--gold-deep)}
+  .spec-arrow::before{content:'↑';font:400 17px/1 var(--sans)}
+  .spec-item.is-on .spec-arrow{color:var(--ink)}
+}
+
+/* Highlights: the night render framed on the buildings' feet, the gate and the road */
+.highlights .portrait img{height:auto;aspect-ratio:1080/850;object-position:center 100%}
+
+/* Amenity tiles are 4:3, so the small brochure pictures (indoor games, kids' play) are barely enlarged and stay crisp */
+.amenity img{aspect-ratio:4/3}
+.amenity img[src*="am-games"],.amenity img[src*="kids-play"]{object-position:center}
+
+/* ---------------------------------------------------------------- Gallery and amenity controls, easier to see at every width */
+.scroll-controls{gap:clamp(16px,1.4vw,28px)}
+.scroll-count{font-size:12px;font-weight:500;color:var(--ink)}
+.scroll-line{height:2px;background:#8a642040}
+.scroll-line>span{background:linear-gradient(90deg,var(--gold-deep),var(--gold) 60%,#e3c27e)}
+.scroll-controls button{border-color:#8a642080;color:var(--gold-deep)}
+.scroll-controls button:hover:not(:disabled){background:var(--gold);border-color:var(--gold);color:var(--white)}
+.gallery-section .scroll-count{color:#fff4dc}
+.gallery-section .scroll-line{height:3px;border-radius:3px;background:#ffffff47}
+.gallery-section .scroll-line>span{border-radius:3px;background:linear-gradient(90deg,#f3c7c6,#f5dfb3 50%,#e3c27e);box-shadow:0 0 14px #f0b56acc}
+.gallery-section .scroll-controls button{background:#ffffff1a;border-color:#f5dfb3b3;color:#fff4dc;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.gallery-section .scroll-controls button:hover:not(:disabled){background:var(--champagne);border-color:var(--champagne);color:var(--night)}
+.gallery-section .scroll-controls button:disabled{opacity:.4}
+.gallery-section .scroll-controls button svg{stroke-width:1.5}
+/* The controls sit inside the solid plum, above the sky that fades into the location */
+.section.gallery-section{padding-bottom:calc(var(--gsky) * .95)}
+.scroll-track{overscroll-behavior-x:contain}
+.scroll-track.is-dragging{cursor:grabbing;user-select:none}
+.scroll-track.is-dragging *{pointer-events:none}
+
+/* ---------------------------------------------------------------- Desktop: fluid width, scaled type */
+@media (min-width:1001px){
+  :root{--gutter:clamp(32px,4.4vw,120px);--wrap:min(2240px,calc(100% - var(--gutter) * 2))}
+  .container,.hero-caption{width:var(--wrap)}
+  .section{padding-block:clamp(96px,6.4vw,170px)}
+
+  /* Header: logo left, links spread between, call right, all on the same edges as the page below */
+  .header-inner{width:var(--wrap);max-width:none;padding:0;margin-inline:auto;gap:clamp(20px,2.4vw,64px)}
+  .brand{flex:0 0 auto}
+  .brand img{width:clamp(124px,8.6vw,210px)}
+  .desktop-nav{flex:1 1 auto;margin:0;justify-content:center;gap:clamp(12px,1.5vw,52px)}
+  .desktop-nav a{font-size:clamp(10px,.64vw,14px)}
+  .header-visit{flex:0 0 auto;gap:10px;padding:clamp(11px,.8vw,18px) clamp(18px,1.3vw,32px);font-size:clamp(12px,.74vw,16px)}
+  :root{--header:clamp(76px,5.2vw,118px)}
+
+  /* Hero: the whole elevation, framed on the towers and the sky */
+  .hero{height:min(calc(100svh - var(--header)),56.25vw);max-height:none;min-height:560px}
+  .hero-image{object-position:center 42%}
+  .hero::after{height:44%;background:linear-gradient(180deg,#0c102000 0%,#0c102033 30%,#0c102088 62%,#0c1020d9 88%,var(--night) 100%)}
+  .hero-caption{bottom:clamp(40px,7vh,96px)}
+  .hero-caption h1{font-size:clamp(54px,6.2vw,150px)}
+
+  /* Overview: the towers and sky show through the night */
+  .overview{background:linear-gradient(180deg,var(--night) 0%,#0c102099 20%,#0c102052 52%,#1a1a3f99 80%,#0c1020 100%),linear-gradient(90deg,#0c1020b8 0%,#0c102047 52%,#0c102000 100%),url('../images/web/overview-elevation.webp') 70% 40%/cover no-repeat;background-color:var(--night)}
+  .project-facts{margin-top:clamp(96px,11vw,260px)}
+  .overview .intro-copy{max-width:clamp(440px,36vw,760px)}
+  .overview .intro-copy p{font-size:clamp(14.5px,.88vw,19px);line-height:1.75}
+  .overview-actions .btn{min-height:clamp(52px,3.4vw,66px)}
+
+  /* Type scales with the screen; paragraphs stay modest */
+  h2,.section-top h2{font-size:clamp(44px,4.6vw,112px)}
+  .body-copy,.section-aside,.legacy-intro{font-size:clamp(14px,.84vw,18px)}
+  .body-copy{max-width:48ch}
+  .section-aside{max-width:40ch}
+  .highlight-list p,.acc li,.amenity-directory li{font-size:clamp(13.5px,.82vw,17px)}
+  .highlight-list h3{font-size:clamp(24px,1.8vw,38px)}
+  .project-facts strong{font-size:clamp(26px,2.3vw,52px)}
+  .project-facts span{font-size:clamp(10px,.62vw,13px)}
+  .project-facts>div{padding:clamp(24px,1.9vw,44px) clamp(22px,1.8vw,40px)}
+
+  /* Highlights */
+  .split{gap:clamp(64px,7vw,150px)}
+
+  /* Amenities: four to a view on big screens */
+  .amenity h3{font-size:clamp(26px,2vw,40px)}
+  .amenity-directory summary,.acc summary{font-size:clamp(22px,1.6vw,32px)}
+
+  /* Location */
+  .map-view{min-height:clamp(340px,30vw,640px)}
+  .airport b{font-size:clamp(38px,3vw,64px)}
+
+  /* Legacy, form, footer */
+  .legacy-stats strong{font-size:clamp(44px,4.4vw,100px)}
+  .legacy-stats span{font-size:clamp(11px,.72vw,15px);color:#f6f0e6;text-shadow:0 1px 10px #1a1638,0 0 3px #1a163899}
+  .enquiry-form h3{font-size:clamp(28px,2vw,42px)}
+  .footer{font-size:clamp(14px,.88vw,18px)}
+  .footer-brand p:first-child{font-size:clamp(26px,1.8vw,40px);max-width:none}
+}
+@media (min-width:1001px) and (max-width:1399px){
+  .header-visit span{letter-spacing:.06em}
+}
+/* Wide screens: three columns of header, links truly centred */
+@media (min-width:1400px){
+  .header-inner{display:grid;grid-template-columns:1fr auto 1fr}
+  .desktop-nav{flex:none}
+  .header-visit{justify-self:end}
+}
+@media (min-width:1700px){
+  .amenity{flex-basis:calc((100% - 72px)/4)}
+}
+
+/* Mouse and trackpad scroll the galleries freely; JS settles on the nearest picture afterwards (touch keeps native snapping) */
+@media (hover:hover) and (min-width:1001px){.scroll-track{scroll-snap-type:none}}

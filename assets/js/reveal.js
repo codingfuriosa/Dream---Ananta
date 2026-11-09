@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var targets = document.querySelectorAll('.section-top, .section-intro, .project-facts > div, .portrait, .highlights-copy, .plan-controls, #floor-panel, .details-lead, .detail-row, .all-amenities, .loc > div, .legacy-heading, .legacy-intro, .legacy-stats > div, .visit-grid > *, .footer-grid > div');
+  var targets = document.querySelectorAll('.section-top, .section-intro, .project-facts > div, .portrait, .highlights-copy, .plan-controls, #floor-panel, .details-head, .spec-stage, .spec-item, .all-amenities, .loc > div, .legacy-heading, .legacy-intro, .legacy-stats > div, .visit-grid > *, .footer-grid > div');
   document.documentElement.classList.add('reveal-ready');
   var observer = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
@@ -66,7 +66,7 @@
   if (!stats) return;
   var counters = Array.prototype.map.call(stats.querySelectorAll('strong'), function (el) {
     var m = el.textContent.match(/^(\D*)([\d,]+)(.*)$/);
-    return m && {el: el, prefix: m[1], target: Number(m[2].replace(/,/g, '')), comma: m[2].indexOf(',') > -1, suffix: m[3], shown: 0};
+    return m && !el.hasAttribute('data-static') && {el: el, prefix: m[1], target: Number(m[2].replace(/,/g, '')), comma: m[2].indexOf(',') > -1, suffix: m[3], shown: 0};
   }).filter(Boolean);
   function format(c, value) {
     var n = Math.round(value);
