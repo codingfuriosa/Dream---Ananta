@@ -219,18 +219,25 @@
 /* Mouse and trackpad scroll the galleries freely; JS settles on the nearest picture afterwards (touch keeps native snapping) */
 @media (hover:hover) and (min-width:1001px){.scroll-track{scroll-snap-type:none}}
 
-/* Legacy lead tile: the 20+ figure alone, dominant. No logo. The number is set far larger than the other four figures
-   and sits in the middle of the tall tile with its label beneath; one quiet line closes the tile at the bottom. */
-.legacy .legacy-stats>div:first-child{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:0;padding:clamp(26px,2.6vw,44px)}
-.legacy .legacy-stats>div:first-child .legacy-big{display:flex;flex-direction:column;align-items:flex-start;width:100%;margin:auto 0}
-.legacy .legacy-stats>div:first-child strong{font-size:clamp(132px,14vw,250px);line-height:.86;letter-spacing:-.04em;margin-left:-.04em}
-.legacy .legacy-stats>div:first-child span{margin-top:22px;font-size:clamp(12px,.92vw,17px);letter-spacing:.2em}
-.legacy .legacy-note{width:100%;margin:clamp(26px,2.8vw,46px) 0 0;padding-top:clamp(14px,1.4vw,22px);border-top:1px solid #e3c27e55;font-size:clamp(12px,.9vw,16px);line-height:1.6;letter-spacing:.02em;color:#f6f0e6d0;text-shadow:0 1px 8px #1a1638}
+/* Legacy lead tile: the 20+ figure alone, sized to the tile. Desktop: a centred composition, the number scaled to the
+   tile's own width so it spans it edge to edge, label and one quiet line centred beneath, framed by two hairlines.
+   Phones: the number on the left, the label and the line stacked on the right, so the wide short tile is filled. */
+.legacy .legacy-stats>div:first-child{container-type:inline-size;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:0;padding:clamp(24px,2.2vw,36px) clamp(20px,1.8vw,30px);text-align:center}
+.legacy .legacy-stats>div:first-child .legacy-big{display:flex;flex-direction:column;align-items:center;width:100%;margin:auto 0}
+.legacy .legacy-stats>div:first-child strong{font-size:clamp(120px,62cqw,250px);line-height:.82;letter-spacing:-.045em;margin-left:-.02em;filter:drop-shadow(0 0 16px #f0b56a33) drop-shadow(0 14px 30px #1a163866)}
+.legacy .legacy-stats>div:first-child span{margin-top:clamp(16px,1.6vw,26px);font-size:clamp(12px,.92vw,17px);letter-spacing:.26em}
+.legacy .legacy-note{width:100%;margin:clamp(18px,1.8vw,30px) 0 0;padding:clamp(14px,1.3vw,20px) 0 0;border-top:1px solid #e3c27e55;max-width:none;font-size:clamp(12px,.86vw,15px);line-height:1.6;letter-spacing:.02em;color:#f6f0e6d0;text-shadow:0 1px 8px #1a1638}
 .legacy-logo{display:none}
 @media (max-width:1000px){
-  .legacy .legacy-stats>div:first-child{display:flex;padding:28px 20px 24px}
-  .legacy .legacy-stats>div:first-child strong{font-size:min(132px,34vw)}
-  .legacy .legacy-stats>div:first-child span{margin-top:14px;font-size:12px}
-  .legacy .legacy-note{margin-top:20px;padding-top:14px;font-size:13px}
+  .legacy .legacy-stats>div:first-child{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:22px;align-items:center;justify-content:normal;padding:26px 20px;text-align:left}
+  .legacy .legacy-stats>div:first-child .legacy-big{display:contents}
+  .legacy .legacy-stats>div:first-child strong{grid-column:1;grid-row:1 / span 2;font-size:min(124px,33vw);line-height:.84;letter-spacing:-.045em;margin:0}
+  .legacy .legacy-stats>div:first-child span{grid-column:2;grid-row:1;align-self:end;margin:0;font-size:12px;letter-spacing:.2em;line-height:1.5}
+  .legacy .legacy-note{grid-column:2;grid-row:2;align-self:start;margin:12px 0 0;padding-top:12px;font-size:13px;line-height:1.5}
   .legacy-logo{display:none}
 }
+
+/* Steady figures while they count up: each number reserves the width of its final value (kept in its aria-label) through
+   a hidden zero-height copy, so "0+" growing to "20+" or "7,000+" never changes the tile's layout mid-count. */
+.legacy .legacy-stats strong{display:inline-block;max-width:100%;text-align:left}
+.legacy .legacy-stats strong::after{content:attr(aria-label);display:block;height:0;overflow:hidden;visibility:hidden;pointer-events:none}
