@@ -10,7 +10,6 @@
 
 /* The common photograph, framed like a print */
 .spec-stage{position:relative;margin:clamp(26px,2.4vw,44px) 0 0;padding:12px;background:#fffdf8;border:1px solid #c99a4c66;box-shadow:0 40px 70px -44px #6b4a1a80;scroll-margin-top:calc(var(--header) + 16px)}
-.spec-stage::after{content:'';position:absolute;inset:-7px;z-index:4;pointer-events:none;background:linear-gradient(#c99a4c,#c99a4c) 0 0/28px 1px,linear-gradient(#c99a4c,#c99a4c) 0 0/1px 28px,linear-gradient(#c99a4c,#c99a4c) 100% 0/28px 1px,linear-gradient(#c99a4c,#c99a4c) 100% 0/1px 28px,linear-gradient(#c99a4c,#c99a4c) 0 100%/28px 1px,linear-gradient(#c99a4c,#c99a4c) 0 100%/1px 28px,linear-gradient(#c99a4c,#c99a4c) 100% 100%/28px 1px,linear-gradient(#c99a4c,#c99a4c) 100% 100%/1px 28px;background-repeat:no-repeat}
 .spec-frame{position:relative;aspect-ratio:16/9;overflow:hidden;background:#e8d6b3}
 .spec-shot{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;opacity:0;transform:scale(1.05);transition:opacity .7s var(--ease),transform 1.6s var(--ease)}
 .spec-shot.is-on{opacity:1;transform:none}
