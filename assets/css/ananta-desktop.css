@@ -9,7 +9,7 @@
 .details-section .details-lead .body-copy{max-width:44ch;margin-top:22px;color:var(--muted)}
 
 /* The common photograph, framed like a print */
-.spec-stage{position:relative;margin:clamp(26px,2.4vw,44px) 0 0;padding:12px;background:#fffdf8;border:1px solid #c99a4c66;box-shadow:0 40px 70px -44px #6b4a1a80;scroll-margin-top:calc(var(--header) + 16px)}
+.spec-stage{position:relative;margin:clamp(26px,2.4vw,44px) 0 0;padding:0;background:transparent;border:0;box-shadow:0 40px 70px -44px #6b4a1a80;scroll-margin-top:calc(var(--header) + 16px)}
 .spec-frame{position:relative;aspect-ratio:16/9;overflow:hidden;background:#e8d6b3}
 .spec-shot{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;opacity:0;transform:scale(1.05);transition:opacity .7s var(--ease),transform 1.6s var(--ease)}
 .spec-shot.is-on{opacity:1;transform:none}
@@ -83,7 +83,7 @@
   .spec-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--ease)}
   .spec-item.is-on .spec-panel{grid-template-rows:1fr}
   .spec-panel-inner{min-height:0;overflow:hidden}
-  .spec-photo{display:block;width:calc(100% - var(--pad) * 2);margin:6px var(--pad) 18px;aspect-ratio:16/9;overflow:hidden;cursor:zoom-in;box-shadow:0 0 0 1px #c99a4c66,0 18px 30px -22px #6b4a1a99}
+  .spec-photo{display:block;width:calc(100% - var(--pad) * 2);margin:6px var(--pad) 18px;aspect-ratio:16/9;overflow:hidden;cursor:zoom-in;box-shadow:0 18px 30px -22px #6b4a1a99}
   .spec-photo img{width:100%;height:100%;object-fit:cover}
 }
 
