@@ -95,7 +95,7 @@
 .legacy .legacy-stats>div:nth-child(2),.legacy .legacy-stats>div:nth-child(3){border-top:0}
 .legacy .legacy-stats>div:first-child{grid-column:1;grid-row:1 / span 2;display:flex;flex-direction:column;justify-content:center;border:0;background:linear-gradient(135deg,#e3c27e24,#e09ca510 70%,transparent)}
 .legacy .legacy-stats>div:first-child{justify-content:space-between;gap:clamp(18px,2vw,34px)}
-.legacy .legacy-stats>div:first-child strong{font-size:clamp(64px,7.4vw,140px)}
+
 .legacy-logo{display:block;align-self:flex-start;flex:none;width:auto;max-width:100%;height:clamp(26px,2.1vw,40px);aspect-ratio:480/111;object-fit:contain;filter:brightness(0) invert(1);opacity:.88}
 .legacy .legacy-lead>p{max-width:30ch;margin:0;padding-top:0;font-size:clamp(13px,.92vw,17px);line-height:1.65;color:#f6f0e6d9;text-shadow:0 1px 8px #1a1638}
 .legacy .legacy-stats strong{font-size:clamp(36px,3.8vw,68px)}
@@ -218,3 +218,19 @@
 
 /* Mouse and trackpad scroll the galleries freely; JS settles on the nearest picture afterwards (touch keeps native snapping) */
 @media (hover:hover) and (min-width:1001px){.scroll-track{scroll-snap-type:none}}
+
+/* Legacy lead tile: the 20+ figure alone, dominant. No logo. The number is set far larger than the other four figures
+   and sits in the middle of the tall tile with its label beneath; one quiet line closes the tile at the bottom. */
+.legacy .legacy-stats>div:first-child{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:0;padding:clamp(26px,2.6vw,44px)}
+.legacy .legacy-stats>div:first-child .legacy-big{display:flex;flex-direction:column;align-items:flex-start;width:100%;margin:auto 0}
+.legacy .legacy-stats>div:first-child strong{font-size:clamp(132px,14vw,250px);line-height:.86;letter-spacing:-.04em;margin-left:-.04em}
+.legacy .legacy-stats>div:first-child span{margin-top:22px;font-size:clamp(12px,.92vw,17px);letter-spacing:.2em}
+.legacy .legacy-note{width:100%;margin:clamp(26px,2.8vw,46px) 0 0;padding-top:clamp(14px,1.4vw,22px);border-top:1px solid #e3c27e55;font-size:clamp(12px,.9vw,16px);line-height:1.6;letter-spacing:.02em;color:#f6f0e6d0;text-shadow:0 1px 8px #1a1638}
+.legacy-logo{display:none}
+@media (max-width:1000px){
+  .legacy .legacy-stats>div:first-child{display:flex;padding:28px 20px 24px}
+  .legacy .legacy-stats>div:first-child strong{font-size:min(132px,34vw)}
+  .legacy .legacy-stats>div:first-child span{margin-top:14px;font-size:12px}
+  .legacy .legacy-note{margin-top:20px;padding-top:14px;font-size:13px}
+  .legacy-logo{display:none}
+}
