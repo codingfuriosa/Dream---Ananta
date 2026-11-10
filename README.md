@@ -4,9 +4,9 @@ A static landing page for Ananta at Dream Gurukul by Jain Group. No build step: 
 
 ## Files that run the site
 - `index.html`: the landing page. `thank-you.html`: shown after an enquiry.
-- `assets/css/ananta.css`: all styling. (Older stylesheets in `assets/css` are no longer loaded.)
-- `assets/js/`: `lead-config.js` (lead destination), `leads.js` (forms, validation, brochure and plan unlock), `refined.js` (menu, plan tabs, image viewer), `revision.js` (progress beam, carousels, floor-level menu, header and bar behaviour), `reveal.js` (scroll reveals, Legacy counters). `main.js` is no longer loaded.
-- `assets/images/web/`: right-sized images the page uses; `assets/images/curated/` holds the full-size originals opened in the image viewer.
+- `assets/css/`: `ananta.css` (base), `ananta-luxe.css` (premium layer), `ananta-flow.css` (section flow), `ananta-desktop.css` (fluid desktop layout and Details explorer).
+- `assets/js/`: `lead-config.js` (lead destination), `leads.js` (forms, validation, brochure and plan unlock), `refined.js` (menu, plan tabs, image viewer), `revision.js` (progress beam, carousels, floor-level menu, header and bar behaviour), `reveal.js` (scroll reveals, Legacy counters), `specs.js` (Details photo explorer), `smooth.js` (smooth anchor scrolling).
+- `assets/images/web/`: right-sized images the page uses; `assets/images/curated/`: the floor-plan sheets and previews and the horizon backdrop. Every file in `assets/` is used by the pages; unused originals were removed before launch.
 - `assets/icons/` and `site.webmanifest`: favicon (light and dark) and home-screen icons.
 - `assets/brochures/ananta-lifestyle.pdf`: the brochure visitors download.
 
