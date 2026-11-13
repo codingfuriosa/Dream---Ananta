@@ -79,41 +79,57 @@
   .section.details-section{padding-bottom:18px}
 }
 
-/* ---- phones and tablets: a collapsible list; the two cards open right under the chosen point */
+/* the photo switch is for phones only */
+.spec-mode{display:none}
+
+/* ---- phones and tablets: the switch under the intro, then a collapsible list. An open point shows the photograph
+   for the chosen side, then At Dream Ananta in gold and What you usually get in grey, stacked. */
 @media (max-width:1000px){
-  .cmp-tabs{position:relative;flex-direction:column;flex-wrap:nowrap;gap:0;margin:22px 0 0;padding:4px 0;background:#fffdf8;border:1px solid #e3c27e73;box-shadow:0 50px 90px -56px #6b4a1a8c}
+  .spec-mode{display:flex;width:100%;margin-top:22px;padding:4px;background:#fffdf8;border:1px solid #e3c27e99;border-radius:999px;box-shadow:0 18px 40px -28px #6b4a1a99}
+  .spec-mode-btn{flex:1 1 0;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 6px;border:0;border-radius:999px;background:transparent;color:var(--muted);font:500 10.5px/1 var(--sans);letter-spacing:.1em;white-space:nowrap;text-transform:uppercase;cursor:pointer;transition:background .45s var(--ease),color .45s var(--ease)}
+  .spec-mode-dot{width:8px;height:8px;border-radius:50%;border:1px solid currentColor}
+  .spec-mode-btn.is-on{color:var(--ink);background:linear-gradient(100deg,#f5dfb3,#d6a565)}
+  .spec-mode-btn.is-on .spec-mode-dot{background:#2a1f0c;border-color:#2a1f0c}
+  .spec-mode-btn[data-mode=usual].is-on{color:#fffdf8;background:linear-gradient(100deg,#6a6058,#3f3832)}
+  .spec-mode-btn[data-mode=usual].is-on .spec-mode-dot{background:#fffdf8;border-color:#fffdf8}
+
+  .cmp-tabs{position:relative;z-index:1;flex-direction:column;flex-wrap:nowrap;gap:0;margin:26px 0 0;padding:4px 0;background:#fffdf8;border:1px solid #e3c27e73;box-shadow:0 50px 90px -56px #6b4a1a8c}
   .cmp-tabs::before,.cmp-tabs::after{content:'';position:absolute;left:-1px;right:-1px;height:3px;background:linear-gradient(90deg,#c99a4c,#f5dfb3 35%,#e3c27e 65%,#b3832d)}
   .cmp-tabs::before{top:-1px}
   .cmp-tabs::after{bottom:-1px}
-  .cmp-tabs [role="tab"]{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:14px;width:100%;min-height:58px;padding:17px 20px;border:0;border-radius:0;background:none;color:var(--ink);font:500 clamp(20px,5.6vw,25px)/1.15 var(--serif);letter-spacing:0;text-transform:none;text-align:left;box-shadow:none;transition:background .5s var(--ease),color .4s var(--ease)}
-  .cmp-tabs [role="tab"]+[role="tab"],.cmp-tabs .cmp-board+[role="tab"]{border-top:1px solid #c99a4c40}
-  .cmp-tabs [role="tab"]:hover{background:none;border-color:#c99a4c40}
-  .cmp-tabs [role="tab"][aria-selected="true"]{background:none;box-shadow:none;color:var(--ink)}
-  .cmp-tabs [role="tab"].is-open{background:linear-gradient(90deg,#f6e6c699,#f6e6c600 85%);color:var(--gold-deep)}
+  .cmp-tabs [role=tab]{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:14px;width:100%;min-height:58px;padding:17px 20px;border:0;border-radius:0;background:none;color:var(--ink);font:500 clamp(20px,5.6vw,25px)/1.15 var(--serif);letter-spacing:0;text-transform:none;text-align:left;box-shadow:none;transition:background .5s var(--ease),color .4s var(--ease)}
+  .cmp-tabs [role=tab]+[role=tab],.cmp-tabs .cmp-board+[role=tab]{border-top:1px solid #c99a4c40}
+  .cmp-tabs [role=tab]:hover{background:none;border-color:#c99a4c40}
+  .cmp-tabs [role=tab][aria-selected=true]{background:none;box-shadow:none;color:var(--ink)}
+  .cmp-tabs [role=tab].is-open{background:linear-gradient(90deg,#f6e6c699,#f6e6c600 85%);color:var(--gold-deep)}
+  .mode-usual .cmp-tabs [role=tab].is-open{background:linear-gradient(90deg,#ebe6df99,#ebe6df00 85%);color:#3f3832}
   .cmp-tab-short{display:none}
   .cmp-tab-long{display:block}
   .cmp-tab-icon{position:relative;display:block;width:34px;height:34px;border:1px solid #c99a4c99;border-radius:50%;color:var(--gold-deep);transition:transform .5s var(--ease),background .4s var(--ease),border-color .4s var(--ease)}
   .cmp-tab-icon::before,.cmp-tab-icon::after{content:'';position:absolute;left:50%;top:50%;width:14px;height:1.5px;margin:-.75px 0 0 -7px;background:currentColor;border-radius:1px}
   .cmp-tab-icon::after{transform:rotate(90deg)}
-  .cmp-tabs [role="tab"].is-open .cmp-tab-icon{transform:rotate(45deg);background:linear-gradient(100deg,#f5dfb3,#d6a565);border-color:#e3c27e;color:var(--ink)}
-  /* the cards inside the list */
-  .cmp-board{display:block;padding:2px 20px 18px}
-  .cmp-side{border:0;box-shadow:none;background:none}
+  .cmp-tabs [role=tab].is-open .cmp-tab-icon{transform:rotate(45deg);background:linear-gradient(100deg,#f5dfb3,#d6a565);border-color:#e3c27e;color:var(--ink)}
+  .mode-usual .cmp-tabs [role=tab].is-open .cmp-tab-icon{background:linear-gradient(100deg,#d9d2c9,#a69a8d);border-color:#a69a8d}
+
+  /* the open point: photograph (one side at a time), then the two blocks */
+  .cmp-board{display:flex;flex-direction:column;padding:0 20px 18px;background:linear-gradient(180deg,#f6e6c64d,#f6e6c600 40%)}
+  .mode-usual .cmp-board{background:linear-gradient(180deg,#ebe6df66,#ebe6df00 40%)}
+  .cmp-side{display:contents}
   .cmp-side::before{content:none}
-  .cmp-side-label{padding:0 0 8px;font-size:10.5px}
-  .cmp-side-ananta .cmp-photo{aspect-ratio:16/9;box-shadow:0 18px 30px -22px #6b4a1a99}
-  .cmp-text{padding:12px 0 0}
-  .cmp-title{font-size:21px}
-  .cmp-side-ananta .cmp-title{display:none}
-  .cmp-short{margin:0 0 10px;font-size:14px}
-  .cmp-points{gap:6px}
+  .cmp-side-label{display:none}
+  .cmp-photo{order:1;width:100%;aspect-ratio:16/9;margin:0 0 14px;box-shadow:0 18px 30px -22px #6b4a1a99}
+  .cmp-side-usual .cmp-photo{display:none;filter:none}
+  .mode-usual .cmp-side-ananta .cmp-photo{display:none}
+  .mode-usual .cmp-side-usual .cmp-photo{display:block}
+  .cmp-text{padding:14px 16px 16px}
+  .cmp-text::before{display:block;margin-bottom:9px;font:500 10.5px/1.35 var(--sans);letter-spacing:.18em;text-transform:uppercase}
+  .cmp-side-ananta .cmp-text{order:2;background:linear-gradient(180deg,#f6e6c680,#f6e6c61a);border-top:2px solid #e3c27e}
+  .cmp-side-ananta .cmp-text::before{content:'At Dream Ananta';color:var(--gold-deep)}
+  .cmp-side-usual .cmp-text{order:3;margin-top:10px;background:linear-gradient(180deg,#ebe6df99,#ebe6df1a);border-top:2px solid #c9c0b5}
+  .cmp-side-usual .cmp-text::before{content:'What you usually get';color:#8a7f74}
+  .cmp-title{display:none}
+  .cmp-side-usual .cmp-title{display:block;margin-bottom:8px;font-size:17px}
+  .cmp-short{display:none}
+  .cmp-points{gap:7px}
   .cmp-points li{font-size:14.5px}
-  /* what you usually get: photograph beside its text, in a quiet grey block */
-  .cmp-side-usual{display:grid;grid-template-columns:40% minmax(0,1fr);column-gap:14px;margin-top:16px;padding:12px 14px 14px;background:linear-gradient(180deg,#ebe6df99,#ebe6df1a);border-top:2px solid #c9c0b5}
-  .cmp-side-usual .cmp-side-label{grid-column:1 / -1}
-  .cmp-side-usual .cmp-photo{aspect-ratio:4/3;align-self:start}
-  .cmp-side-usual .cmp-text{padding:0}
-  .cmp-side-usual .cmp-title{font-size:17px}
-  .cmp-side-usual .cmp-short{display:none}
-  .cmp-side-usual .cmp-points li{font-size:13.5px}
 }
