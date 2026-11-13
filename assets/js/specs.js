@@ -50,6 +50,7 @@
   }
   function select(index, focus) {
     folded = false;
+    if (narrow.matches && typeof setMode === 'function') setMode('ananta');
     if (index !== current) {
       current = index;
       board.setAttribute('aria-labelledby', tabs[index].id);
@@ -102,14 +103,14 @@
     });
   });
 
-  // Phones only: which photograph sits at the top of the open point. Both spec lists stay in view regardless.
+  // Phones only: which side the open point shows. Every point opens on Ananta specs; the choice is not carried over.
   var section = document.getElementById('details');
-  Array.prototype.slice.call(document.querySelectorAll('.spec-mode-btn')).forEach(function (b, _, all) {
-    b.addEventListener('click', function () {
-      all.forEach(function (o) { var on = o === b; o.classList.toggle('is-on', on); o.setAttribute('aria-pressed', String(on)); });
-      section.classList.toggle('mode-usual', b.dataset.mode === 'usual');
-    });
-  });
+  var modeBtns = Array.prototype.slice.call(document.querySelectorAll('.spec-mode-btn'));
+  function setMode(mode) {
+    modeBtns.forEach(function (o) { var on = o.dataset.mode === mode; o.classList.toggle('is-on', on); o.setAttribute('aria-pressed', String(on)); });
+    section.classList.toggle('mode-usual', mode === 'usual');
+  }
+  modeBtns.forEach(function (b) { b.addEventListener('click', function () { setMode(b.dataset.mode); }); });
 
   function onResize() { folded = false; place(); sync(); }
   if (narrow.addEventListener) narrow.addEventListener('change', onResize); else narrow.addListener(onResize);
