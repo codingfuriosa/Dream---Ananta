@@ -9,7 +9,7 @@
 .cmp-tabs [role="tab"]:hover{border-color:#c99a4c;background:#f6e6c666}
 .cmp-tabs [role="tab"][aria-selected="true"]{background:linear-gradient(100deg,#f5dfb3,#d6a565);border-color:#e3c27e;color:#2a1f0c;box-shadow:0 12px 28px -16px #b3832d}
 .cmp-tabs [role="tab"]:focus-visible{outline:2px solid var(--gold-deep);outline-offset:3px}
-.cmp-tab-long,.cmp-tab-icon{display:none}
+.cmp-tab-long,.cmp-tab-long-u,.cmp-tab-icon{display:none}
 
 /* ---- the two cards */
 .cmp-board{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,1.8vw,30px);align-items:stretch}
@@ -105,6 +105,8 @@
   .mode-usual .cmp-tabs [role=tab].is-open{background:linear-gradient(90deg,#ebe6df99,#ebe6df00 85%);color:#3f3832}
   .cmp-tab-short{display:none}
   .cmp-tab-long{display:block}
+  .mode-usual .cmp-tab-long{display:none}
+  .mode-usual .cmp-tab-long-u{display:block}
   .cmp-tab-icon{position:relative;display:block;width:34px;height:34px;border:1px solid #c99a4c99;border-radius:50%;color:var(--gold-deep);transition:transform .5s var(--ease),background .4s var(--ease),border-color .4s var(--ease)}
   .cmp-tab-icon::before,.cmp-tab-icon::after{content:'';position:absolute;left:50%;top:50%;width:14px;height:1.5px;margin:-.75px 0 0 -7px;background:currentColor;border-radius:1px}
   .cmp-tab-icon::after{transform:rotate(90deg)}
@@ -128,8 +130,11 @@
   .cmp-side-usual .cmp-text{order:3;margin-top:10px;background:linear-gradient(180deg,#ebe6df99,#ebe6df1a);border-top:2px solid #c9c0b5}
   .cmp-side-usual .cmp-text::before{content:'What you usually get';color:#8a7f74}
   .cmp-title{display:none}
-  .cmp-side-usual .cmp-title{display:block;margin-bottom:8px;font-size:17px}
-  .cmp-short{display:none}
+  .cmp-short{display:block;margin:0 0 10px;font-size:14px;line-height:1.55;color:var(--muted)}
+  /* each side owns the open point: Dream Ananta shows only its block, Conventional only its own */
+  .cmp-side-usual .cmp-text{display:none;margin-top:0}
+  .mode-usual .cmp-side-usual .cmp-text{display:block}
+  .mode-usual .cmp-side-ananta .cmp-text{display:none}
   .cmp-points{gap:7px}
   .cmp-points li{font-size:14.5px}
 }
