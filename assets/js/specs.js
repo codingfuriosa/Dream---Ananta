@@ -63,23 +63,32 @@
     sync();
     if (focus) tabs[index].focus();
   }
-  // Phones: once the cards have opened, make sure the chosen point is on screen (only moves the page if it has to)
+  function glideTo(y) { if (window.anantaGlideTo) window.anantaGlideTo(y); else scrollTo({top: y, behavior: 'smooth'}); }
+  // Phones: once a point has opened, make sure the row and what opened under it are in the frame.
+  // Only moves the page if some of it is off screen; then the row comes to rest just under the header.
   function keepInView(tab) {
     setTimeout(function () {
       var header = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
-      var r = tab.getBoundingClientRect();
-      if (r.top < header + 6) {
-        var y = r.top + scrollY - header - 12;
-        if (window.anantaGlideTo) window.anantaGlideTo(y); else scrollTo({top: y, behavior: 'smooth'});
-      }
-    }, 80);
+      var top = tab.getBoundingClientRect().top;
+      var bottom = board.hidden ? tab.getBoundingClientRect().bottom : board.getBoundingClientRect().bottom;
+      if (top < header + 6 || bottom > innerHeight - 6) glideTo(top + scrollY - header - 12);
+    }, 120);
+  }
+  // Desktop: if the cards are partly off screen when a tab is clicked, bring the whole comparison into view
+  function keepBoardInView() {
+    var header = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+    var t = tablist.getBoundingClientRect(), b = board.getBoundingClientRect();
+    if (t.top >= header && b.bottom <= innerHeight) return;
+    var room = innerHeight - header - (b.bottom - t.top);
+    var lead = Math.max(16, Math.min(60, room * 0.4));
+    glideTo(t.top + scrollY - header - lead);
   }
 
   tabs.forEach(function (tab, index) {
     tab.addEventListener('click', function () {
       if (narrow.matches && index === current) { folded = !folded; sync(); return; }
       select(index);
-      if (narrow.matches) keepInView(tab);
+      if (narrow.matches) keepInView(tab); else keepBoardInView();
     });
     tab.addEventListener('keydown', function (event) {
       var k = event.key, next = null;
