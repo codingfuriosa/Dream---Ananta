@@ -1,6 +1,7 @@
 /* Ananta Standard: a row of detail tabs, then two cards always in view. Left, At Dream Ananta in gold with ticks;
    right, What you usually get in quiet grey with crosses. Each card has its own photograph, title, line and list.
-   Choosing a detail changes both cards together. Nothing is hidden and there is nothing to switch. */
+   Choosing a detail changes both cards together. Nothing is hidden and there is nothing to switch.
+   Phones: the tabs become a collapsible list and the two cards open right under the chosen point. */
 
 /* ---- the detail tabs */
 .cmp-tabs{display:flex;flex-wrap:wrap;gap:10px;margin:clamp(16px,1.5vw,24px) 0 clamp(12px,1.2vw,18px)}
@@ -8,27 +9,29 @@
 .cmp-tabs [role="tab"]:hover{border-color:#c99a4c;background:#f6e6c666}
 .cmp-tabs [role="tab"][aria-selected="true"]{background:linear-gradient(100deg,#f5dfb3,#d6a565);border-color:#e3c27e;color:#2a1f0c;box-shadow:0 12px 28px -16px #b3832d}
 .cmp-tabs [role="tab"]:focus-visible{outline:2px solid var(--gold-deep);outline-offset:3px}
+.cmp-tab-long,.cmp-tab-icon{display:none}
 
 /* ---- the two cards */
-.cmp-board{display:grid;grid-template-columns:minmax(0,1.38fr) minmax(0,1fr);gap:clamp(16px,1.8vw,30px);align-items:stretch}
+.cmp-board{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,1.8vw,30px);align-items:stretch}
 .cmp-side{position:relative;display:flex;flex-direction:column;min-width:0;background:#fffdf8;border:1px solid #e3c27e73;box-shadow:0 50px 90px -56px #6b4a1a8c}
 .cmp-side::before{content:'';position:absolute;left:-1px;right:-1px;top:-1px;height:3px;background:linear-gradient(90deg,#c99a4c,#f5dfb3 35%,#e3c27e 65%,#b3832d)}
 .cmp-side-usual{background:#f6f2ec;border-color:#d9d0c4;box-shadow:0 50px 90px -60px #3f383266}
 .cmp-side-usual::before{background:linear-gradient(90deg,#b8ab9e,#ddd5ca 50%,#b8ab9e)}
-.cmp-side-label{margin:0;padding:clamp(11px,.9vw,14px) clamp(18px,1.8vw,28px) clamp(9px,.8vw,12px);font:500 11px/1.3 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep)}
+.cmp-side-label{margin:0;padding:clamp(10px,.85vw,13px) clamp(18px,1.8vw,28px) clamp(8px,.7vw,11px);font:500 11px/1.3 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep)}
 .cmp-side-usual .cmp-side-label{color:#8a7f74}
-.cmp-photo{position:relative;height:clamp(200px,19.5vw,320px);overflow:hidden;background:#e8d6b3}
+/* photographs keep their true 16:9 shape; nothing is cropped away */
+.cmp-photo{position:relative;aspect-ratio:16/9;overflow:hidden;background:#e8d6b3}
 .cmp-side-usual .cmp-photo{filter:saturate(.92)}
 .cmp-shot{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;opacity:0;transform:scale(1.04);transition:opacity .7s var(--ease),transform 1.6s var(--ease)}
 .cmp-shot.is-on{opacity:1;transform:none}
 .cmp-zoom{position:absolute;inset:0;z-index:2;padding:0;border:0;background:transparent;cursor:zoom-in}
 .cmp-zoom:focus-visible{outline:3px solid var(--gold-deep);outline-offset:-3px}
-.cmp-text{flex:1 1 auto;padding:clamp(14px,1.2vw,20px) clamp(18px,1.8vw,28px) clamp(16px,1.4vw,22px)}
+.cmp-text{flex:1 1 auto;padding:clamp(12px,1.1vw,18px) clamp(18px,1.8vw,28px) clamp(14px,1.3vw,20px)}
 .cmp-title{margin:0;font:500 clamp(20px,1.5vw,26px)/1.15 var(--serif);color:var(--ink)}
 .cmp-side-usual .cmp-title{color:#3f3832}
-.cmp-short{margin:5px 0 11px;font-size:clamp(13px,.86vw,15px);line-height:1.5;color:var(--muted)}
+.cmp-short{margin:5px 0 10px;font-size:clamp(13px,.86vw,15px);line-height:1.5;color:var(--muted)}
 .cmp-side-usual .cmp-short{color:#7a6f66}
-.cmp-points{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px;min-height:calc(3 * 1.4em + 14px)}
+.cmp-points{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
 .cmp-points li{display:flex;align-items:flex-start;gap:10px;font-size:clamp(13.5px,.9vw,15.5px);line-height:1.4}
 .cmp-mark{position:relative;flex:none;display:grid;place-items:center;width:18px;height:18px;margin-top:.1em;border-radius:50%}
 .cmp-side-ananta .cmp-points li{color:var(--ink);font-weight:500}
@@ -45,38 +48,72 @@
 .is-swapping .cmp-text{animation:cmp-rise .45s var(--ease) both}
 @media (prefers-reduced-motion:reduce){.is-swapping .cmp-text{animation:none}.cmp-shot{transition:opacity .3s linear;transform:none}}
 
-/* ---- desktop: the section stays inside one screen */
-@media (min-width:1001px){
-  .section.details-section{padding-bottom:clamp(30px,3vw,48px)}
-  .details-section .details-head .body-copy{max-width:60ch;margin-top:12px}
-}
-/* short laptop screens: tighter still, so the whole comparison is on screen without scrolling */
-@media (min-width:1001px) and (max-height:820px){
-  .cmp-tabs{margin:12px 0 10px}
-  .cmp-tabs [role="tab"]{min-height:40px}
-  .cmp-side-label{padding:9px 20px 7px}
-  .cmp-photo{height:clamp(190px,17vw,236px)}
-  .cmp-text{padding:12px 20px 14px}
-  .cmp-title{font-size:20px}
-  .cmp-short{margin:4px 0 9px;font-size:13px}
-  .cmp-points{gap:5px;min-height:calc(3 * 1.35em + 10px)}
-  .cmp-points li{font-size:13.5px;line-height:1.35}
-  .section.details-section{padding-bottom:22px}
-}
-/* ---- phones and tablets: tabs wrap, the two cards stack, Ananta first */
-@media (max-width:1000px){
-  .cmp-tabs{gap:8px;margin:20px 0 16px}
-  .cmp-tabs [role="tab"]{min-height:42px;padding:0 15px;font-size:11px;letter-spacing:.12em}
-  .cmp-board{grid-template-columns:1fr;gap:16px}
-  .cmp-photo{height:auto;aspect-ratio:16/9}
-  .cmp-side-usual .cmp-photo{aspect-ratio:2/1}
-  .cmp-text{padding:16px 18px 18px}
-  .cmp-title{font-size:22px}
-  .cmp-short{font-size:14px}
-  .cmp-points{min-height:0;gap:7px}
-  .cmp-points li{font-size:14.5px}
-}
-
 /* the intro keeps its dark ink on this light section */
 .details-section .details-head h2{color:var(--ink)}
 .details-section .details-head .body-copy{color:var(--muted)}
+
+/* ---- desktop: the section stays inside one screen */
+@media (min-width:1001px){
+  .section.details-section{padding-bottom:clamp(28px,2.8vw,44px)}
+  .details-section .details-head .body-copy{max-width:60ch;margin-top:12px}
+}
+/* short laptop screens: the one-line description steps aside so the photographs and lists stay on screen */
+@media (min-width:1001px) and (max-height:900px){
+  .cmp-short{display:none}
+  .cmp-title{margin-bottom:10px}
+  .cmp-tabs{margin:14px 0 12px}
+  .section.details-section{padding-bottom:24px}
+}
+/* shorter still (768px laptops): the heading alone introduces the cards, which sit a little narrower so their
+   photographs keep their full shape and still end above the fold */
+@media (min-width:1001px) and (max-height:800px){
+  .details-section .details-head .body-copy{display:none}
+  .cmp-tabs{margin:12px 0 10px}
+  .cmp-tabs [role="tab"]{min-height:40px}
+  .cmp-board{max-width:1120px;margin-inline:auto}
+  .cmp-side-label{padding:8px 20px 6px}
+  .cmp-text{padding:10px 20px 12px}
+  .cmp-title{font-size:20px;margin-bottom:8px}
+  .cmp-points{gap:4px}
+  .cmp-points li{font-size:13.5px;line-height:1.35}
+  .section.details-section{padding-bottom:18px}
+}
+
+/* ---- phones and tablets: a collapsible list; the two cards open right under the chosen point */
+@media (max-width:1000px){
+  .cmp-tabs{position:relative;flex-direction:column;flex-wrap:nowrap;gap:0;margin:22px 0 0;padding:4px 0;background:#fffdf8;border:1px solid #e3c27e73;box-shadow:0 50px 90px -56px #6b4a1a8c}
+  .cmp-tabs::before,.cmp-tabs::after{content:'';position:absolute;left:-1px;right:-1px;height:3px;background:linear-gradient(90deg,#c99a4c,#f5dfb3 35%,#e3c27e 65%,#b3832d)}
+  .cmp-tabs::before{top:-1px}
+  .cmp-tabs::after{bottom:-1px}
+  .cmp-tabs [role="tab"]{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:14px;width:100%;min-height:58px;padding:17px 20px;border:0;border-radius:0;background:none;color:var(--ink);font:500 clamp(20px,5.6vw,25px)/1.15 var(--serif);letter-spacing:0;text-transform:none;text-align:left;box-shadow:none;transition:background .5s var(--ease),color .4s var(--ease)}
+  .cmp-tabs [role="tab"]+[role="tab"],.cmp-tabs .cmp-board+[role="tab"]{border-top:1px solid #c99a4c40}
+  .cmp-tabs [role="tab"]:hover{background:none;border-color:#c99a4c40}
+  .cmp-tabs [role="tab"][aria-selected="true"]{background:none;box-shadow:none;color:var(--ink)}
+  .cmp-tabs [role="tab"].is-open{background:linear-gradient(90deg,#f6e6c699,#f6e6c600 85%);color:var(--gold-deep)}
+  .cmp-tab-short{display:none}
+  .cmp-tab-long{display:block}
+  .cmp-tab-icon{position:relative;display:block;width:34px;height:34px;border:1px solid #c99a4c99;border-radius:50%;color:var(--gold-deep);transition:transform .5s var(--ease),background .4s var(--ease),border-color .4s var(--ease)}
+  .cmp-tab-icon::before,.cmp-tab-icon::after{content:'';position:absolute;left:50%;top:50%;width:14px;height:1.5px;margin:-.75px 0 0 -7px;background:currentColor;border-radius:1px}
+  .cmp-tab-icon::after{transform:rotate(90deg)}
+  .cmp-tabs [role="tab"].is-open .cmp-tab-icon{transform:rotate(45deg);background:linear-gradient(100deg,#f5dfb3,#d6a565);border-color:#e3c27e;color:var(--ink)}
+  /* the cards inside the list */
+  .cmp-board{display:block;padding:2px 20px 18px}
+  .cmp-side{border:0;box-shadow:none;background:none}
+  .cmp-side::before{content:none}
+  .cmp-side-label{padding:0 0 8px;font-size:10.5px}
+  .cmp-side-ananta .cmp-photo{aspect-ratio:16/9;box-shadow:0 18px 30px -22px #6b4a1a99}
+  .cmp-text{padding:12px 0 0}
+  .cmp-title{font-size:21px}
+  .cmp-side-ananta .cmp-title{display:none}
+  .cmp-short{margin:0 0 10px;font-size:14px}
+  .cmp-points{gap:6px}
+  .cmp-points li{font-size:14.5px}
+  /* what you usually get: photograph beside its text, in a quiet grey block */
+  .cmp-side-usual{display:grid;grid-template-columns:40% minmax(0,1fr);column-gap:14px;margin-top:16px;padding:12px 14px 14px;background:linear-gradient(180deg,#ebe6df99,#ebe6df1a);border-top:2px solid #c9c0b5}
+  .cmp-side-usual .cmp-side-label{grid-column:1 / -1}
+  .cmp-side-usual .cmp-photo{aspect-ratio:4/3;align-self:start}
+  .cmp-side-usual .cmp-text{padding:0}
+  .cmp-side-usual .cmp-title{font-size:17px}
+  .cmp-side-usual .cmp-short{display:none}
+  .cmp-side-usual .cmp-points li{font-size:13.5px}
+}
