@@ -554,13 +554,13 @@ h2 em,h3 em{padding-right:.06em;background:linear-gradient(100deg,#7d5a1c 0%,var
   .brochure-dialog .enquiry-form{padding:44px 22px 28px}
   /* Quick contact: a floating smoked-plum bar with a lit edge, the visit as a gold bar inside it */
   .mobile-actions{position:fixed;left:0;right:0;bottom:0;z-index:33;display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:62px;padding:0;border:0;background:linear-gradient(100deg,#1a1f3d 0%,#0c1020 100%);box-shadow:0 20px 40px -18px #000c,inset 0 1px 0 #ffffff12;transition:transform .5s var(--ease)}
-  .mobile-actions a{display:flex;align-items:center;justify-content:center;gap:10px;min-height:62px;padding-bottom:env(safe-area-inset-bottom);transition:padding-bottom .28s ease-out;font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:var(--on-dark)}
+  .mobile-actions a{display:flex;align-items:center;justify-content:center;gap:10px;min-height:62px;padding-bottom:calc(env(safe-area-inset-bottom, 0px) / 2);transition:none;font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:var(--on-dark)}
   .mobile-actions a:first-child{background:linear-gradient(100deg,#f5dfb3 0%,#e3c27e 55%,#d6a565 100%);color:var(--ink)}
   .mobile-actions svg{box-sizing:content-box;padding:7px;border:1px solid #e3c27e66;border-radius:50%;color:var(--champagne)}
   /* The quick-contact bar steps aside once the footer is on screen */
 
   .at-footer .mobile-actions{transform:translateY(100%)}
-  .wa-float{right:22px;bottom:calc(62px + 18px + env(safe-area-inset-bottom));width:50px;height:50px;transition:bottom .28s ease-out}
+  .wa-float{right:22px;bottom:calc(62px + 18px + env(safe-area-inset-bottom, 0px) / 2);width:50px;height:50px}
   .at-footer .wa-float{opacity:0;pointer-events:none;transform:translateY(20px)}
 }
 
