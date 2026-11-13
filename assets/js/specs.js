@@ -24,10 +24,19 @@
     zoom.dataset.image = tab.dataset[which + 'Src'];
     zoom.dataset.caption = title + ' · ' + label;
   }
-  // Where the cards live: after the whole row on desktop, right under the chosen point on phones
+  // Where the cards live: after the whole row on desktop, right under the chosen point on phones.
+  // On phones the Dream Ananta / Conventional switch travels inside the open point too, so closed points show
+  // no switch; the chosen side stays as it is when another point is opened.
+  var modeSwitch = document.querySelector('.spec-mode');
+  var modeHome = modeSwitch && modeSwitch.parentNode;
   function place() {
-    if (narrow.matches) { if (current >= 0) tabs[current].insertAdjacentElement('afterend', board); }
-    else if (board.previousElementSibling !== tablist) tablist.insertAdjacentElement('afterend', board);
+    if (narrow.matches) {
+      if (current >= 0) tabs[current].insertAdjacentElement('afterend', board);
+      if (modeSwitch && modeSwitch.parentNode !== board) board.insertBefore(modeSwitch, board.firstChild);
+    } else {
+      if (board.previousElementSibling !== tablist) tablist.insertAdjacentElement('afterend', board);
+      if (modeSwitch && modeSwitch.parentNode !== modeHome) modeHome.appendChild(modeSwitch);
+    }
   }
   function sync() {
     tabs.forEach(function (t, i) {
