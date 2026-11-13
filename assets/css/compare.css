@@ -1,32 +1,33 @@
-/* Ananta Standard: the Details explorer shows both sides at once. Click a point: the Ananta photograph fills the
-   stage, a quiet strip beneath it shows what you usually get instead, and the open point lists the two specs side
-   by side. Ananta reads in gold with ticks; the usual reads in grey with thin crosses. No switching needed. */
+/* Ananta Standard (Compare copy): the Details explorer with a Dream Ananta / Conventional switch.
+   Click a point to select it. The switch changes the photograph, the caption and the spec list beneath the open point.
+   Ananta reads in gold with ticks; conventional reads in quiet grey with thin crosses. */
 
-/* ---- the stage: the Ananta photograph, with a small card in its corner showing what you usually get */
-.spec-stage{display:flex;flex-direction:column;background:transparent;box-shadow:none}
-.spec-main{position:relative;flex:1 1 auto;min-height:0;box-shadow:0 40px 70px -44px #6b4a1a80}
-.spec-usual-strip{--card:clamp(180px,19vw,262px);position:absolute;z-index:5;right:clamp(16px,1.6vw,28px);bottom:clamp(16px,1.6vw,28px);width:var(--card);padding:6px 6px 9px;background:#fbf6ecf0;border:1px solid #ffffffa6;box-shadow:0 22px 44px -22px #1a122899;backdrop-filter:blur(8px)}
-.spec-usual-thumb{position:relative;display:block;width:100%;aspect-ratio:16/9;overflow:hidden;padding:0;border:0;background:#e2dbd1;cursor:zoom-in;filter:saturate(.9)}
-.spec-usual-shot{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;opacity:0;transition:opacity .6s var(--ease)}
-.spec-usual-shot.is-on{opacity:1}
-.spec-usual-text{display:flex;flex-direction:column;gap:2px;min-width:0;padding:8px 6px 0}
-.spec-usual-label{font:500 9.5px/1.3 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:#8a7f74}
-.spec-usual-title{font:500 clamp(14px,1.05vw,17px)/1.2 var(--serif);color:#3f3832}
-.spec-usual-short{display:none}
-/* the caption keeps clear of the card */
-.spec-caption{right:calc(var(--card, 240px) + clamp(40px,3.4vw,60px))}
-.spec-caption-text{max-width:none}
+/* ---- the switch */
+.spec-mode{display:inline-flex;align-self:flex-start;padding:4px;background:#fffdf8;border:1px solid #e3c27e99;border-radius:999px;box-shadow:0 18px 40px -28px #6b4a1a99;transition:border-color .5s var(--ease)}
+.spec-mode-btn{position:relative;display:inline-flex;align-items:center;gap:9px;padding:11px 20px 11px 16px;border:0;border-radius:999px;background:transparent;color:var(--muted);font:500 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:background .45s var(--ease),color .45s var(--ease),box-shadow .45s var(--ease)}
+.spec-mode-btn:hover{color:var(--ink)}
+.spec-mode-dot{width:8px;height:8px;border-radius:50%;border:1px solid currentColor;transition:background .45s var(--ease),border-color .45s var(--ease)}
+.spec-mode-btn.is-on{color:var(--ink);background:linear-gradient(100deg,#f5dfb3,#d6a565);box-shadow:0 8px 22px -12px #b3832d}
+.spec-mode-btn.is-on .spec-mode-dot{background:#2a1f0c;border-color:#2a1f0c}
+.spec-mode-btn[data-mode="usual"].is-on{color:#fffdf8;background:linear-gradient(100deg,#6a6058,#3f3832);box-shadow:0 8px 22px -12px #3f3832}
+.spec-mode-btn[data-mode="usual"].is-on .spec-mode-dot{background:#fffdf8;border-color:#fffdf8}
+.mode-usual .spec-mode{border-color:#b8ab9e}
 
-/* ---- the open point: two spec lists */
+/* ---- the caption badge on the photograph */
+.spec-caption-badge{display:inline-block;padding:6px 11px 5px;border-radius:999px;font:500 10.5px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:#2a1f0c;background:linear-gradient(100deg,#f5dfb3,#d6a565);text-shadow:none;transition:background .5s var(--ease),color .5s var(--ease)}
+.mode-usual .spec-caption-badge{color:#fffdf8;background:#5a524b}
+.mode-usual .spec-shot{filter:saturate(.9)}
+
+/* ---- the open point always shows both spec lists; the tabs only decide which photograph is up */
 .spec-compare{display:grid;gap:0}
-.cmp-cell{min-width:0}
-.cmp-cell-label{display:block;margin-bottom:10px;font:500 10.5px/1.35 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:#8a7f74}
+.cmp-cell{min-width:0;transition:opacity .4s var(--ease)}
+/* the side that is not on the photograph steps back a touch */
+.details-section:not(.mode-usual) .cmp-usual,.details-section.mode-usual .cmp-ananta{opacity:.72}
+.cmp-cell-label{display:block;margin-bottom:9px;font:500 10.5px/1.35 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
 .cmp-ananta .cmp-cell-label{color:var(--gold-deep)}
-.cmp-usual-title{display:none}
-.cmp-usual-photo{display:none}
-.cmp-cell ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
-.cmp-cell li{display:flex;align-items:flex-start;gap:9px;font-size:clamp(13.5px,.9vw,16px);line-height:1.45}
-.cmp-mark{position:relative;flex:none;display:grid;place-items:center;width:18px;height:18px;margin-top:.1em;border-radius:50%}
+.cmp-cell ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+.cmp-cell li{display:flex;align-items:flex-start;gap:9px;font-size:clamp(13px,.86vw,15.5px);line-height:1.45}
+.cmp-mark{position:relative;flex:none;display:grid;place-items:center;width:17px;height:17px;margin-top:.12em;border-radius:50%}
 .cmp-ananta li{color:var(--ink);font-weight:500}
 .cmp-ananta .cmp-mark{background:linear-gradient(100deg,#f5dfb3,#d6a565);box-shadow:0 0 10px #f0b56a66}
 .cmp-ananta .cmp-mark::before{content:'';width:8px;height:4px;margin-top:-2px;border-left:1.7px solid #2a1f0c;border-bottom:1.7px solid #2a1f0c;transform:rotate(-45deg)}
@@ -36,37 +37,55 @@
 .cmp-usual .cmp-mark::before{transform:rotate(45deg)}
 .cmp-usual .cmp-mark::after{transform:rotate(-45deg)}
 
-/* ---- desktop: click only; the list sets the height and the stage fills it */
+/* the switch swaps content with a short rise */
+@keyframes cmp-rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.mode-swap .spec-caption-text,.mode-swap .spec-title,.mode-swap .spec-caption-title{animation:cmp-rise .45s var(--ease) both}
+
+/* ---- conventional mode: the list's gold turns to quiet grey */
+.mode-usual .spec-item.is-on{background:linear-gradient(90deg,#ebe6df99,#ebe6df00 85%)}
+.mode-usual .spec-item.is-on .spec-title{color:#3f3832}
+.mode-usual .spec-item.is-on .spec-arrow{background:linear-gradient(100deg,#d9d2c9,#a69a8d);border-color:#a69a8d;box-shadow:none}
+
+/* ---- desktop: click only, everything in one view */
 @media (min-width:1001px){
+  /* the heading sits over the photograph column; the switch sits over the list column, as two tabs the full width of the list */
+  .details-section .details-head{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);column-gap:clamp(36px,4.4vw,96px);align-items:end}
+  .details-head-copy{min-width:0}
+  .details-section .details-head .body-copy{max-width:60ch}
+  .spec-mode{display:flex;align-self:end;width:100%;padding:5px;margin-bottom:2px;border-radius:999px}
+  .spec-mode-btn{flex:1 1 0;justify-content:center;padding:clamp(14px,1.15vw,19px) 18px;font-size:clamp(12px,.88vw,14px);letter-spacing:.18em}
+  .spec-mode-dot{width:9px;height:9px}
   .spec-item{flex-direction:column}
   .spec-item.is-on .spec-panel{display:block}
   .spec-panel .spec-photo{display:none}
-  .spec-tab{cursor:pointer;padding-block:clamp(13px,1.1vw,19px)}
+  .spec-tab{cursor:pointer;padding-block:clamp(16px,1.3vw,24px)}
   .spec-item:not(.is-on):hover .spec-arrow{background:none;box-shadow:none}
-  .spec-compare{grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);column-gap:clamp(14px,1.4vw,26px);padding:0 var(--pad) clamp(14px,1.2vw,20px)}
-  .cmp-ananta{padding:11px 13px 13px;background:linear-gradient(180deg,#f6e6c680,#f6e6c61a);border-top:2px solid #e3c27e}
-  .cmp-usual{padding:11px 0 13px 2px;border-top:2px solid #e3dccf}
-  .cmp-cell-label{margin-bottom:8px}
-  .cmp-cell ul{gap:6px}
-  .cmp-cell li{font-size:clamp(13px,.86vw,15px);line-height:1.4}
-  .details-section .spec-stage{display:flex;margin:0}
-  .spec-frame{aspect-ratio:auto;min-height:0;height:100%;max-height:none}
-  .spec-main{display:grid;grid-template-rows:minmax(0,1fr)}
+  .mode-usual .spec-item:hover .spec-title{color:#3f3832}
+  .spec-compare{grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);column-gap:clamp(14px,1.4vw,26px);padding:2px var(--pad) clamp(18px,1.5vw,26px)}
+  .cmp-ananta{padding:12px 14px 14px;background:linear-gradient(180deg,#f6e6c680,#f6e6c61a);border-top:2px solid #e3c27e}
+  .cmp-usual{padding:12px 0 14px 2px;border-top:2px solid #e3dccf}
+  .cmp-cell-label{margin-bottom:10px;font-size:10.5px}
+  .cmp-cell ul{gap:8px}
+  .cmp-cell li{font-size:clamp(13.5px,.9vw,16px);line-height:1.45}
+  .cmp-mark{width:18px;height:18px;margin-top:.1em}
+  /* the list sets the height; the photograph fills it */
+  .details-section .spec-stage{display:grid;grid-template-rows:minmax(0,1fr)}
+  .spec-frame{aspect-ratio:auto;min-height:0;height:100%}
   .section.details-section{padding-bottom:clamp(36px,3.6vw,56px)}
+  .details-section .details-layout{row-gap:clamp(18px,1.8vw,30px)}
 }
-/* ---- phones and tablets: photograph, Ananta list, then the conventional photograph and list, stacked */
+/* ---- phones and tablets: the switch sits under the intro, full width; the open point shows its photograph then its list */
 @media (max-width:1000px){
+  .spec-mode{display:flex;width:100%;margin-top:22px}
+  .spec-mode-btn{flex:1 1 0;justify-content:center;padding:12px 10px;font-size:11px;letter-spacing:.14em}
   .spec-compare{grid-template-columns:1fr;margin:0 var(--pad) 6px}
   .cmp-cell{padding:14px 16px 16px}
   .cmp-ananta{background:linear-gradient(180deg,#f6e6c680,#f6e6c61a);border-top:2px solid #e3c27e}
-  .cmp-usual{display:grid;grid-template-columns:38% minmax(0,1fr);column-gap:14px;margin-top:10px;background:linear-gradient(180deg,#ebe6df99,#ebe6df1a);border-top:2px solid #c9c0b5}
-  .cmp-usual .cmp-cell-label{grid-column:1 / -1;margin-bottom:8px}
-  .cmp-usual-photo{display:block;grid-row:2 / span 2;width:100%;aspect-ratio:4/3;overflow:hidden;margin:0;padding:0;border:0;background:#e2dbd1;cursor:zoom-in;filter:saturate(.9)}
-  .cmp-usual-photo img{width:100%;height:100%;object-fit:cover}
-  .cmp-usual-title{display:block;grid-column:2;align-self:start;margin-bottom:6px;font:500 17px/1.2 var(--serif);color:#3f3832}
-  .cmp-usual ul{grid-column:2;align-self:start;gap:6px}
-  .cmp-cell li{font-size:14px}
-  .cmp-ananta ul{gap:7px}
-  .cmp-cell{padding:12px 14px 14px}
+  .cmp-usual{margin-top:8px;background:linear-gradient(180deg,#ebe6df99,#ebe6df1a);border-top:2px solid #c9c0b5}
+  .cmp-cell ul{gap:7px}
+  .cmp-cell li{font-size:14.5px}
   .spec-photo{margin-bottom:12px}
 }
+
+/* no mode badge on the photograph; the tabs already say which side is showing */
+.spec-caption-badge{display:none}
